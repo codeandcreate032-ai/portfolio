@@ -9,6 +9,44 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <script defer src="script.js"></script>
+    <style>
+        /* Add these styles to your styles.css file */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification.fade-out {
+            animation: fadeOut 0.3s ease forwards;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -92,7 +130,7 @@
         <div class="about-container">
             <div class="about-image fade-in">
                 <div class="about-image-wrapper">
-                    <img src="https://via.placeholder.com/400" alt="B. Mohith">
+                    <img src="mohithportfilo\image\mohith2.png" alt="B. Mohith">
                 </div>
             </div>
             <div class="about-text fade-in">
@@ -625,18 +663,18 @@
         </div>
         <h2 class="section-title fade-in">Get In Touch</h2>
         <div class="contact-container">
-            <form class="contact-form fade-in" id="contact-form">
+            <form class="contact-form fade-in" id="contact-form" action="https://forms.gle/xifweuoNZPHsSaZB7" method="get" target="_blank">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" required>
+                    <input type="text" class="form-control" id="name" name="entry.1234567890" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" required>
+                    <input type="email" class="form-control" id="email" name="entry.0987654321" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea class="form-control" id="message" required></textarea>
+                    <textarea class="form-control" id="message" name="entry.1122334455" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
             </form>
@@ -963,49 +1001,31 @@
         // Form submission
         const contactForm = document.getElementById('contact-form');
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             // Get form values
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
             
-            // Here you would normally send the form data to a server
-            // For this example, we'll just show a success message
-            const successMessage = document.createElement('div');
-            successMessage.className = 'success-message';
-            successMessage.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: var(--gradient-1);
-                color: white;
-                padding: 2rem 3rem;
-                border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-                z-index: 1000;
-                text-align: center;
-                font-weight: 600;
-                animation: fadeIn 0.3s ease;
-            `;
-            successMessage.innerHTML = `
-                <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                Thank you, ${name}! Your message has been sent successfully.
+            // Show a brief notification before redirecting
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i>
+                Redirecting to contact form...
             `;
             
-            document.body.appendChild(successMessage);
+            document.body.appendChild(notification);
             
-            // Remove success message after 3 seconds
+            // Remove notification after 2 seconds
             setTimeout(() => {
-                successMessage.style.opacity = '0';
+                notification.classList.add('fade-out');
                 setTimeout(() => {
-                    document.body.removeChild(successMessage);
+                    document.body.removeChild(notification);
                 }, 300);
-            }, 3000);
+            }, 2000);
             
-            // Reset form
-            contactForm.reset();
+            // The form will automatically redirect to the Google Form
+            // No need to prevent default behavior
         });
 
         // Fade-in animation on scroll
