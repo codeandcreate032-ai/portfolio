@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B. Mohith - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=Roboto+Mono:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Improved Preloader with Background Effects -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-container">
+            <div class="logo-loader">
+                <div class="logo-circle"></div>
+                <div class="logo-circle"></div>
+                <div class="logo-circle"></div>
+                <i class="fas fa-code logo-icon"></i>
+            </div>
+            <div class="loader-text">B. MOHITH</div>
+            <div class="loader-subtitle">Full-Stack Developer & Content Creator</div>
+            <div class="progress-container">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="progress-percentage" id="progress-percentage">0%</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="logo"><i class="fas fa-code"></i> B. MOHITH</div>
+        <ul class="nav-menu" id="nav-menu">
+            <li class="nav-item"><a href="#about">About</a></li>
+            <li class="nav-item"><a href="#skills">Skills</a></li>
+            <li class="nav-item"><a href="#achievements">Achievements</a></li>
+            <li class="nav-item"><a href="#projects">Projects</a></li>
+            <li class="nav-item"><a href="#certificates">Certificates</a></li>
+            <li class="nav-item"><a href="#shop">Shop</a></li>
+            <li class="nav-item"><a href="#timeline">Timeline</a></li>
+            <li class="nav-item"><a href="#testimonials">Testimonials</a></li>
+            <li class="nav-item"><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <canvas class="hero-bg" id="hero-bg"></canvas>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span data-text="B.">B.</span>
+                <span data-text="MOHITH">MOHITH</span>
+            </h1>
+            <h2 class="hero-subtitle">
+                <span class="typing-subtitle" id="typing-subtitle"></span>
+            </h2>
+            <p class="hero-description">
+                A passionate technology enthusiast and content creator, running the "CodeandCreate" YouTube & Instagram channel where I share tech tutorials and creative projects. Currently pursuing a Diploma in AIM with expertise in web development, AI/ML, and robotics.
+            </p>
+            <div class="hero-tags">
+                <div class="hero-tag"><i class="fas fa-trophy"></i> National-Level Athlete</div>
+                <div class="hero-tag"><i class="fas fa-laptop-code"></i> Full-Stack Developer</div>
+                <div class="hero-tag"><i class="fas fa-palette"></i> Creative Technologist</div>
+                <div class="hero-tag"><i class="fas fa-video"></i> Content Creator</div>
+            </div>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary"><i class="fas fa-briefcase"></i> View My Work</a>
+                <a href="#shop" class="btn btn-secondary"><i class="fas fa-shopping-bag"></i> Visit Shop</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="bg-effect">
+            <div class="geometric-shape"></div>
+            <div class="geometric-shape"></div>
+            <div class="geometric-shape"></div>
+        </div>
+        <h2 class="section-title fade-in">About Me</h2>
+        <div class="about-container">
+            <div class="about-image fade-in">
+                <div class="about-image-wrapper">
+                    <img src="https://via.placeholder.com/400" alt="B. Mohith">
+                </div>
+            </div>
+            <div class="about-text fade-in">
+                <p>
+                    I'm B. Mohith, a final year Diploma student in the AIM (Artificial Intelligence and Machine Learning) branch, based in Visakhapatnam Steel Plant Area. I completed my schooling at Kendriya Vidyalaya Steel Plant from 2013 to 2023, and I'm set to complete my Diploma in March/April 2026.
+                </p>
+                <p>
+                    My journey has been a unique blend of sports and technology. As a national-level athlete in roller skating and inline hockey, I've learned discipline, perseverance, and teamwork - qualities that I now apply to my tech pursuits.
+                </p>
+                <p>
+                    I'm a certified Full-Stack Developer with expertise in C, Python, JavaScript, MySQL, and various web technologies. Beyond coding, I'm passionate about AI/ML, Arduino robotics, and creative technologies. Through my "CodeandCreate" channel, I share my knowledge and projects with a growing community of tech enthusiasts.
+                </p>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">National Championships</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Tech Projects</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section skills-section" id="skills">
+        <div class="bg-effect">
+            <div class="code-rain" id="code-rain"></div>
+        </div>
+        <h2 class="section-title fade-in">Technical Skills</h2>
+        <div class="skills-container">
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3 class="skill-title">Programming Languages</h3>
+                    <ul class="skill-list">
+                        <li>C Programming <span class="certified-badge">Certified</span></li>
+                        <li>Python <span class="certified-badge">Certified</span></li>
+                        <li>JavaScript (ES6+)</li>
+                        <li>HTML5 & CSS3</li>
+                    </ul>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-globe"></i></div>
+                    <h3 class="skill-title">Web Technologies</h3>
+                    <ul class="skill-list">
+                        <li>Web Technologies <span class="certified-badge">Certified</span></li>
+                        <li>Firebase Hosting & Deployment</li>
+                        <li>Responsive Web Design</li>
+                        <li>GitHub & Version Control</li>
+                    </ul>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="skill-title">Database</h3>
+                    <ul class="skill-list">
+                        <li>MySQL <span class="certified-badge">Certified</span></li>
+                        <li>Database Design</li>
+                        <li>RESTful API concepts</li>
+                    </ul>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                    <h3 class="skill-title">AI & Robotics</h3>
+                    <ul class="skill-list">
+                        <li>Machine Learning Fundamentals</li>
+                        <li>AI Prompt Engineering</li>
+                        <li>Arduino Programming</li>
+                        <li>Robotics & Automation</li>
+                    </ul>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-palette"></i></div>
+                    <h3 class="skill-title">Creative Skills</h3>
+                    <ul class="skill-list">
+                        <li>Digital Art & Painting</li>
+                        <li>Script Writing & Storytelling</li>
+                        <li>Content Creation for Social Media</li>
+                        <li>UI/UX Design Basics</li>
+                    </ul>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon"><i class="fas fa-tools"></i></div>
+                    <h3 class="skill-title">Tools & Platforms</h3>
+                    <ul class="skill-list">
+                        <li>Content Creation (YouTube, Instagram)</li>
+                        <li>Video Editing & Production</li>
+                        <li>Graphic Design Tools</li>
+                        <li>Development Environments</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="section achievements-section" id="achievements">
+        <div class="bg-effect">
+            <div class="confetti-container" id="confetti-container"></div>
+        </div>
+        <h2 class="section-title fade-in">Major Achievements</h2>
+        <div class="achievements-container">
+            <div class="achievements-grid">
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">NATIONAL LEVEL</div>
+                    <div class="achievement-icon">🏆</div>
+                    <h3 class="achievement-title">National Roller Skating Championship</h3>
+                    <p class="achievement-desc">56th National Championships, Visakhapatnam (2018)</p>
+                </div>
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">NATIONAL LEVEL</div>
+                    <div class="achievement-icon">🏒</div>
+                    <h3 class="achievement-title">National Inline Hockey</h3>
+                    <p class="achievement-desc">Certificate of Merit, 56th National Championships</p>
+                </div>
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">DISTRICT LEVEL</div>
+                    <div class="achievement-icon">⛸️</div>
+                    <h3 class="achievement-title">District Roller Skating</h3>
+                    <p class="achievement-desc">Multiple Championships (2017-2018)</p>
+                </div>
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">CERTIFIED</div>
+                    <div class="achievement-icon">📜</div>
+                    <h3 class="achievement-title">DataPro Certifications</h3>
+                    <p class="achievement-desc">C, Python, Web Tech, MySQL - All GOOD Grade</p>
+                </div>
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">REGIONAL</div>
+                    <div class="achievement-icon">🏃</div>
+                    <h3 class="achievement-title">KVS Regional Sports Meet</h3>
+                    <p class="achievement-desc">51st Regional Meet - 500m, Road Events (2022)</p>
+                </div>
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">STATE LEVEL</div>
+                    <div class="achievement-icon">✍️</div>
+                    <h3 class="achievement-title">Essay Writing Competition</h3>
+                    <p class="achievement-desc">Sri Sathya Sai Organization, State Level (2022)</p>
+                </div>
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">COMPETITION</div>
+                    <div class="achievement-icon">🎨</div>
+                    <h3 class="achievement-title">Painting Competition</h3>
+                    <p class="achievement-desc">Winner, Srikrisha Janmashtami (2019)</p>
+                </div>
+                <div class="achievement-card fade-in">
+                    <div class="achievement-badge">CERTIFIED</div>
+                    <div class="achievement-icon">♟️</div>
+                    <h3 class="achievement-title">Chess Academy Training</h3>
+                    <p class="achievement-desc">Certificate, Sri Chess Academy (2021)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects-section" id="projects">
+        <div class="bg-effect">
+            <div class="grid-lines"></div>
+        </div>
+        <h2 class="section-title fade-in">Featured Projects</h2>
+        <div class="projects-container">
+            <div class="projects-grid">
+                <div class="project-card fade-in" data-id="1">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3 class="project-title">CodeandCreate Portfolio</h3>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-desc">Professional website with Firebase hosting, GitHub integration, responsive design, and admin panel for content management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">GitHub</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="viewer.html?id=1" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    </div>
+                </div>
+                <div class="project-card fade-in" data-id="2">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="project-title">Arduino Pet Robot</h3>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-desc">Voice-recognition enabled robot with autonomous navigation and human-following capabilities using Arduino and various sensors.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Arduino</span>
+                            <span class="tech-tag">C/C++</span>
+                            <span class="tech-tag">Sensors</span>
+                            <span class="tech-tag">Robotics</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="viewer.html?id=2" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    </div>
+                </div>
+                <div class="project-card fade-in" data-id="3">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-brain"></i></div>
+                        <h3 class="project-title">AIML Presentation Project</h3>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-desc">Educational content on ML types, AI agents, decision trees, and random forests for learning and teaching purposes.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">AI/ML</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Research</span>
+                            <span class="tech-tag">Education</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="viewer.html?id=3" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    </div>
+                </div>
+                <div class="project-card fade-in" data-id="4">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-pen-fancy"></i></div>
+                        <h3 class="project-title">Creative Writing Projects</h3>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-desc">Anime/movie scripts with original characters, exploring themes of friendship and mythology using creative writing techniques.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Storytelling</span>
+                            <span class="tech-tag">AI Tools</span>
+                            <span class="tech-tag">Creative Writing</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="viewer.html?id=4" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    </div>
+                </div>
+                <div class="project-card fade-in" data-id="5">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <h3 class="project-title">Food Business E-commerce</h3>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-desc">Online store with product catalog, shopping cart, and payment integration for a local food business.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">E-commerce</span>
+                            <span class="tech-tag">Web Design</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="viewer.html?id=5" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    </div>
+                </div>
+                <div class="project-card fade-in" data-id="6">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-school"></i></div>
+                        <h3 class="project-title">KV School Webpage Design</h3>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-desc">Custom design for Kendriya Vidyalaya with school branding, responsive layout, and intuitive navigation.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Web Design</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">Responsive</span>
+                            <span class="tech-tag">UI/UX</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="viewer.html?id=6" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section - New -->
+    <section class="section certificates-section" id="certificates">
+        <div class="bg-effect">
+            <div class="paper-float"></div>
+            <div class="paper-float"></div>
+            <div class="paper-float"></div>
+        </div>
+        <h2 class="section-title fade-in">Certificates</h2>
+        <div class="certificates-container">
+            <div class="certificates-grid">
+                <div class="certificate-card fade-in">
+                    <div class="certificate-image">
+                        <img src="https://via.placeholder.com/400x300" alt="C Programming Certificate">
+                    </div>
+                    <div class="certificate-body">
+                        <h3 class="certificate-title">C Programming</h3>
+                        <p class="certificate-issuer">DataPro</p>
+                        <div class="certificate-date">
+                            <i class="fas fa-calendar-alt"></i> January 2023
+                        </div>
+                    </div>
+                    <div class="certificate-footer">
+                        <a href="#" class="btn btn-primary btn-certificate"><i class="fas fa-eye"></i> View Certificate</a>
+                    </div>
+                </div>
+                <div class="certificate-card fade-in">
+                    <div class="certificate-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Python Certificate">
+                    </div>
+                    <div class="certificate-body">
+                        <h3 class="certificate-title">Python Programming</h3>
+                        <p class="certificate-issuer">DataPro</p>
+                        <div class="certificate-date">
+                            <i class="fas fa-calendar-alt"></i> March 2023
+                        </div>
+                    </div>
+                    <div class="certificate-footer">
+                        <a href="#" class="btn btn-primary btn-certificate"><i class="fas fa-eye"></i> View Certificate</a>
+                    </div>
+                </div>
+                <div class="certificate-card fade-in">
+                    <div class="certificate-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Web Technologies Certificate">
+                    </div>
+                    <div class="certificate-body">
+                        <h3 class="certificate-title">Web Technologies</h3>
+                        <p class="certificate-issuer">DataPro</p>
+                        <div class="certificate-date">
+                            <i class="fas fa-calendar-alt"></i> May 2023
+                        </div>
+                    </div>
+                    <div class="certificate-footer">
+                        <a href="#" class="btn btn-primary btn-certificate"><i class="fas fa-eye"></i> View Certificate</a>
+                    </div>
+                </div>
+                <div class="certificate-card fade-in">
+                    <div class="certificate-image">
+                        <img src="https://via.placeholder.com/400x300" alt="MySQL Certificate">
+                    </div>
+                    <div class="certificate-body">
+                        <h3 class="certificate-title">MySQL Database</h3>
+                        <p class="certificate-issuer">DataPro</p>
+                        <div class="certificate-date">
+                            <i class="fas fa-calendar-alt"></i> July 2023
+                        </div>
+                    </div>
+                    <div class="certificate-footer">
+                        <a href="#" class="btn btn-primary btn-certificate"><i class="fas fa-eye"></i> View Certificate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section - New -->
+    <section class="section shop-section" id="shop">
+        <div class="bg-effect">
+            <div class="shopping-icon" style="top: 10%; left: 10%;"><i class="fas fa-shopping-cart"></i></div>
+            <div class="shopping-icon" style="top: 30%; left: 80%;"><i class="fas fa-box"></i></div>
+            <div class="shopping-icon" style="top: 70%; left: 30%;"><i class="fas fa-tag"></i></div>
+            <div class="shopping-icon" style="top: 50%; left: 60%;"><i class="fas fa-gift"></i></div>
+        </div>
+        <h2 class="section-title fade-in">Shop</h2>
+        <div class="shop-container">
+            <div class="shop-intro fade-in">
+                <p>Visit my e-commerce store for tech products, digital resources, and merchandise. I've curated a collection of items that align with my passion for technology and creativity.</p>
+                <a href="https://your-ecommerce-site.com" target="_blank" class="shop-cta"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+            </div>
+            
+            <div class="shop-features">
+                <div class="shop-feature fade-in">
+                    <div class="shop-feature-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="shop-feature-title">Tech Products</h3>
+                    <p class="shop-feature-desc">Arduino kits, sensors, and other tech components for your projects.</p>
+                </div>
+                <div class="shop-feature fade-in">
+                    <div class="shop-feature-icon"><i class="fas fa-book"></i></div>
+                    <h3 class="shop-feature-title">Digital Resources</h3>
+                    <p class="shop-feature-desc">E-books, courses, and templates to boost your learning journey.</p>
+                </div>
+                <div class="shop-feature fade-in">
+                    <div class="shop-feature-icon"><i class="fas fa-tshirt"></i></div>
+                    <h3 class="shop-feature-title">Merchandise</h3>
+                    <p class="shop-feature-desc">CodeandCreate branded apparel and accessories for tech enthusiasts.</p>
+                </div>
+                <div class="shop-feature fade-in">
+                    <div class="shop-feature-icon"><i class="fas fa-palette"></i></div>
+                    <h3 class="shop-feature-title">Creative Tools</h3>
+                    <p class="shop-feature-desc">Digital art resources and creative software for your projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section - New -->
+    <section class="section timeline-section" id="timeline">
+        <div class="bg-effect">
+            <div class="timeline-line"></div>
+        </div>
+        <h2 class="section-title fade-in">My Journey</h2>
+        <div class="timeline-container">
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2013 - 2023</div>
+                    <h3 class="timeline-title">Schooling at Kendriya Vidyalaya</h3>
+                    <p class="timeline-description">Completed my schooling at Kendriya Vidyalaya Steel Plant, where I developed my foundation in academics and sports.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2017 - 2018</div>
+                    <h3 class="timeline-title">District Roller Skating Champion</h3>
+                    <p class="timeline-description">Won multiple district-level roller skating championships and qualified for national competitions.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2018</div>
+                    <h3 class="timeline-title">56th National Roller Skating Championship</h3>
+                    <p class="timeline-description">Participated in the 56th National Roller Skating Championship held in Visakhapatnam.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2023</div>
+                    <h3 class="timeline-title">Started Diploma in AIM</h3>
+                    <p class="timeline-description">Enrolled in Diploma program in Artificial Intelligence and Machine Learning at Government Polytechnic, Visakhapatnam.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2023</div>
+                    <h3 class="timeline-title">Launched CodeandCreate Channel</h3>
+                    <p class="timeline-description">Started my YouTube and Instagram channel "CodeandCreate" to share tech tutorials and creative projects.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2023 - Present</div>
+                    <h3 class="timeline-title">Multiple Tech Certifications</h3>
+                    <p class="timeline-description">Earned certifications in C, Python, Web Technologies, and MySQL from DataPro with GOOD grade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section - New -->
+    <section class="section testimonials-section" id="testimonials">
+        <div class="bg-effect">
+            <div class="quote-mark" style="top: 10%; left: 10%;">"</div>
+            <div class="quote-mark" style="top: 60%; left: 80%;">"</div>
+            <div class="quote-mark" style="top: 30%; left: 50%;">"</div>
+        </div>
+        <h2 class="section-title fade-in">Testimonials</h2>
+        <div class="testimonials-container">
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-quote">"Mohith is an exceptional student with a unique blend of technical skills and creative abilities. His projects demonstrate a deep understanding of modern web technologies and a passion for innovation."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <img src="https://via.placeholder.com/100" alt="Dr. Ramesh Kumar">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4 class="testimonial-name">Dr. Ramesh Kumar</h4>
+                            <p class="testimonial-position">Professor, Computer Science</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-quote">"As a national-level athlete, Mohith brings discipline and perseverance to his technical work. His Arduino robot project was impressive, showcasing both technical skill and creative problem-solving."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <img src="https://via.placeholder.com/100" alt="Priya Sharma">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4 class="testimonial-name">Priya Sharma</h4>
+                            <p class="testimonial-position">Robotics Instructor</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <p class="testimonial-quote">"Mohith's CodeandCreate channel is a valuable resource for students interested in technology. His tutorials are clear, engaging, and demonstrate a deep understanding of the subject matter."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <img src="https://via.placeholder.com/100" alt="Ankit Patel">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4 class="testimonial-name">Ankit Patel</h4>
+                            <p class="testimonial-position">Content Creator, TechTube</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact">
+        <div class="bg-effect">
+            <div class="envelope-icon" style="top: 10%; left: 10%;"><i class="fas fa-envelope"></i></div>
+            <div class="envelope-icon" style="top: 60%; left: 80%;"><i class="fas fa-paper-plane"></i></div>
+            <div class="envelope-icon" style="top: 30%; left: 50%;"><i class="fas fa-comment"></i></div>
+        </div>
+        <h2 class="section-title fade-in">Get In Touch</h2>
+        <div class="contact-container">
+            <form class="contact-form fade-in" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+            </form>
+            <div class="social-links fade-in">
+                <a href="https://github.com/mohithbatchala" class="social-link github" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/mohithbatchala" class="social-link linkedin" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:mohithbatchala21@gmail.com" class="social-link email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://youtube.com/@CodeandCreate" class="social-link youtube" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://instagram.com/codeandcreate" class="social-link instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com/mohithbatchala" class="social-link twitter" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">B. MOHITH</div>
+            <p class="footer-description">
+                A passionate technology enthusiast and content creator, running the "CodeandCreate" YouTube & Instagram channel where I share tech tutorials and creative projects. Currently pursuing a Diploma in AIM with expertise in web development, AI/ML, and robotics.
+            </p>
+            <div class="footer-social">
+                <a href="https://github.com/mohithbatchala" class="footer-social-link github" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/mohithbatchala" class="footer-social-link linkedin" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:mohithbatchala21@gmail.com" class="footer-social-link email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://youtube.com/@CodeandCreate" class="footer-social-link youtube" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://instagram.com/codeandcreate" class="footer-social-link instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com/mohithbatchala" class="footer-social-link twitter" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="#about" class="footer-link">About</a>
+                <a href="#skills" class="footer-link">Skills</a>
+                <a href="#projects" class="footer-link">Projects</a>
+                <a href="#contact" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2025 B. Mohith. All rights reserved. | Built with passion and code 💻</p>
+                <p>From Kendriya Vidyalaya Steel Plant to National Championships to Tech Innovation</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Add hover effect to links and buttons
+        const hoverElements = document.querySelectorAll('a, button, .btn, .skill-card, .achievement-card, .project-card, .certificate-card, .testimonial-card, .timeline-content, .stat-card, .hero-tag, .social-link, .shop-feature, .footer-social-link');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                cursorFollower.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                cursorFollower.classList.remove('hover');
+            });
+        });
+
+        // Improved Preloader with percentage
+        const progressBar = document.getElementById('progress');
+        const progressPercentage = document.getElementById('progress-percentage');
+        let progress = 0;
+        
+        const updateProgress = () => {
+            progress += Math.random() * 15; // Random increment for more natural loading
+            if (progress > 100) progress = 100;
+            
+            progressBar.style.width = progress + '%';
+            progressPercentage.textContent = Math.floor(progress) + '%';
+            
+            if (progress < 100) {
+                setTimeout(updateProgress, 200);
+            } else {
+                // Hide preloader after progress completes
+                setTimeout(() => {
+                    const preloader = document.getElementById('preloader');
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 800);
+                }, 500);
+            }
+        };
+        
+        // Start progress after a short delay
+        setTimeout(updateProgress, 500);
+
+        // Hero Background Animation
+        const canvas = document.getElementById('hero-bg');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size to window size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Particle system for hero background
+        const particles = [];
+        const particleCount = 100;
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = Math.random() > 0.5 ? '#ff2a6d' : '#05d9e8';
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                else if (this.x < 0) this.x = canvas.width;
+                
+                if (this.y > canvas.height) this.y = 0;
+                else if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        
+        // Animation loop
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+
+        // Code Rain Effect for Skills Section
+        const codeRain = document.getElementById('code-rain');
+        const codeChars = '01';
+        const codeColumns = Math.floor(window.innerWidth / 20);
+        const codeDrops = [];
+        
+        for (let i = 0; i < codeColumns; i++) {
+            codeDrops[i] = 1;
+        }
+        
+        function drawCodeRain() {
+            codeRain.innerHTML = '';
+            
+            for (let i = 0; i < codeColumns; i++) {
+                if (codeDrops[i] * 20 > window.innerHeight && Math.random() > 0.975) {
+                    codeDrops[i] = 0;
+                }
+                
+                codeDrops[i]++;
+                
+                const codeChar = document.createElement('span');
+                codeChar.textContent = codeChars[Math.floor(Math.random() * codeChars.length)];
+                codeChar.style.left = i * 20 + 'px';
+                codeChar.style.top = codeDrops[i] * 20 + 'px';
+                codeChar.style.animationDuration = Math.random() * 5 + 5 + 's';
+                
+                codeRain.appendChild(codeChar);
+            }
+        }
+        
+        setInterval(drawCodeRain, 100);
+
+        // Confetti Effect for Achievements Section
+        const confettiContainer = document.getElementById('confetti-container');
+        const confettiColors = ['#ff2a6d', '#05d9e8', '#d1f7ff', '#ff5e3a', '#0056d3'];
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+            confetti.style.opacity = Math.random() * 0.5 + 0.5;
+            
+            confettiContainer.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+        
+        setInterval(createConfetti, 300);
+
+        // Typing Animation for Hero Subtitle
+        const typingSubtitle = document.getElementById('typing-subtitle');
+        const subtitleTexts = [
+            "Hi, I am Mohith",
+            "Full-Stack Developer",
+            "Content Creator",
+            "AI/ML Enthusiast"
+        ];
+        let textIndex = 0;
+        let charIndexSubtitle = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        let deletingSpeed = 50;
+        let pauseTime = 2000;
+
+        function typeSubtitle() {
+            const currentText = subtitleTexts[textIndex];
+            
+            if (isDeleting) {
+                typingSubtitle.textContent = currentText.substring(0, charIndexSubtitle - 1);
+                charIndexSubtitle--;
+                
+                if (charIndexSubtitle === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % subtitleTexts.length;
+                    setTimeout(typeSubtitle, 500);
+                } else {
+                    setTimeout(typeSubtitle, deletingSpeed);
+                }
+            } else {
+                typingSubtitle.textContent = currentText.substring(0, charIndexSubtitle + 1);
+                charIndexSubtitle++;
+                
+                if (charIndexSubtitle === currentText.length) {
+                    isDeleting = true;
+                    setTimeout(typeSubtitle, pauseTime);
+                } else {
+                    setTimeout(typeSubtitle, typingSpeed);
+                }
+            }
+        }
+
+        // Start typing animation for subtitle after preloader
+        setTimeout(() => {
+            typeSubtitle();
+        }, 4500);
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would normally send the form data to a server
+            // For this example, we'll just show a success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--gradient-1);
+                color: white;
+                padding: 2rem 3rem;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                text-align: center;
+                font-weight: 600;
+                animation: fadeIn 0.3s ease;
+            `;
+            successMessage.innerHTML = `
+                <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                Thank you, ${name}! Your message has been sent successfully.
+            `;
+            
+            document.body.appendChild(successMessage);
+            
+            // Remove success message after 3 seconds
+            setTimeout(() => {
+                successMessage.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(successMessage);
+                }, 300);
+            }, 3000);
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // Fade-in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
