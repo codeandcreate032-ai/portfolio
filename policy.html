@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - B. Mohith</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=Roboto+Mono:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(5, 217, 232, 0.1);
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.3s ease;
+        }
+        
+        .cursor.hover {
+            transform: scale(0.5);
+        }
+        
+        .cursor-follower.hover {
+            transform: scale(1.5);
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        body {
+            background-color: #0a0a14;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Canvas Background */
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Background Effects */
+        .bg-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .geometric-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 42, 109, 0.1), rgba(5, 217, 232, 0.1));
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .geometric-shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .geometric-shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 2s;
+        }
+        
+        .geometric-shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 30%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+        
+        /* Code Rain Effect */
+        .code-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .code-rain span {
+            position: absolute;
+            color: rgba(5, 217, 232, 0.3);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px));
+                opacity: 0;
+            }
+        }
+        
+        .policy-container {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 30px;
+            background: rgba(10, 10, 20, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .policy-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 42, 109, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(5, 217, 232, 0.5);
+            }
+        }
+        
+        .policy-section {
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .policy-section:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .policy-section:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .policy-section:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+        
+        .policy-section:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+        
+        .policy-section:nth-child(6) {
+            animation-delay: 1s;
+        }
+        
+        .policy-section:nth-child(7) {
+            animation-delay: 1.2s;
+        }
+        
+        .policy-section:nth-child(8) {
+            animation-delay: 1.4s;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .policy-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #05d9e8;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .policy-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+        }
+        
+        .policy-section p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .policy-section ul {
+            padding-left: 20px;
+        }
+        
+        .policy-section li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 5px;
+        }
+        
+        .policy-section li::before {
+            content: '▶';
+            position: absolute;
+            left: -15px;
+            color: #ff2a6d;
+            font-size: 0.8rem;
+        }
+        
+        .copyright-notice {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 42, 109, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #ff2a6d;
+            text-align: center;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 42, 109, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 42, 109, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 42, 109, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Canvas Background -->
+    <canvas class="hero-bg" id="hero-bg"></canvas>
+    
+    <!-- Background Effects -->
+    <div class="bg-effect">
+        <div class="geometric-shape"></div>
+        <div class="geometric-shape"></div>
+        <div class="geometric-shape"></div>
+        <div class="code-rain" id="code-rain"></div>
+    </div>
+
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i> Back
+    </button>
+
+    <div class="policy-container">
+        <h1 class="policy-title">Terms of Service</h1>
+        
+        <div class="policy-section">
+            <h3>Acceptance of Terms</h3>
+            <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. In addition, when using this website's particular services, you shall be subject to any posted guidelines or rules applicable to such services.</p>
+            <p>Any participation in this service will constitute acceptance of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Use License</h3>
+            <p>Permission is granted to temporarily download one copy of the materials on B. Mohith's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+            <ul>
+                <li>Modify or copy the materials;</li>
+                <li>Use the materials for any commercial purpose or for any public display;</li>
+                <li>Attempt to reverse engineer any software contained on B. Mohith's website;</li>
+                <li>Remove any copyright or other proprietary notations from the materials; or</li>
+                <li>Transfer the materials to another person or "mirror" the materials on any other server.</li>
+            </ul>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Disclaimer</h3>
+            <p>The materials on B. Mohith's website are provided on an 'as is' basis. B. Mohith makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+            <p>Further, B. Mohith does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its website or otherwise relating to such materials or on any sites linked to this site.</p>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Limitations</h3>
+            <p>In no event shall B. Mohith or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on B. Mohith's website, even if B. Mohith or a B. Mohith authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Accuracy of Materials</h3>
+            <p>The materials appearing on B. Mohith's website could include technical, typographical, or photographic errors. B. Mohith does not warrant that any of the materials on its website are accurate, complete, or current. B. Mohith may make changes to the materials contained on its website at any time without notice. However, B. Mohith does not make any commitment to update the materials.</p>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Links</h3>
+            <p>B. Mohith has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by B. Mohith of the site. Use of any such linked website is at the user's own risk.</p>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Modifications</h3>
+            <p>B. Mohith may revise these terms of service for its website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Governing Law</h3>
+            <p>These terms and conditions are governed by and construed in accordance with the laws of India and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.</p>
+        </div>
+        
+        <div class="policy-section">
+            <h3>Contact Information</h3>
+            <p>If you have any questions about these terms of service, please contact me at:</p>
+            <p>Email: mohithbatchala21@gmail.com</p>
+        </div>
+        
+        <div class="copyright-notice">
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>Strict Copyright Notice:</strong> All content on this website, including text, graphics, logos, and images, is the property of B. Mohith and is protected by copyright laws. Unauthorized use, reproduction, or distribution of any material from this website is strictly prohibited without prior written permission.</p>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Add hover effect to links and buttons
+        const hoverElements = document.querySelectorAll('a, button, .back-button');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                cursorFollower.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                cursorFollower.classList.remove('hover');
+            });
+        });
+
+        // Canvas Background Animation (same as hero section)
+        const canvas = document.getElementById('hero-bg');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size to window size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Particle system for background
+        const particles = [];
+        const particleCount = 100;
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = Math.random() > 0.5 ? '#ff2a6d' : '#05d9e8';
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                else if (this.x < 0) this.x = canvas.width;
+                
+                if (this.y > canvas.height) this.y = 0;
+                else if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        
+        // Animation loop
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+
+        // Code Rain Effect (same as skills section)
+        const codeRain = document.getElementById('code-rain');
+        const codeChars = '01';
+        const codeColumns = Math.floor(window.innerWidth / 20);
+        const codeDrops = [];
+        
+        for (let i = 0; i < codeColumns; i++) {
+            codeDrops[i] = 1;
+        }
+        
+        function drawCodeRain() {
+            codeRain.innerHTML = '';
+            
+            for (let i = 0; i < codeColumns; i++) {
+                if (codeDrops[i] * 20 > window.innerHeight && Math.random() > 0.975) {
+                    codeDrops[i] = 0;
+                }
+                
+                codeDrops[i]++;
+                
+                const codeChar = document.createElement('span');
+                codeChar.textContent = codeChars[Math.floor(Math.random() * codeChars.length)];
+                codeChar.style.left = i * 20 + 'px';
+                codeChar.style.top = codeDrops[i] * 20 + 'px';
+                codeChar.style.animationDuration = Math.random() * 5 + 5 + 's';
+                
+                codeRain.appendChild(codeChar);
+            }
+        }
+        
+        setInterval(drawCodeRain, 100);
+    </script>
+</body>
+</html>

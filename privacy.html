@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - B. Mohith</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=Roboto+Mono:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(5, 217, 232, 0.1);
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.3s ease;
+        }
+        
+        .cursor.hover {
+            transform: scale(0.5);
+        }
+        
+        .cursor-follower.hover {
+            transform: scale(1.5);
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        body {
+            background-color: #0a0a14;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Canvas Background */
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Background Effects */
+        .bg-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .geometric-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 42, 109, 0.1), rgba(5, 217, 232, 0.1));
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .geometric-shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .geometric-shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 2s;
+        }
+        
+        .geometric-shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 30%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+        
+        /* Code Rain Effect */
+        .code-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .code-rain span {
+            position: absolute;
+            color: rgba(5, 217, 232, 0.3);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px));
+                opacity: 0;
+            }
+        }
+        
+        .privacy-container {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 30px;
+            background: rgba(10, 10, 20, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .privacy-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 42, 109, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(5, 217, 232, 0.5);
+            }
+        }
+        
+        .privacy-section {
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .privacy-section:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .privacy-section:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .privacy-section:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+        
+        .privacy-section:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+        
+        .privacy-section:nth-child(6) {
+            animation-delay: 1s;
+        }
+        
+        .privacy-section:nth-child(7) {
+            animation-delay: 1.2s;
+        }
+        
+        .privacy-section:nth-child(8) {
+            animation-delay: 1.4s;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .privacy-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #05d9e8;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .privacy-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+        }
+        
+        .privacy-section p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .privacy-section ul {
+            padding-left: 20px;
+        }
+        
+        .privacy-section li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 5px;
+        }
+        
+        .privacy-section li::before {
+            content: '▶';
+            position: absolute;
+            left: -15px;
+            color: #ff2a6d;
+            font-size: 0.8rem;
+        }
+        
+        .copyright-notice {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 42, 109, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #ff2a6d;
+            text-align: center;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 42, 109, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 42, 109, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 42, 109, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Canvas Background -->
+    <canvas class="hero-bg" id="hero-bg"></canvas>
+    
+    <!-- Background Effects -->
+    <div class="bg-effect">
+        <div class="geometric-shape"></div>
+        <div class="geometric-shape"></div>
+        <div class="geometric-shape"></div>
+        <div class="code-rain" id="code-rain"></div>
+    </div>
+
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i> Back
+    </button>
+
+    <div class="privacy-container">
+        <h1 class="privacy-title">Privacy Policy</h1>
+        
+        <div class="privacy-section">
+            <h3>Information We Collect</h3>
+            <p>When you visit my website or contact me through the contact form, I may collect certain information to provide you with the best experience:</p>
+            <ul>
+                <li><strong>Personal Information:</strong> Name, email address, and any other information you voluntarily provide through the contact form.</li>
+                <li><strong>Usage Data:</strong> Information about how you access and use my website, including your IP address, browser type, and pages visited.</li>
+                <li><strong>Cookies:</strong> My website may use cookies to enhance your user experience and track website performance.</li>
+            </ul>
+        </div>
+        
+        <div class="privacy-section">
+            <h3>How We Use Your Information</h3>
+            <p>I use the information I collect for various purposes, including:</p>
+            <ul>
+                <li>To respond to your inquiries and provide customer support.</li>
+                <li>To improve my website and services based on your feedback.</li>
+                <li>To communicate with you about updates, events, or opportunities that may interest you.</li>
+                <li>To monitor and analyze the usage of my website.</li>
+            </ul>
+        </div>
+        
+        <div class="privacy-section">
+            <h3>Information Sharing</h3>
+            <p>I do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except in the following circumstances:</p>
+            <ul>
+                <li>When required by law or to comply with legal processes.</li>
+                <li>To protect and defend the rights or property of my website.</li>
+                <li>To prevent or investigate possible wrongdoing in connection with my website.</li>
+            </ul>
+        </div>
+        
+        <div class="privacy-section">
+            <h3>Data Security</h3>
+            <p>I implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or method of electronic storage is 100% secure.</p>
+        </div>
+        
+        <div class="privacy-section">
+            <h3>Your Rights</h3>
+            <p>You have certain rights regarding your personal information, including:</p>
+            <ul>
+                <li>The right to access, update, or delete the information I have about you.</li>
+                <li>The right to object to the processing of your personal information.</li>
+                <li>The right to data portability.</li>
+            </ul>
+            <p>If you would like to exercise any of these rights, please contact me at mohithbatchala21@gmail.com.</p>
+        </div>
+        
+        <div class="privacy-section">
+            <h3>Children's Privacy</h3>
+            <p>My website is not intended for children under the age of 13. I do not knowingly collect personally identifiable information from children under 13. If I become aware that I have inadvertently collected such information, I will take steps to delete it immediately.</p>
+        </div>
+        
+        <div class="privacy-section">
+            <h3>Changes to This Privacy Policy</h3>
+            <p>I may update this privacy policy from time to time. The updated version will be indicated by a revised "Last Updated" date and the updated version will be effective as soon as it is accessible.</p>
+        </div>
+        
+        <div class="privacy-section">
+            <h3>Contact Information</h3>
+            <p>If you have any questions about this privacy policy, please contact me at:</p>
+            <p>Email: mohithbatchala21@gmail.com</p>
+        </div>
+        
+        <div class="copyright-notice">
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>Strict Copyright Notice:</strong> All content on this website, including text, graphics, logos, and images, is the property of B. Mohith and is protected by copyright laws. Unauthorized use, reproduction, or distribution of any material from this website is strictly prohibited without prior written permission.</p>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Add hover effect to links and buttons
+        const hoverElements = document.querySelectorAll('a, button, .back-button');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                cursorFollower.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                cursorFollower.classList.remove('hover');
+            });
+        });
+
+        // Canvas Background Animation (same as hero section)
+        const canvas = document.getElementById('hero-bg');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size to window size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Particle system for background
+        const particles = [];
+        const particleCount = 100;
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = Math.random() > 0.5 ? '#ff2a6d' : '#05d9e8';
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                else if (this.x < 0) this.x = canvas.width;
+                
+                if (this.y > canvas.height) this.y = 0;
+                else if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        
+        // Animation loop
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+
+        // Code Rain Effect (same as skills section)
+        const codeRain = document.getElementById('code-rain');
+        const codeChars = '01';
+        const codeColumns = Math.floor(window.innerWidth / 20);
+        const codeDrops = [];
+        
+        for (let i = 0; i < codeColumns; i++) {
+            codeDrops[i] = 1;
+        }
+        
+        function drawCodeRain() {
+            codeRain.innerHTML = '';
+            
+            for (let i = 0; i < codeColumns; i++) {
+                if (codeDrops[i] * 20 > window.innerHeight && Math.random() > 0.975) {
+                    codeDrops[i] = 0;
+                }
+                
+                codeDrops[i]++;
+                
+                const codeChar = document.createElement('span');
+                codeChar.textContent = codeChars[Math.floor(Math.random() * codeChars.length)];
+                codeChar.style.left = i * 20 + 'px';
+                codeChar.style.top = codeDrops[i] * 20 + 'px';
+                codeChar.style.animationDuration = Math.random() * 5 + 5 + 's';
+                
+                codeRain.appendChild(codeChar);
+            }
+        }
+        
+        setInterval(drawCodeRain, 100);
+    </script>
+</body>
+</html>
