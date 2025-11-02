@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B. Mohith | TECH HERO</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Add this CSS to hide the admin link initially */
+.admin-hidden {
+    display: none !important;
+}
+
+/* Add this CSS to make the admin link visible when shown */
+.admin-visible {
+    display: flex !important;
+}
+        :root {
+            /* Comic Book Color Scheme */
+            --primary: #FF3C41;
+            --secondary: #0099FF;
+            --accent: #FFD700;
+            --background: #FFF;
+            --text: #000;
+            --text-light: #FFF;
+            --panel-bg: #F8F8F8;
+            --border-color: #000;
+            --shadow-color: rgba(0,0,0,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(circle, #000 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        /* Comic Book Halftone Pattern */
+        .halftone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 4px 4px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        .loader-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .loader-bang {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: var(--text-light);
+            text-shadow: 3px 3px 0 var(--secondary), 6px 6px 0 var(--accent);
+            animation: bounce 0.5s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Admin Link */
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 0 3px var(--border-color);
+            transition: all 0.3s ease;
+            z-index: 999;
+            color: var(--text-light);
+            text-decoration: none;
+            border: 2px dashed var(--accent);
+        }
+
+        .admin-link:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary);
+            border-bottom: 4px solid var(--border-color);
+            z-index: 1000;
+            box-shadow: 0 4px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 700;
+            color: var(--text-light);
+            text-shadow: 2px 2px 0 var(--border-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            position: relative;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            padding: 5px 10px;
+            border: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+            border: 2px solid var(--border-color);
+            background-color: var(--text-light);
+        }
+
+        .theme-toggle {
+            background: var(--secondary);
+            border: 3px solid var(--border-color);
+            color: var(--text-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            box-shadow: 0 3px 0 var(--shadow-color);
+            order: 2; /* Make theme toggle appear last */
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        .theme-toggle:active {
+            transform: translateY(0);
+            box-shadow: 0 0 0 var(--shadow-color);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            order: 1;
+        }
+
+        /* Home Section */
+        .home {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 20px;
+            background: linear-gradient(135deg, #FFE0E2 0%, #E0F0FF 100%);
+            border-bottom: 8px solid var(--border-color);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: clamp(20px, 5vw, 50px);
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            background: var(--panel-bg);
+            padding: 30px;
+            border: 5px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 10px 10px 0 var(--shadow-color);
+            position: relative;
+        }
+
+        .hero-text::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            text-shadow: 3px 3px 0 var(--border-color);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 30px;
+            color: var(--text);
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .comic-button {
+            padding: 12px 25px;
+            background: var(--secondary);
+            border: 3px solid var(--border-color);
+            color: var(--text-light);
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            box-shadow: 0 4px 0 var(--shadow-color);
+            text-transform: uppercase;
+        }
+
+        .comic-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 0 var(--shadow-color);
+        }
+
+        .comic-button:active {
+            transform: translateY(0);
+            box-shadow: 0 0 0 var(--shadow-color);
+        }
+
+        .mascot {
+            flex: 0 0 clamp(200px, 40vw, 300px);
+            height: clamp(200px, 40vw, 300px);
+            background-image: url("image\mohith2.png");
+            background-position: center;
+            background-size: cover;
+            border-radius: 50%;
+            border: 5px solid var(--border-color);
+            box-shadow: 0 0 0 5px var(--accent), 10px 10px 0 var(--shadow-color);
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .mascot::after {
+            content: 'POW!';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            color: var(--primary);
+            transform: rotate(15deg);
+            text-shadow: 2px 2px 0 var(--border-color);
+            animation: pulse 1s ease infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: rotate(15deg) scale(1); }
+            to { transform: rotate(15deg) scale(1.1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Comic Book Sound Effects */
+        .sound-effect {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            text-shadow: 2px 2px 0 var(--border-color);
+            z-index: 1;
+            opacity: 0.8;
+            animation: wiggle 3s ease infinite;
+        }
+
+        .effect-1 {
+            top: 20%;
+            left: 10%;
+            font-size: clamp(2rem, 5vw, 3rem);
+            transform: rotate(-15deg);
+            color: var(--secondary);
+        }
+
+        .effect-2 {
+            top: 60%;
+            right: 15%;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            transform: rotate(10deg);
+            color: var(--accent);
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-15deg) scale(1); }
+            50% { transform: rotate(-10deg) scale(1.05); }
+        }
+
+        /* About Section */
+        .about {
+            padding: clamp(60px, 10vw, 100px) 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 var(--border-color);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 5px;
+            background: repeating-linear-gradient(90deg, var(--border-color), var(--border-color) 10px, var(--accent) 10px, var(--accent) 20px);
+        }
+
+        .about-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            line-height: 1.6;
+            padding: 25px;
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            position: relative;
+        }
+
+        .about-text::before {
+            content: 'BAM!';
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            color: var(--secondary);
+            transform: rotate(10deg);
+            text-shadow: 2px 2px 0 var(--border-color);
+        }
+
+        .roles-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .roles-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .roles-list li i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .superpowers {
+            flex: 1;
+            min-width: 300px;
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            position: relative;
+        }
+
+        .superpowers::before {
+            content: 'SUPER POWERS';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            color: var(--accent);
+            text-shadow: 2px 2px 0 var(--border-color);
+            white-space: nowrap;
+        }
+
+        .power-item {
+            margin-bottom: 25px;
+        }
+
+        .power-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            text-transform: uppercase;
+        }
+
+        .power-bar-container {
+            height: 25px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, var(--border-color) 5px, var(--border-color) 10px);
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .power-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0;
+            transition: width 1.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .power-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(255,255,255,0.3) 5px, rgba(255,255,255,0.3) 10px);
+        }
+
+        /* Filmography Section */
+        .filmography {
+            padding: clamp(60px, 10vw, 100px) 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #E0F0FF 0%, #FFE0E2 100%);
+            border-top: 8px solid var(--border-color);
+            border-bottom: 8px solid var(--border-color);
+        }
+
+        .film-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .film-card {
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+            position: relative;
+            transform: rotate(-1deg);
+        }
+
+        .film-card:nth-child(even) {
+            transform: rotate(1deg);
+        }
+
+        .film-card:hover {
+            transform: rotate(0) scale(1.03);
+            box-shadow: 12px 12px 0 var(--shadow-color);
+        }
+
+        .film-poster {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--border-color);
+        }
+
+        .film-content {
+            padding: 20px;
+        }
+
+        .film-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .film-description {
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .film-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .film-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .film-btn {
+            padding: 8px 15px;
+            background: var(--secondary);
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            text-transform: uppercase;
+        }
+
+        .film-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: clamp(60px, 10vw, 100px) 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background: var(--panel-bg);
+            border: 3px solid var(--border-color);
+            color: var(--text);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            box-shadow: 0 4px 0 var(--shadow-color);
+            text-transform: uppercase;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: var(--primary);
+            color: var(--text-light);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 var(--shadow-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 12px 18px 0 var(--shadow-color);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--border-color);
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-description {
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            padding: 5px 12px;
+            background: var(--secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-light);
+            box-shadow: 0 3px 0 var(--shadow-color);
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .project-btn {
+            padding: 8px 15px;
+            background: var(--secondary);
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            text-transform: uppercase;
+        }
+
+        .project-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: clamp(60px, 10vw, 100px) 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #FFE0E2 0%, #E0F0FF 100%);
+            border-top: 8px solid var(--border-color);
+        }
+
+        .contact-form {
+            background: var(--panel-bg);
+            border: 5px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 10px 10px 0 var(--shadow-color);
+            position: relative;
+        }
+
+        .contact-form::before {
+            content: 'CONTACT HQ';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--primary);
+            text-shadow: 2px 2px 0 var(--border-color);
+            white-space: nowrap;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--background);
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text);
+            transition: all 0.3s ease;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: inset 0 2px 0 var(--shadow-color);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: inset 0 2px 0 var(--shadow-color), 0 0 0 3px rgba(0, 153, 255, 0.3);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .contact-item {
+            text-align: center;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 0 var(--shadow-color);
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) rotate(15deg);
+            box-shadow: 0 8px 0 var(--shadow-color);
+        }
+
+        /* Chat Bot */
+        .chat-bot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .chat-bot:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .chat-bot i {
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        /* Chat Window */
+        .chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 0 var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .chat-window.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .chat-header {
+            background: var(--accent);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--border-color);
+        }
+
+        .chat-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            color: var(--text);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-close {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chat-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 10px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bot-avatar {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        .user-avatar {
+            background: var(--secondary);
+            color: var(--text-light);
+        }
+
+        .message-content {
+            background: var(--background);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 12px;
+            position: relative;
+            box-shadow: 0 3px 0 var(--shadow-color);
+        }
+
+        .bot-message .message-content {
+            border-top-left-radius: 5px;
+        }
+
+        .user-message .message-content {
+            border-top-right-radius: 5px;
+            background: var(--secondary);
+            color: var(--text-light);
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 12px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .chat-input {
+            padding: 15px;
+            border-top: 3px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        .chat-input button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Quick Replies */
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .quick-reply {
+            padding: 6px 12px;
+            background: var(--secondary);
+            color: var(--text-light);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .quick-reply:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-light);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 0 var(--shadow-color);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 0 var(--shadow-color);
+        }
+
+        /* Timeline Section */
+        .timeline {
+            padding: clamp(60px, 10vw, 100px) 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 6px;
+            height: 100%;
+            background: var(--primary);
+            transform: translateX(-50%);
+            border: 2px solid var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 40px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 40px;
+        }
+
+        .timeline-content {
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 20px solid var(--border-color);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 20px solid var(--border-color);
+        }
+
+        .timeline-date {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: var(--secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .timeline-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .timeline-description {
+            font-weight: 700;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            top: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-icon {
+            right: -20px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-icon {
+            left: -20px;
+        }
+
+        /* Achievements Section */
+        .achievements {
+            padding: clamp(60px, 10vw, 100px) 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #E0F0FF 0%, #FFE0E2 100%);
+            border-top: 8px solid var(--border-color);
+            border-bottom: 8px solid var(--border-color);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .achievement-card {
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 12px 18px 0 var(--shadow-color);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .achievement-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            color: var(--secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .achievement-description {
+            font-weight: 700;
+        }
+
+        /* OTT Section */
+        .ott-section {
+            padding: clamp(60px, 10vw, 100px) 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ott-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .ott-info {
+            flex: 1;
+            min-width: 300px;
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            position: relative;
+        }
+
+        .ott-info::before {
+            content: 'CODE & CREATE OTT';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--primary);
+            text-shadow: 2px 2px 0 var(--border-color);
+            white-space: nowrap;
+        }
+
+        .ott-features {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .ott-features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .ott-features li i {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .ott-preview {
+            flex: 1;
+            min-width: 300px;
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            position: relative;
+        }
+
+        .ott-preview iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-bottom: 4px solid var(--border-color);
+        }
+
+        .ott-preview-content {
+            padding: 20px;
+        }
+
+        .ott-preview-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .ott-preview-description {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .ott-preview-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 5px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .mascot {
+                flex: none;
+                width: 250px;
+                height: 250px;
+            }
+            
+            .chat-window {
+                width: 300px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                border-top: 4px solid var(--border-color);
+                box-shadow: 0 4px 0 var(--shadow-color);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .theme-toggle {
+                order: 1;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                display: none;
+            }
+
+            .timeline-icon {
+                left: 10px !important;
+                right: auto !important;
+            }
+            
+            .admin-link {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .chat-bot {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .chat-window {
+                width: 280px;
+                height: 350px;
+                right: 10px;
+                bottom: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .theme-toggle {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .hero-text {
+                padding: 20px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .comic-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .about-text, .superpowers {
+                padding: 15px;
+            }
+            
+            .film-grid, .projects-grid, .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-link {
+                bottom: 10px;
+                left: 10px;
+                width: 35px;
+                height: 35px;
+            }
+            
+            .chat-bot {
+                bottom: 10px;
+                right: 10px;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .back-to-top {
+                bottom: 65px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+            }
+            
+            .chat-window {
+                width: 250px;
+                height: 300px;
+                right: 5px;
+                bottom: 60px;
+            }
+        }
+
+        /* Dark Theme */
+        body.dark-theme {
+            background-color: #222;
+            color: #eee;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        body.dark-theme .navbar {
+            background: #111;
+        }
+
+        body.dark-theme .about-text,
+        body.dark-theme .superpowers,
+        body.dark-theme .film-card,
+        body.dark-theme .project-card,
+        body.dark-theme .contact-form,
+        body.dark-theme .timeline-content,
+        body.dark-theme .achievement-card,
+        body.dark-theme .ott-info,
+        body.dark-theme .ott-preview,
+        body.dark-theme .chat-window,
+        body.dark-theme .message-content {
+            background: #333;
+            color: #eee;
+        }
+
+        body.dark-theme .form-control,
+        body.dark-theme .chat-input input {
+            background: #444;
+            color: #eee;
+        }
+
+        body.dark-theme .category-btn {
+            background: #333;
+            color: #eee;
+        }
+
+        body.dark-theme .quick-reply {
+            background: #444;
+        }
+
+        body.dark-theme .home {
+            background: linear-gradient(135deg, #333 0%, #222 100%);
+        }
+
+        body.dark-theme .filmography,
+        body.dark-theme .achievements {
+            background: linear-gradient(135deg, #222 0%, #333 100%);
+        }
+
+        body.dark-theme .contact {
+            background: linear-gradient(135deg, #333 0%, #222 100%);
+        }
+
+        body.dark-theme .ott-section {
+            background: linear-gradient(135deg, #222 0%, #333 100%);
+        }
+        /* Footer Styles */
+    .footer {
+        background: var(--primary);
+        color: var(--text-light);
+        padding: 50px 20px 20px;
+        border-top: 5px solid var(--border-color);
+        box-shadow: 0 -5px 0 var(--shadow-color);
+        margin-top: 100px;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .footer-logo {
+        text-align: center;
+    }
+
+    .footer-logo .logo {
+        font-family: 'Bangers', cursive;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-light);
+        text-shadow: 2px 2px 0 var(--border-color);
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .footer-tagline {
+        font-family: 'Comic Neue', cursive;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--accent);
+        text-transform: uppercase;
+    }
+
+    .footer-title {
+        font-family: 'Bangers', cursive;
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--accent);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .footer .social-link {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid var(--text-light);
+        border-radius: 50%;
+        color: var(--text-light);
+        font-size: 1.3rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .footer .social-link:hover {
+        transform: translateY(-5px) rotate(15deg);
+        background: var(--accent);
+        color: var(--text);
+        border-color: var(--text);
+        box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-links a:hover {
+        color: var(--accent);
+        transform: translateX(5px);
+    }
+
+    .footer-email {
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .footer-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .footer-buttons .comic-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 40px auto 0;
+        padding-top: 20px;
+        border-top: 2px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .copyright, .made-with {
+        font-family: 'Comic Neue', cursive;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    /* Footer Responsive Styles */
+    @media (max-width: 768px) {
+        .footer {
+            padding: 40px 15px 15px;
+        }
+        
+        .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        
+        .footer-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer {
+            padding: 30px 10px 10px;
+        }
+        
+        .footer-logo .logo {
+            font-size: 1.8rem;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+        }
+        
+        .social-links {
+            gap: 10px;
+        }
+        
+        .footer .social-link {
+            width: 45px;
+            height: 45px;
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Dark Theme Footer Styles */
+    body.dark-theme .footer {
+        background: #111;
+    }
+
+    body.dark-theme .footer-title::after {
+        background: var(--accent);
+    }
+    </style>
+</head>
+<body>
+    <!-- Halftone Overlay -->
+    <div class="halftone"></div>
+
+    <!-- Loading Animation -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-bang">KAPOW!</div>
+        </div>
+    </div>
+
+    <!-- Comic Sound Effects -->
+    <div class="sound-effect effect-1">ZAP!</div>
+    <div class="sound-effect effect-2">BOOM!</div>
+
+    <!-- Admin Link -->
+    <a href="admin.html" class="admin-link" title="Admin Panel">
+        <i class="fas fa-cog"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">TECH HERO</div>
+        <div class="nav-links" id="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">Origin</a>
+            <a href="#filmography">Movies</a>
+            <a href="#projects">Missions</a>
+            <a href="#ott">OTT</a>
+            <a href="#timeline">Journey</a>
+            <a href="#achievements">Powers</a>
+            <a href="#contact">Signal</a>
+        </div>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <!-- Home Section -->
+    <section class="home" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title" id="hero-title">B. Mohith</h1>
+                <p class="hero-subtitle" id="hero-subtitle">Tech Hero | AI Avenger | Code Crusader | Film Phantom</p>
+                <div class="hero-buttons" id="hero-buttons">
+                    <a href="#projects" class="comic-button">View Missions</a>
+                    <a href="#ott" class="comic-button">Watch OTT</a>
+                    <a href="#contact" class="comic-button">Send Signal</a>
+                </div>
+            </div>
+            <div class="mascot" style="background-image: url('D:/portfoilo/mohith2.png'); background-position: center; background-size: cover;"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title" data-aos="fade-up">Hero Origin</h2>
+        <div class="about-content">
+            <div class="about-text" data-aos="fade-right">
+                <p id="about-bio">I'm B. Mohith, a passionate AI and Web Developer, game creator, OTT founder, director, editor, and anime writer. I create intelligent, fun, and cinematic digital experiences, from web apps and AI tools to short films, anime scripts, and games. Currently pursuing a Diploma in AIML and aiming to become a Cyber Security Engineer. My goal is to combine creativity, technology, and storytelling to inspire and entertain.</p>
+                <ul class="roles-list" id="about-roles">
+                    <li><i class="fas fa-bolt"></i> AI & Web Developer</li>
+                    <li><i class="fas fa-gamepad"></i> Game Designer / Creator</li>
+                    <li><i class="fas fa-tv"></i> OTT Owner / Platform Founder</li>
+                    <li><i class="fas fa-film"></i> Director & Editor</li>
+                    <li><i class="fas fa-book"></i> Anime Writer</li>
+                    <li><i class="fas fa-paint-brush"></i> Creative Content Producer</li>
+                </ul>
+            </div>
+            <div class="superpowers" data-aos="fade-left" id="about-skills">
+                <div class="power-item">
+                    <div class="power-name">
+                        <span>Python</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="power-bar-container">
+                        <div class="power-bar" data-skill="60"></div>
+                    </div>
+                </div>
+                <div class="power-item">
+                    <div class="power-name">
+                        <span>HTML/CSS</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="power-bar-container">
+                        <div class="power-bar" data-skill="95"></div>
+                    </div>
+                </div>
+                <div class="power-item">
+                    <div class="power-name">
+                        <span>JavaScript</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="power-bar-container">
+                        <div class="power-bar" data-skill="60"></div>
+                    </div>
+                </div>
+                <div class="power-item">
+                    <div class="power-name">
+                        <span>AI & Machine Learning</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="power-bar-container">
+                        <div class="power-bar" data-skill="60"></div>
+                    </div>
+                </div>
+                <div class="power-item">
+                    <div class="power-name">
+                        <span>UI/UX Design</span>
+                        <span>55%</span>
+                    </div>
+                    <div class="power-bar-container">
+                        <div class="power-bar" data-skill="55"></div>
+                    </div>
+                </div>
+                <div class="power-item">
+                    <div class="power-name">
+                        <span>Video Editing</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="power-bar-container">
+                        <div class="power-bar" data-skill="60"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filmography Section -->
+    <section class="filmography" id="filmography">
+        <h2 class="section-title" data-aos="fade-up">Hero Movies</h2>
+        <div class="film-grid" id="filmography-grid">
+            <div class="film-card" data-aos="fade-up">
+                <img src="https://picsum.photos/seed/lastdrop/400/300.jp" alt="The Last Drop" class="film-poster">
+                <div class="film-content">
+                    <h3 class="film-title">The Last Drop</h3>
+                    <p class="film-description">AI short film, magical Pixar-inspired journey</p>
+                    <div class="film-meta">
+                        <span>Runtime: 2h30m</span>
+                        <span>Role: Director, Editor</span>
+                    </div>
+                    <div class="film-buttons">
+                        <a href="#" class="film-btn">Watch Trailer</a>
+                        <a href="#" class="film-btn">Press Kit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="film-card" data-aos="fade-up">
+                <img src="D:\portfoilo\upcomingmovies.png"alt="Upcoming Films" class="film-poster">
+                <div class="film-content">
+                    <h3 class="film-title">Upcoming Short Films</h3>
+                    <p class="film-description">Storyboarded, written, and edited by Mohith</p>
+                    <div class="film-meta">
+                        <span>Runtime: TBA</span>
+                        <span>Role: Director, Writer, Editor</span>
+                    </div>
+                    <div class="film-buttons">
+                        <a href="#" class="film-btn">Coming Soon</a>
+                        <a href="#" class="film-btn">Concept Art</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <h2 class="section-title" data-aos="fade-up">Hero Missions</h2>
+        <div class="project-categories" data-aos="fade-up">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="games">Games</button>
+            <button class="category-btn" data-category="ai">AI Tools</button>
+            <button class="category-btn" data-category="web">Web Apps</button>
+        </div>
+        <div class="projects-grid" id="projects-grid">
+            <div class="project-card" data-category="games" data-aos="fade-up">
+                <img src="D:\portfoilo\maze.png" alt="Maze Escape" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Maze Escape</h3>
+                    <p class="project-description">Multi-level Pac-Man style game, neon-themed with enemies, scores, and animations</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="#" class="project-btn">Play Game</a>
+                        <a href="#" class="project-btn">Source Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-category="games" data-aos="fade-up">
+                <img src="D:\portfoilo\tic-gameposter.png" alt="Tic Tac Toe AI" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Tic Tac Toe AI</h3>
+                    <p class="project-description">Smart AI opponent, score system, animated UI, Creatons coin integration</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">AI</span>
+                        <span class="tech-tag">HTML5</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="tic.html" class="project-btn" target="_blank">Play Game</a>
+                        <a href="#" class="project-btn">Source Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-category="web" data-aos="fade-up">
+                <img src="D:\portfoilo\webapp.png" alt="Mini Web Apps" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Mini Web Apps</h3>
+                    <p class="project-description">AI-based projects, coding experiments, interactive tools</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">AI</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="webapp.html" class="project-btn" target="_blank">View Apps</a>
+                        <a href="#" class="project-btn">Source Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OTT Section -->
+    <section class="ott-section" id="ott">
+        <h2 class="section-title" data-aos="fade-up">Code & Create OTT</h2>
+        <div class="ott-content">
+            <div class="ott-info" data-aos="fade-right">
+                <ul class="ott-features">
+                    <li><i class="fas fa-film"></i> Features films, anime shorts, educational content</li>
+                    <li><i class="fas fa-gamepad"></i> Mini games and interactive experiences</li>
+                    <li><i class="fas fa-play-circle"></i> "Watch Now" integration for YouTube and streaming</li>
+                    <li><i class="fas fa-images"></i> Promotional content: trailers, thumbnails, playlists</li>
+                    <li><i class="fas fa-mobile-alt"></i> Available on all devices</li>
+                </ul>
+            </div>
+            <div class="ott-preview" data-aos="fade-left">
+                <iframe src="https://www.youtube.com/embed/kw82oxJyaiQ?si=Om_QB-g_MQ9O7O7K" title="Code & Create OTT Preview"></iframe>
+                <div class=" The Last Drop | Hindi Musical Lyrics">
+                    <h3 class="ott-preview-title">Present Content</h3>
+                    <p class="ott-preview-description">Check out our latest films, anime series, and interactive experiences on Code & Create OTT</p>
+                    <div class="ott-preview-buttons">
+                        <a href="https://youtube.com/@codeandcreate032?si=LQB5IlI7HCVIryJy" class="comic-button">Watch Now</a>
+                        <a href="#" class="comic-button">Browse Library</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline" id="timeline">
+        <h2 class="section-title" data-aos="fade-up">Hero Journey</h2>
+        <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="timeline-date">Current</div>
+                <h3 class="timeline-title">Diploma in AIML</h3>
+                <p class="timeline-description">Pursuing a Diploma in Artificial Intelligence and Machine Learning</p>
+            </div>
+        </div>
+        <div class="timeline-item" data-aos="fade-left">
+            <div class="timeline-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="timeline-date">2025</div>
+                <h3 class="timeline-title">Launched Code & Create</h3>
+                <p class="timeline-description">Founded the Code & Create website and OTT platform</p>
+            </div>
+        </div>
+        <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="timeline-date">2025-2027</div>
+                <h3 class="timeline-title">Game Development</h3>
+                <p class="timeline-description">Created 12+ interactive games and web projects</p>
+            </div>
+        </div>
+        <div class="timeline-item" data-aos="fade-left">
+            <div class="timeline-icon">
+                <i class="fas fa-film"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="timeline-date">2025</div>
+                <h3 class="timeline-title">The Last Drop</h3>
+                <p class="timeline-description">Produced AI short film with Pixar-style animation</p>
+            </div>
+        </div>
+        <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="timeline-date">2025-Present</div>
+                <h3 class="timeline-title">Anime & Storytelling</h3>
+                <p class="timeline-description">Developing anime scripts and storytelling projects</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements" id="achievements">
+        <h2 class="section-title" data-aos="fade-up">Hero Achievements</h2>
+        <div class="achievements-grid">
+            <div class="achievement-card" data-aos="fade-up">
+                <div class="achievement-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="achievement-title">Founder</h3>
+                <p class="achievement-description">Founder of Code & Create platform</p>
+            </div>
+            <div class="achievement-card" data-aos="fade-up">
+                <div class="achievement-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <h3 class="achievement-title">Filmmaker</h3>
+                <p class="achievement-description">Created AI short film "The Last Drop"</p>
+            </div>
+            <div class="achievement-card" data-aos="fade-up">
+                <div class="achievement-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="achievement-title">Game Developer</h3>
+                <p class="achievement-description">Developed 12+ interactive games</p>
+            </div>
+            <div class="achievement-card" data-aos="fade-up">
+                <div class="achievement-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="achievement-title">AI Innovator</h3>
+                <p class="achievement-description">Active contributor to AI learning</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title" data-aos="fade-up">Send A Signal</h2>
+        <form class="contact-form" data-aos="fade-up">
+            <div class="form-group">
+                <label for="name">Hero Name</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Signal Frequency</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="reason">Mission Type</label>
+                <select id="reason" class="form-control" required>
+                    <option value="">Select mission type</option>
+                    <option value="director">Hire as Director</option>
+                    <option value="editor">Hire as Editor</option>
+                    <option value="collaborate">Team Up</option>
+                    <option value="ott">Movie Licensing</option>
+                    <option value="technical">Tech Mission</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Secret Message</label>
+                <textarea id="message" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="comic-button">Send Signal</button>
+        </form>
+        <div class="contact-info" data-aos="fade-up">
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <p id="contact-email">codeandcreate032@gmail.com</p>
+            </div>
+        </div>
+        <div class="social-links" data-aos="fade-up" id="social-links">
+            <a href="https://youtube.com/@codeandcreate" target="_blank" class="social-link">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/yourprofile" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://instagram.com/yourprofile" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Chat Bot -->
+    <div class="chat-bot" id="chat-bot">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <div class="chat-title">
+                <i class="fas fa-robot"></i>
+                <span>Codi Assistant</span>
+            </div>
+            <button class="chat-close" id="chat-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="chat-message bot-message">
+                <div class="message-avatar bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    🌟 Hey there! I'm Codi, your friendly AI assistant for B. Mohith's portfolio! I'm here to guide you through his amazing work and answer any questions you might have. How can I help you today? 😊
+                    <div class="quick-replies">
+                        <div class="quick-reply" data-message="Who is Mohith?">Who is Mohith?</div>
+                        <div class="quick-reply" data-message="What projects has he made?">What projects has he made?</div>
+                        <div class="quick-reply" data-message="What is The Last Drop?">What is The Last Drop?</div>
+                        <div class="quick-reply" data-message="How can I contact him?">How can I contact him?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input-field" placeholder="Type your message...">
+            <button id="chat-send">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Loading Animation
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                document.getElementById('loader').style.visibility = 'hidden';
+            }, 1500);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Power Bars Animation
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const powerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const powerBars = entry.target.querySelectorAll('.power-bar');
+                    powerBars.forEach(bar => {
+                        const power = bar.getAttribute('data-skill');
+                        setTimeout(() => {
+                            bar.style.width = power + '%';
+                        }, 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const powersSection = document.querySelector('.superpowers');
+        if (powersSection) {
+            powerObserver.observe(powersSection);
+        }
+
+        // Project Filtering
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const category = btn.getAttribute('data-category');
+                
+                document.querySelectorAll('.project-card').forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.classList.add('show');
+                        }, 10);
+                    } else {
+                        card.classList.remove('show');
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Form Submission
+        const contactForm = document.querySelector('.contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would normally send the form data to a server
+            alert('Signal received! The Tech Hero will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Chat Bot
+        const chatBot = document.getElementById('chat-bot');
+        const chatWindow = document.getElementById('chat-window');
+        const chatClose = document.getElementById('chat-close');
+        const chatBody = document.getElementById('chat-body');
+        const chatInputField = document.getElementById('chat-input-field');
+        const chatSend = document.getElementById('chat-send');
+
+        chatBot.addEventListener('click', () => {
+            chatWindow.classList.toggle('active');
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWindow.classList.remove('active');
+        });
+
+        // Quick reply buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quick-reply')) {
+                const message = e.target.getAttribute('data-message');
+                addMessageToChat('user', message);
+                setTimeout(() => {
+                    generateBotResponse(message);
+                }, 500);
+            }
+        });
+
+        // Send message on Enter key
+        chatInputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Send message on button click
+        chatSend.addEventListener('click', sendMessage);
+
+        function sendMessage() {
+            const message = chatInputField.value.trim();
+            if (message) {
+                addMessageToChat('user', message);
+                chatInputField.value = '';
+                setTimeout(() => {
+                    generateBotResponse(message);
+                }, 500);
+            }
+        }
+
+        function addMessageToChat(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message', `${sender}-message`);
+            
+            const avatarDiv = document.createElement('div');
+            avatarDiv.classList.add('message-avatar', `${sender}-avatar`);
+            
+            if (sender === 'bot') {
+                avatarDiv.innerHTML = '<i class="fas fa-robot"></i>';
+            } else {
+                avatarDiv.innerHTML = '<i class="fas fa-user"></i>';
+            }
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('message-content');
+            contentDiv.textContent = message;
+            
+            messageDiv.appendChild(avatarDiv);
+            messageDiv.appendChild(contentDiv);
+            
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('chat-message', 'bot-message');
+            typingDiv.id = 'typing-indicator';
+            
+            const avatarDiv = document.createElement('div');
+            avatarDiv.classList.add('message-avatar', 'bot-avatar');
+            avatarDiv.innerHTML = '<i class="fas fa-robot"></i>';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('message-content', 'typing-indicator');
+            contentDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            
+            typingDiv.appendChild(avatarDiv);
+            typingDiv.appendChild(contentDiv);
+            
+            chatBody.appendChild(typingDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Replace the existing generateBotResponse function with this improved version:
+
+function generateBotResponse(userMessage) {
+    showTypingIndicator();
+    
+    setTimeout(() => {
+        removeTypingIndicator();
+        
+        const lowerCaseMessage = userMessage.toLowerCase();
+        let response = '';
+        
+        // Who is Mohith?
+        if (lowerCaseMessage.includes('who is mohith') || 
+            lowerCaseMessage.includes('who\'s mohith') || 
+            lowerCaseMessage.includes('about mohith') || 
+            lowerCaseMessage.includes('introduction') ||
+            lowerCaseMessage.includes('tell me about mohith')) {
+            response = "🌟 Mohith is a passionate creator from India — a coder, director, and AI storyteller! He runs Code & Create, where he mixes coding with creativity to make learning magical. He's the founder of the Code & Create website and YouTube channel, focusing on AI, coding, and fun learning experiences. Want to explore his projects or films? 🎬💻";
+        }
+        // What projects has he made?
+        else if (lowerCaseMessage.includes('projects') || 
+                 lowerCaseMessage.includes('what has he made') || 
+                 lowerCaseMessage.includes('games') ||
+                 lowerCaseMessage.includes('what projects')) {
+            response = "🚀 Mohith has built several interactive games like Maze Escape, Tic Tac Toe Battle, and many more! He also creates web applications, AI tools, and educational content. His projects combine creativity with technology to make learning fun and engaging. You can check them all on the Projects Page. Want me to take you there?";
+        }
+        // What is The Last Drop?
+        else if (lowerCaseMessage.includes('last drop') || 
+                 lowerCaseMessage.includes('film') || 
+                 lowerCaseMessage.includes('movie') ||
+                 lowerCaseMessage.includes('the last drop')) {
+            response = "💧 The Last Drop is Mohith's emotional AI short film about friendship, sacrifice, and magic — inspired by Rajamouli and Pixar vibes. It's a powerful story about reviving a drought-stricken village through friendship and courage. 🌧️✨ The film showcases his skills as a director and storyteller!";
+        }
+        // Skills and education
+        else if (lowerCaseMessage.includes('skills') || 
+                 lowerCaseMessage.includes('what can he do') || 
+                 lowerCaseMessage.includes('abilities') ||
+                 lowerCaseMessage.includes('education') ||
+                 lowerCaseMessage.includes('study') ||
+                 lowerCaseMessage.includes('diploma')) {
+            response = "💻 Mohith is skilled in HTML, CSS, JavaScript, AI tools, creative storytelling, and video editing with DaVinci Resolve 20. He's currently pursuing a Diploma in Artificial Intelligence and Machine Learning and plans to do a B.Tech in Cyber Security. His goal is to become a Cyber Security Engineer while continuing his creative work! 🛡️";
+        }
+        // Contact information
+        else if (lowerCaseMessage.includes('contact') || 
+                 lowerCaseMessage.includes('email') || 
+                 lowerCaseMessage.includes('reach') ||
+                 lowerCaseMessage.includes('how to contact')) {
+            response = "📧 You can reach Mohith through the Contact Page or email him directly at codeandcreate032@gmail.com. He loves hearing from fellow creators, learners, and potential collaborators! Feel free to reach out with any questions or opportunities. 💙";
+        }
+        // YouTube/Code & Create
+        else if (lowerCaseMessage.includes('youtube') || 
+                 lowerCaseMessage.includes('code and create') || 
+                 lowerCaseMessage.includes('channel') ||
+                 lowerCaseMessage.includes('youtube channel')) {
+            response = "📺 Mohith creates amazing content on YouTube under the name 'Code & Create'! His channel focuses on AI, coding, creativity, and fun learning experiences. He shares tutorials, project showcases, and creative content that makes learning technology exciting. You should definitely check it out! Would you like the link?";
+        }
+        // Creatons Engine
+        else if (lowerCaseMessage.includes('creations') || 
+                 lowerCaseMessage.includes('coins') || 
+                 lowerCaseMessage.includes('virtual currency') ||
+                 lowerCaseMessage.includes('creaton') ||
+                 lowerCaseMessage.includes('creations engine')) {
+            response = "🪙 The Creatons Engine is Mohith's custom virtual coin system with user login, balance saving, and admin features. It's used across his games and platforms to enhance user experience! Users can earn, save, and spend virtual coins while playing his games and using his applications. It's a pretty cool system! 💰";
+        }
+        // Style/Aesthetic
+        else if (lowerCaseMessage.includes('style') || 
+                 lowerCaseMessage.includes('design') || 
+                 lowerCaseMessage.includes('aesthetic') ||
+                 lowerCaseMessage.includes('look')) {
+            response = "🎨 Mohith's style is colorful, Pixar-inspired, techy, and futuristic with Neon Blue & Glassy UI elements. He loves creating vibrant, engaging experiences that capture the imagination! His work has a unique aesthetic that blends technology with artistic creativity. ✨";
+        }
+        // Career goals
+        else if (lowerCaseMessage.includes('career') || 
+                 lowerCaseMessage.includes('goals') || 
+                 lowerCaseMessage.includes('future') ||
+                 lowerCaseMessage.includes('what does he want to be')) {
+            response = "🚀 Mohith's career goal is to become a Cyber Security Engineer while continuing his creative work in filmmaking, game development, and AI. He wants to blend technical expertise with creative storytelling! He's passionate about both technology and the arts, and aims to combine these interests in his future career. 💻🎬";
+        }
+        // Greetings
+        else if (lowerCaseMessage.includes('hello') || 
+                 lowerCaseMessage.includes('hi') || 
+                 lowerCaseMessage.includes('hey') ||
+                 lowerCaseMessage.includes('good morning') ||
+                 lowerCaseMessage.includes('good afternoon') ||
+                 lowerCaseMessage.includes('good evening')) {
+            response = "🌟 Hello there! Welcome to Mohith's portfolio! I'm Codi, your AI assistant. I'm here to help you explore his amazing work as a creator, developer, and filmmaker. How can I assist you today? 😊";
+        }
+        // Default response
+        else {
+            const responses = [
+                "🤔 I'm not sure I understand. Could you ask me something about Mohith's projects, skills, education, films, or creative work?",
+                "🌟 I'd love to help! Try asking me about Mohith's films, games, technical skills, or background!",
+                "💡 Great question! I'm here to help you explore Mohith's portfolio. You can ask me about who he is, what projects he's created, his films, skills, education, or how to contact him!",
+                "🤖 I'm Codi, Mohith's AI assistant! I can tell you about his work as a creator, developer, filmmaker, and his plans for the future. What would you like to know?"
+            ];
+            response = responses[Math.floor(Math.random() * responses.length)];
+        }
+        
+        addMessageToChat('bot', response);
+        
+        // Add quick replies after bot response
+        setTimeout(() => {
+            const lastMessage = chatBody.lastElementChild;
+            const quickRepliesDiv = document.createElement('div');
+            quickRepliesDiv.className = 'quick-replies';
+            
+            // Generate contextual quick replies
+            if (lowerCaseMessage.includes('projects') || lowerCaseMessage.includes('games')) {
+                quickRepliesDiv.innerHTML = `
+                    <div class="quick-reply" data-message="Tell me about Maze Escape">Tell me about Maze Escape</div>
+                    <div class="quick-reply" data-message="What is Creatons Engine?">What is Creatons Engine?</div>
+                    <div class="quick-reply" data-message="Does he have AI projects?">Does he have AI projects?</div>
+                `;
+            } else if (lowerCaseMessage.includes('film') || lowerCaseMessage.includes('movie') || lowerCaseMessage.includes('last drop')) {
+                quickRepliesDiv.innerHTML = `
+                    <div class="quick-reply" data-message="What other films is he working on?">What other films is he working on?</div>
+                    <div class="quick-reply" data-message="What software does he use for editing?">What software does he use for editing?</div>
+                    <div class="quick-reply" data-message="Where can I watch The Last Drop?">Where can I watch The Last Drop?</div>
+                `;
+            } else if (lowerCaseMessage.includes('contact') || lowerCaseMessage.includes('email')) {
+                quickRepliesDiv.innerHTML = `
+                    <div class="quick-reply" data-message="What's his LinkedIn?">What's his LinkedIn?</div>
+                    <div class="quick-reply" data-message="Does he have a GitHub?">Does he have a GitHub?</div>
+                    <div class="quick-reply" data-message="Is he available for collaborations?">Is he available for collaborations?</div>
+                `;
+            } else {
+                quickRepliesDiv.innerHTML = `
+                    <div class="quick-reply" data-message="Who is Mohith?">Who is Mohith?</div>
+                    <div class="quick-reply" data-message="What projects has he made?">What projects has he made?</div>
+                    <div class="quick-reply" data-message="What is The Last Drop?">What is The Last Drop?</div>
+                    <div class="quick-reply" data-message="How can I contact him?">How can I contact him?</div>
+                `;
+            }
+            
+            lastMessage.querySelector('.message-content').appendChild(quickRepliesDiv);
+        }, 300);
+    }, 1500);
+}
+// Add this JavaScript to handle the admin link visibility and password protection
+
+// Show admin link when scrolling to bottom
+window.addEventListener('scroll', () => {
+    // Check if user has scrolled to the bottom of the page
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        document.querySelector('.admin-link').classList.remove('admin-hidden');
+        document.querySelector('.admin-link').classList.add('admin-visible');
+    }
+});
+
+// Add password protection to admin link
+document.querySelector('.admin-link').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default navigation
+    
+    const password = prompt("Enter the admin password:");
+    if (password === "C&Cmohith@2006") {
+        // Correct password, navigate to admin panel
+        window.location.href = "admin.html";
+    } else {
+        // Incorrect password
+        alert("Incorrect password! Access denied.");
+        // Hide the admin link again after incorrect attempt
+        document.querySelector('.admin-link').classList.remove('admin-visible');
+        document.querySelector('.admin-link').classList.add('admin-hidden');
+    }
+});
+
+    </script>
+   <!-- Add this footer section right before the closing body tag -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            <div class="logo">TECH HERO</div>
+            <p class="footer-tagline">Code & Create</p>
+        </div>
+        
+        <div class="footer-social">
+            <h3 class="footer-title">Connect With Mohith</h3>
+            <div class="social-links">
+                <a href="https://youtube.com/@codeandcreate032" target="_blank" class="social-link" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" class="social-link" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/yourprofile" target="_blank" class="social-link" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://instagram.com/code_create_032" target="_blank" class="social-link" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com/CodeIICreate" target="_blank" class="social-link" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://facebook.com/yourprofile" target="_blank" class="social-link" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer-nav">
+            <h3 class="footer-title">Explore</h3>
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#filmography">Films</a></li>
+                <li><a href="#ott">Code & Create OTT</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-contact">
+            <h3 class="footer-title">Get In Touch</h3>
+            <p class="footer-email">📧 codeandcreate032@gmail.com</p>
+            <div class="footer-buttons">
+                <a href="#contact" class="comic-button">Send Message</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="copyright">
+            <p>&copy; 2025 B. Mohith | Tech Hero. All rights reserved.</p>
+        </div>
+        <div class="made-with">
+            <p>Made with <i class="fas fa-heart" style="color: var(--primary);"></i> by Code & Create</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

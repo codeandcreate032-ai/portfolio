@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Comic Tic Tac Toe | TECH HERO</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Comic Book Color Scheme */
+            --primary: #FF3C41;
+            --secondary: #0099FF;
+            --accent: #FFD700;
+            --background: #FFF;
+            --text: #000;
+            --text-light: #FFF;
+            --panel-bg: #F8F8F8;
+            --border-color: #000;
+            --shadow-color: rgba(0,0,0,0.2);
+            --cell-size: min(100px, 25vw);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(circle, #000 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            touch-action: manipulation;
+        }
+
+        /* Comic Book Halftone Pattern */
+        .halftone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 4px 4px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-symbol {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+            color: var(--primary);
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            to {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--panel-bg);
+            border: 5px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 15px 15px 0 var(--shadow-color);
+            z-index: 1000;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .settings-panel.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .settings-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .close-settings {
+            background: var(--primary);
+            border: 3px solid var(--border-color);
+            color: var(--text-light);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-settings:hover {
+            transform: rotate(90deg);
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--secondary);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(30px);
+        }
+
+        .slider-control {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            background: #ccc;
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Game Container */
+        .game-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--panel-bg);
+            border: 8px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 15px 15px 0 var(--shadow-color);
+            position: relative;
+            z-index: 2;
+            margin-top: 50px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .game-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 4px 4px 0 var(--border-color);
+            margin-bottom: 10px;
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .game-subtitle {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Top Controls */
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid var(--border-color);
+            background: var(--secondary);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .icon-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        /* Game Modes */
+        .game-modes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            background: var(--background);
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            box-shadow: 0 4px 0 var(--shadow-color);
+            text-transform: uppercase;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 var(--shadow-color);
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: var(--text-light);
+        }
+
+        /* Tournament Mode */
+        .tournament-info {
+            background: var(--accent);
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        .tournament-info.active {
+            display: block;
+        }
+
+        /* Character Selection */
+        .character-selection {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .character-card {
+            background: var(--background);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0 var(--shadow-color);
+            position: relative;
+            flex: 1;
+            min-width: 80px;
+            max-width: 120px;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 0 var(--shadow-color);
+        }
+
+        .character-card.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent), 5px 5px 0 var(--shadow-color);
+        }
+
+        .character-icon {
+            font-size: clamp(2rem, 8vw, 3rem);
+            margin-bottom: 5px;
+        }
+
+        .character-name {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            text-transform: uppercase;
+        }
+
+        /* Power Moves */
+        .power-moves {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .power-move {
+            padding: 6px 12px;
+            background: var(--accent);
+            border: 3px solid var(--border-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            box-shadow: 0 4px 0 var(--shadow-color);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            min-width: 80px;
+            max-width: 120px;
+            text-align: center;
+        }
+
+        .power-move:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 var(--shadow-color);
+        }
+
+        .power-move:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .power-move .cooldown {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: clamp(0.8rem, 3vw, 1rem);
+        }
+
+        /* Game Info */
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 140px;
+            background: var(--background);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 5px 5px 0 var(--shadow-color);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .player-info.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent), 5px 5px 0 var(--shadow-color);
+            transform: scale(1.05);
+        }
+
+        .player-info.ai {
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+        }
+
+        .player-name {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            margin-bottom: 5px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .player-symbol {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 8vw, 2.5rem);
+            color: var(--secondary);
+            text-transform: uppercase;
+            animation: symbolFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes symbolFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .score-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 5px;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+        }
+
+        .score, .streak {
+            font-family: 'Bangers', cursive;
+            text-transform: uppercase;
+        }
+
+        .score {
+            color: var(--text);
+        }
+
+        .streak {
+            color: var(--accent);
+        }
+
+        /* Game Board */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, var(--cell-size));
+            grid-gap: clamp(5px, 2vw, 10px);
+            margin: 0 auto 20px;
+            position: relative;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background: var(--background);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0 var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .cell:hover:not(.taken) {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            background: rgba(255, 60, 65, 0.1);
+        }
+
+        .cell.taken {
+            cursor: not-allowed;
+        }
+
+        .cell.x {
+            color: var(--primary);
+            animation: placeX 0.5s ease;
+        }
+
+        @keyframes placeX {
+            from {
+                transform: scale(0) rotate(180deg);
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .cell.o {
+            color: var(--secondary);
+            animation: placeO 0.5s ease;
+        }
+
+        @keyframes placeO {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .cell.winner {
+            background: var(--accent);
+            animation: winnerPulse 0.5s ease infinite alternate;
+        }
+
+        @keyframes winnerPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .cell.blocked {
+            background: #ffcccc;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Game Message */
+        .game-message {
+            text-align: center;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            color: var(--primary);
+            margin: 15px 0;
+            text-transform: uppercase;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: messageGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes messageGlow {
+            0%, 100% { text-shadow: 2px 2px 0 var(--border-color); }
+            50% { text-shadow: 2px 2px 0 var(--border-color), 0 0 20px var(--accent); }
+        }
+
+        /* Game Controls */
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .comic-button {
+            padding: 10px 20px;
+            background: var(--secondary);
+            border: 3px solid var(--border-color);
+            color: var(--text-light);
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            box-shadow: 0 4px 0 var(--shadow-color);
+            text-transform: uppercase;
+            flex: 1;
+            min-width: 100px;
+            max-width: 150px;
+            text-align: center;
+        }
+
+        .comic-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 0 var(--shadow-color);
+        }
+
+        .comic-button:active {
+            transform: translateY(0);
+            box-shadow: 0 0 0 var(--shadow-color);
+        }
+
+        .comic-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .comic-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Back Button */
+        .back-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 8px 15px;
+            background: var(--primary);
+            border: 3px solid var(--border-color);
+            color: var(--text-light);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            box-shadow: 0 4px 0 var(--shadow-color);
+            text-transform: uppercase;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 var(--shadow-color);
+        }
+
+        /* Leaderboard */
+        .leaderboard {
+            background: var(--background);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 5px 5px 0 var(--shadow-color);
+            display: none;
+        }
+
+        .leaderboard.active {
+            display: block;
+        }
+
+        .leaderboard-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 700;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-rank {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        /* Achievements */
+        .achievements {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .achievement {
+            background: var(--accent);
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            box-shadow: 5px 5px 0 var(--shadow-color);
+            animation: slideInRight 0.5s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 300px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .achievement-icon {
+            font-size: 1.5rem;
+        }
+
+        .achievement-text {
+            font-family: 'Bangers', cursive;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Sound Effects */
+        .sound-effect {
+            position: absolute;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            text-shadow: 2px 2px 0 var(--border-color);
+            z-index: 10;
+            pointer-events: none;
+            animation: soundPop 1s ease forwards;
+        }
+
+        @keyframes soundPop {
+            0% {
+                transform: scale(0) rotate(-10deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(5deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        /* Particle Effects */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+            animation: particleExplode 1s ease-out forwards;
+        }
+
+        @keyframes particleExplode {
+            to {
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Tutorial Overlay */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .tutorial-overlay.active {
+            display: flex;
+        }
+
+        .tutorial-content {
+            background: var(--panel-bg);
+            border: 5px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 15px 15px 0 var(--shadow-color);
+        }
+
+        .tutorial-step {
+            display: none;
+            text-align: center;
+        }
+
+        .tutorial-step.active {
+            display: block;
+        }
+
+        .tutorial-step h3 {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .tutorial-step p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tutorial-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Theme Selector */
+        .theme-selector {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+            display: flex;
+            gap: 5px;
+        }
+
+        .theme-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 var(--shadow-color);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 var(--shadow-color);
+        }
+
+        .theme-btn.comic {
+            background: linear-gradient(135deg, #FF3C41, #0099FF);
+        }
+
+        .theme-btn.neon {
+            background: linear-gradient(135deg, #FF00FF, #00FFFF);
+        }
+
+        .theme-btn.retro {
+            background: linear-gradient(135deg, #FFA500, #FF1493);
+        }
+
+        /* Keyboard Shortcuts */
+        .shortcuts-hint {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .shortcuts-hint.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 15px;
+                margin-top: 40px;
+            }
+            
+            .game-board {
+                grid-gap: 5px;
+            }
+            
+            .cell {
+                border-width: 3px;
+                font-size: 2.5rem;
+            }
+            
+            .character-card {
+                min-width: 70px;
+                padding: 8px;
+            }
+            
+            .power-move {
+                min-width: 70px;
+                padding: 5px 10px;
+            }
+            
+            .comic-button {
+                min-width: 80px;
+                padding: 8px 15px;
+            }
+            
+            .achievement {
+                max-width: 250px;
+                padding: 8px 12px;
+            }
+            
+            .tutorial-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .game-container {
+                padding: 10px;
+            }
+            
+            .game-board {
+                grid-gap: 3px;
+            }
+            
+            .cell {
+                border-width: 2px;
+                font-size: 2rem;
+            }
+            
+            .character-icon {
+                font-size: 1.5rem;
+            }
+            
+            .player-symbol {
+                font-size: 1.8rem;
+            }
+            
+            .game-title {
+                font-size: 1.8rem;
+            }
+            
+            .game-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* Dark Theme */
+        body.dark-theme {
+            background-color: #222;
+            color: #eee;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        body.dark-theme .game-container,
+        body.dark-theme .player-info,
+        body.dark-theme .cell,
+        body.dark-theme .character-card,
+        body.dark-theme .leaderboard,
+        body.dark-theme .tutorial-content,
+        body.dark-theme .settings-panel {
+            background: #333;
+            color: #eee;
+        }
+
+        body.dark-theme .player-info.ai {
+            background: linear-gradient(135deg, #444, #333);
+        }
+
+        body.dark-theme .mode-btn,
+        body.dark-theme .power-move {
+            background: #444;
+            color: #eee;
+        }
+
+        body.dark-theme .cell:hover:not(.taken) {
+            background: rgba(255, 60, 65, 0.2);
+        }
+
+        body.dark-theme .cell.blocked {
+            background: #660000;
+        }
+
+        body.dark-theme .shortcuts-hint {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* High Contrast Mode */
+        body.high-contrast {
+            --primary: #000;
+            --secondary: #000;
+            --accent: #000;
+            --text: #000;
+            --background: #FFF;
+            --border-color: #000;
+        }
+
+        body.high-contrast .cell,
+        body.high-contrast .player-info,
+        body.high-contrast .character-card {
+            border-width: 5px;
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg" id="animatedBg"></div>
+
+    <!-- Halftone Overlay -->
+    <div class="halftone"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2 class="settings-title">GAME SETTINGS</h2>
+            <div class="close-settings" id="closeSettings">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="setting-label">Sound Effects</div>
+            <div class="setting-control">
+                <div class="toggle-switch active" id="soundToggle"></div>
+                <span>Enable/Disable sound effects</span>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="setting-label">Vibration</div>
+            <div class="setting-control">
+                <div class="toggle-switch" id="vibrationToggle"></div>
+                <span>Enable haptic feedback</span>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="setting-label">Animation Speed</div>
+            <div class="setting-control slider-control">
+                <input type="range" class="slider" id="animationSpeed" min="0.5" max="2" step="0.1" value="1">
+                <span id="speedValue">1x</span>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="setting-label">Difficulty (AI)</div>
+            <div class="setting-control">
+                <select class="form-control" id="aiDifficulty" style="padding: 8px; border: 2px solid var(--border-color); border-radius: 5px; font-family: inherit;">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                    <option value="impossible">Impossible</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <div class="setting-label">Accessibility</div>
+            <div class="setting-control">
+                <div class="toggle-switch" id="highContrastToggle"></div>
+                <span>High contrast mode</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div class="tutorial-overlay" id="tutorialOverlay">
+        <div class="tutorial-content">
+            <div class="tutorial-step active">
+                <h3>Welcome to Comic Tic Tac Toe!</h3>
+                <p>This is not your ordinary Tic Tac Toe game. It's packed with superpowers, special effects, and multiple game modes!</p>
+                <p>Let's learn how to play...</p>
+            </div>
+            
+            <div class="tutorial-step">
+                <h3>Game Modes</h3>
+                <p><strong>Player vs Player:</strong> Play against a friend on the same device</p>
+                <p><strong>Player vs Computer:</strong> Challenge the AI opponent</p>
+                <p><strong>Tournament Mode:</strong> Best of 3 or 5 games to determine the champion!</p>
+            </div>
+            
+            <div class="tutorial-step">
+                <h3>Choose Your Character</h3>
+                <p>Select from Hero, Villain, Robot, or Alien. Each has their own style!</p>
+                <p>In PvP mode, both players can choose their character.</p>
+            </div>
+            
+            <div class="tutorial-step">
+                <h3>Power Moves</h3>
+                <p><strong>Block:</strong> Block a random cell for 3 seconds</p>
+                <p><strong>Steal Turn:</strong> Take your opponent's turn</p>
+                <p><strong>Double Move:</strong> Place two symbols in a row</p>
+                <p>Each power move has a 3-second cooldown!</p>
+            </div>
+            
+            <div class="tutorial-step">
+                <h3>Controls</h3>
+                <p><strong>Mouse/Touch:</strong> Click or tap on cells to play</p>
+                <p><strong>Keyboard:</strong> Use number keys 1-9 for cells</p>
+                <p><strong>Power Moves:</strong> Press Q, W, E for power moves</p>
+                <p><strong>Settings:</strong> Press S to open settings</p>
+            </div>
+            
+            <div class="tutorial-step">
+                <h3>Ready to Play!</h3>
+                <p>Now you know all the basics. Go have fun and may the best player win!</p>
+                <p>Don't forget to check your achievements and leaderboard!</p>
+            </div>
+            
+            <div class="tutorial-navigation">
+                <button class="comic-button" id="prevTutorial">Previous</button>
+                <span id="tutorialProgress">1 / 6</span>
+                <button class="comic-button" id="nextTutorial">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <div class="theme-btn comic" data-theme="comic" title="Comic Theme"></div>
+        <div class="theme-btn neon" data-theme="neon" title="Neon Theme"></div>
+        <div class="theme-btn retro" data-theme="retro" title="Retro Theme"></div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">COMIC TIC TAC TOE</h1>
+            <p class="game-subtitle">BATTLE OF THE SYMBOLS</p>
+        </div>
+
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <div class="control-group">
+                <div class="icon-button" id="settingsBtn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="icon-button" id="tutorialBtn" title="Tutorial">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="icon-button" id="fullscreenBtn" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="icon-button" id="soundToggleBtn" title="Toggle Sound">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+                <div class="icon-button" id="shareBtn" title="Share">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tournament Info -->
+        <div class="tournament-info" id="tournamentInfo">
+            <span id="tournamentText">Tournament Mode: Best of 3</span>
+        </div>
+
+        <!-- Game Modes -->
+        <div class="game-modes">
+            <button class="mode-btn active" data-mode="pvp">Player vs Player</button>
+            <button class="mode-btn" data-mode="pvc">Player vs Computer</button>
+            <button class="mode-btn" data-mode="tournament">Tournament</button>
+        </div>
+
+        <!-- Character Selection -->
+        <div class="character-selection" id="characterSelection">
+            <div class="character-card selected" data-character="hero">
+                <div class="character-icon">🦸</div>
+                <div class="character-name">Hero</div>
+            </div>
+            <div class="character-card" data-character="villain">
+                <div class="character-icon">🦹</div>
+                <div class="character-name">Villain</div>
+            </div>
+            <div class="character-card" data-character="robot">
+                <div class="character-icon">🤖</div>
+                <div class="character-name">Robot</div>
+            </div>
+            <div class="character-card" data-character="alien">
+                <div class="character-icon">👽</div>
+                <div class="character-name">Alien</div>
+            </div>
+        </div>
+
+        <!-- Power Moves -->
+        <div class="power-moves" id="powerMoves">
+            <button class="power-move" id="blockMove" title="Block (Q)">
+                <i class="fas fa-shield-alt"></i> Block
+                <div class="cooldown" style="display: none;"></div>
+            </button>
+            <button class="power-move" id="stealMove" title="Steal Turn (W)">
+                <i class="fas fa-exchange-alt"></i> Steal
+                <div class="cooldown" style="display: none;"></div>
+            </button>
+            <button class="power-move" id="doubleMove" title="Double Move (E)">
+                <i class="fas fa-copy"></i> Double
+                <div class="cooldown" style="display: none;"></div>
+            </button>
+        </div>
+
+        <!-- Game Info -->
+        <div class="game-info" id="gameInfo" style="display: none;">
+            <div class="player-info active" id="player1Info">
+                <div class="player-name" id="player1NameDisplay">Hero</div>
+                <div class="player-symbol">X</div>
+                <div class="score-info">
+                    <div class="score">Wins: <span id="player1Score">0</span></div>
+                    <div class="streak">Streak: <span id="player1Streak">0</span></div>
+                </div>
+            </div>
+            <div class="player-info" id="player2Info">
+                <div class="player-name" id="player2NameDisplay">Villain</div>
+                <div class="player-symbol">O</div>
+                <div class="score-info">
+                    <div class="score">Wins: <span id="player2Score">0</span></div>
+                    <div class="streak">Streak: <span id="player2Streak">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="game-board" id="gameBoard" style="display: none;">
+            <div class="cell" data-index="0" tabindex="0" aria-label="Top left cell"></div>
+            <div class="cell" data-index="1" tabindex="0" aria-label="Top center cell"></div>
+            <div class="cell" data-index="2" tabindex="0" aria-label="Top right cell"></div>
+            <div class="cell" data-index="3" tabindex="0" aria-label="Middle left cell"></div>
+            <div class="cell" data-index="4" tabindex="0" aria-label="Center cell"></div>
+            <div class="cell" data-index="5" tabindex="0" aria-label="Middle right cell"></div>
+            <div class="cell" data-index="6" tabindex="0" aria-label="Bottom left cell"></div>
+            <div class="cell" data-index="7" tabindex="0" aria-label="Bottom center cell"></div>
+            <div class="cell" data-index="8" tabindex="0" aria-label="Bottom right cell"></div>
+        </div>
+
+        <!-- Game Message -->
+        <div class="game-message" id="gameMessage" role="status" aria-live="polite">Select Your Character</div>
+
+        <!-- Game Controls -->
+        <div class="game-controls" id="gameControls" style="display: none;">
+            <button class="comic-button" id="resetButton">Reset</button>
+            <button class="comic-button" id="newGameButton">New Game</button>
+            <button class="comic-button" id="saveButton">Save</button>
+            <button class="comic-button" id="loadButton">Load</button>
+            <button class="comic-button" id="leaderboardButton">Leaderboard</button>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="leaderboard" id="leaderboard">
+            <h3 class="leaderboard-title">HALL OF FAME</h3>
+            <ul class="leaderboard-list" id="leaderboardList">
+                <li class="leaderboard-item">
+                    <span><span class="leaderboard-rank">#1</span> Hero</span>
+                    <span>10 Wins</span>
+                </li>
+                <li class="leaderboard-item">
+                    <span><span class="leaderboard-rank">#2</span> Villain</span>
+                    <span>8 Wins</span>
+                </li>
+                <li class="leaderboard-item">
+                    <span><span class="leaderboard-rank">#3</span> Robot</span>
+                    <span>5 Wins</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="achievements" id="achievements"></div>
+
+    <!-- Keyboard Shortcuts Hint -->
+    <div class="shortcuts-hint" id="shortcutsHint">
+        <strong>Shortcuts:</strong> 1-9: Cells | Q/W/E: Power Moves | S: Settings | F: Fullscreen | H: Help
+    </div>
+
+    <script>
+        // DOM Elements
+        const animatedBg = document.getElementById('animatedBg');
+        const characterSelection = document.getElementById('characterSelection');
+        const gameModes = document.querySelectorAll('.mode-btn');
+        const powerMoves = document.getElementById('powerMoves');
+        const gameInfo = document.getElementById('gameInfo');
+        const gameBoard = document.getElementById('gameBoard');
+        const gameMessage = document.getElementById('gameMessage');
+        const gameControls = document.getElementById('gameControls');
+        const leaderboard = document.getElementById('leaderboard');
+        const leaderboardButton = document.getElementById('leaderboardButton');
+        const leaderboardList = document.getElementById('leaderboardList');
+        const resetButton = document.getElementById('resetButton');
+        const newGameButton = document.getElementById('newGameButton');
+        const saveButton = document.getElementById('saveButton');
+        const loadButton = document.getElementById('loadButton');
+        const cells = document.querySelectorAll('.cell');
+        const player1NameDisplay = document.getElementById('player1NameDisplay');
+        const player2NameDisplay = document.getElementById('player2NameDisplay');
+        const player1ScoreDisplay = document.getElementById('player1Score');
+        const player2ScoreDisplay = document.getElementById('player2Score');
+        const player1StreakDisplay = document.getElementById('player1Streak');
+        const player2StreakDisplay = document.getElementById('player2Streak');
+        const player1Info = document.getElementById('player1Info');
+        const player2Info = document.getElementById('player2Info');
+        const blockMove = document.getElementById('blockMove');
+        const stealMove = document.getElementById('stealMove');
+        const doubleMove = document.getElementById('doubleMove');
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const closeSettings = document.getElementById('closeSettings');
+        const tutorialBtn = document.getElementById('tutorialBtn');
+        const tutorialOverlay = document.getElementById('tutorialOverlay');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const soundToggleBtn = document.getElementById('soundToggleBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const tournamentInfo = document.getElementById('tournamentInfo');
+        const tournamentText = document.getElementById('tournamentText');
+        const achievements = document.getElementById('achievements');
+        const shortcutsHint = document.getElementById('shortcutsHint');
+
+        // Settings elements
+        const soundToggle = document.getElementById('soundToggle');
+        const vibrationToggle = document.getElementById('vibrationToggle');
+        const animationSpeed = document.getElementById('animationSpeed');
+        const speedValue = document.getElementById('speedValue');
+        const aiDifficulty = document.getElementById('aiDifficulty');
+        const highContrastToggle = document.getElementById('highContrastToggle');
+
+        // Tutorial elements
+        const tutorialSteps = document.querySelectorAll('.tutorial-step');
+        const prevTutorial = document.getElementById('prevTutorial');
+        const nextTutorial = document.getElementById('nextTutorial');
+        const tutorialProgress = document.getElementById('tutorialProgress');
+
+        // Game State
+        let gameActive = false;
+        let gameMode = 'pvp';
+        let currentPlayer = 'X';
+        let gameBoardState = ['', '', '', '', '', '', '', '', '', ''];
+        let player1Character = 'hero';
+        let player2Character = 'villain';
+        let player1Score = 0;
+        let player2Score = 0;
+        let player1Streak = 0;
+        let player2Streak = 0;
+        let powerMoveUsed = {
+            block: false,
+            steal: false,
+            double: false
+        };
+        let doubleMoveActive = false;
+        let blockedCell = null;
+        let tournamentMode = false;
+        let tournamentRound = 1;
+        let tournamentTarget = 3;
+        let player1TournamentWins = 0;
+        let player2TournamentWins = 0;
+        let settings = {
+            sound: true,
+            vibration: false,
+            animationSpeed: 1,
+            aiDifficulty: 'medium',
+            highContrast: false
+        };
+
+        // Winning Conditions
+        const winningConditions = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        // Sound Effects
+        const soundEffects = ['POW!', 'BAM!', 'ZAP!', 'BOOM!', 'WHAM!', 'CRASH!', 'KAPOW!', 'SOCK!', 'BIFF!'];
+        
+        // Audio Context for sound effects
+        let audioContext = null;
+
+        // Initialize audio context
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Play sound effect
+        function playSound(frequency = 440, duration = 0.1) {
+            if (!settings.sound) return;
+            
+            initAudio();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'square';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        // Vibration feedback
+        function vibrate(pattern = [50]) {
+            if (settings.vibration && 'vibrate' in navigator) {
+                navigator.vibrate(pattern);
+            }
+        }
+
+        // Create floating symbols
+        function createFloatingSymbols() {
+            const symbols = ['X', 'O', '⚡', '💥', '🎯', '🏆'];
+            for (let i = 0; i < 8; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'floating-symbol';
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                symbol.style.left = Math.random() * 100 + '%';
+                symbol.style.animationDelay = Math.random() * 20 + 's';
+                symbol.style.animationDuration = (15 + Math.random() * 10) + 's';
+                animatedBg.appendChild(symbol);
+            }
+        }
+
+        // Create particle effect
+        function createParticles(x, y, count = 20) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+                particle.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
+                particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        // Add sound effect
+        function addSoundEffect(x, y, text = null) {
+            const soundEffect = document.createElement('div');
+            soundEffect.classList.add('sound-effect');
+            soundEffect.textContent = text || soundEffects[Math.floor(Math.random() * soundEffects.length)];
+            soundEffect.style.left = x + 'px';
+            soundEffect.style.top = y + 'px';
+            soundEffect.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(soundEffect);
+            
+            setTimeout(() => soundEffect.remove(), 1000);
+        }
+
+        // Show achievement
+        function showAchievement(title, icon = '🏆') {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement';
+            achievement.innerHTML = `
+                <div class="achievement-icon">${icon}</div>
+                <div class="achievement-text">${title}</div>
+            `;
+            achievements.appendChild(achievement);
+            
+            playSound(800, 0.2);
+            vibrate([100, 50, 100]);
+            
+            setTimeout(() => achievement.remove(), 5000);
+        }
+
+        // Check achievements
+        function checkAchievements() {
+            // First Win
+            if ((player1Score === 1 || player2Score === 1) && !localStorage.getItem('achievement_firstWin')) {
+                showAchievement('First Victory!', '🎯');
+                localStorage.setItem('achievement_firstWin', 'true');
+            }
+            
+            // Streak Master
+            if ((player1Streak >= 5 || player2Streak >= 5) && !localStorage.getItem('achievement_streakMaster')) {
+                showAchievement('Streak Master!', '🔥');
+                localStorage.setItem('achievement_streakMaster', 'true');
+            }
+            
+            // Power User
+            if (!powerMoveUsed.block && !powerMoveUsed.steal && !powerMoveUsed.double && 
+                gameBoardState.filter(cell => cell !== '').length >= 5 && !localStorage.getItem('achievement_powerUser')) {
+                showAchievement('Pure Skill!', '💪');
+                localStorage.setItem('achievement_powerUser', 'true');
+            }
+            
+            // Tournament Champion
+            if (tournamentMode && (player1TournamentWins >= tournamentTarget || player2TournamentWins >= tournamentTarget) && 
+                !localStorage.getItem('achievement_champion')) {
+                showAchievement('Tournament Champion!', '👑');
+                localStorage.setItem('achievement_champion', 'true');
+            }
+        }
+
+        // Save game
+        function saveGame() {
+            const gameState = {
+                gameMode,
+                currentPlayer,
+                gameBoardState,
+                player1Character,
+                player2Character,
+                player1Score,
+                player2Score,
+                player1Streak,
+                player2Streak,
+                tournamentMode,
+                tournamentRound,
+                tournamentTarget,
+                player1TournamentWins,
+                player2TournamentWins,
+                timestamp: Date.now()
+            };
+            
+            localStorage.setItem('ticTacToeSave', JSON.stringify(gameState));
+            gameMessage.textContent = 'Game Saved!';
+            setTimeout(() => {
+                if (gameActive) {
+                    gameMessage.textContent = `${currentPlayer === 'X' ? player1NameDisplay.textContent : player2NameDisplay.textContent}'s Turn`;
+                }
+            }, 2000);
+            
+            showAchievement('Game Saved', '💾');
+        }
+
+        // Load game
+        function loadGame() {
+            const savedGame = localStorage.getItem('ticTacToeSave');
+            if (savedGame) {
+                const gameState = JSON.parse(savedGame);
+                
+                // Restore game state
+                gameMode = gameState.gameMode;
+                currentPlayer = gameState.currentPlayer;
+                gameBoardState = gameState.gameBoardState;
+                player1Character = gameState.player1Character;
+                player2Character = gameState.player2Character;
+                player1Score = gameState.player1Score;
+                player2Score = gameState.player2Score;
+                player1Streak = gameState.player1Streak;
+                player2Streak = gameState.player2Streak;
+                tournamentMode = gameState.tournamentMode;
+                tournamentRound = gameState.tournamentRound;
+                tournamentTarget = gameState.tournamentTarget;
+                player1TournamentWins = gameState.player1TournamentWins;
+                player2TournamentWins = gameState.player2TournamentWins;
+                
+                // Update UI
+                updateGameMode();
+                updateCharacters();
+                updateScores();
+                updateBoard();
+                
+                gameMessage.textContent = 'Game Loaded!';
+                setTimeout(() => {
+                    if (gameActive) {
+                        gameMessage.textContent = `${currentPlayer === 'X' ? player1NameDisplay.textContent : player2NameDisplay.textContent}'s Turn`;
+                    }
+                }, 2000);
+                
+                showAchievement('Game Loaded', '📂');
+            } else {
+                gameMessage.textContent = 'No saved game found!';
+                setTimeout(() => {
+                    if (gameActive) {
+                        gameMessage.textContent = `${currentPlayer === 'X' ? player1NameDisplay.textContent : player2NameDisplay.textContent}'s Turn`;
+                    }
+                }, 2000);
+            }
+        }
+
+        // Update game mode UI
+        function updateGameMode() {
+            gameModes.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === gameMode);
+            });
+            
+            if (tournamentMode) {
+                tournamentInfo.classList.add('active');
+                tournamentText.textContent = `Tournament: Round ${tournamentRound} - Best of ${tournamentTarget}`;
+            } else {
+                tournamentInfo.classList.remove('active');
+            }
+        }
+
+        // Update character selection
+        function updateCharacters() {
+            document.querySelectorAll('.character-card').forEach(card => {
+                if (card.dataset.character === player1Character || 
+                    (gameMode === 'pvp' && card.dataset.character === player2Character)) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+            
+            const player1Card = document.querySelector(`[data-character="${player1Character}"]`);
+            player1NameDisplay.textContent = player1Card.querySelector('.character-name').textContent;
+            
+            if (gameMode === 'pvp') {
+                const player2Card = document.querySelector(`[data-character="${player2Character}"]`);
+                player2NameDisplay.textContent = player2Card.querySelector('.character-name').textContent;
+                player2Info.classList.remove('ai');
+            } else {
+                player2NameDisplay.textContent = 'Computer';
+                player2Info.classList.add('ai');
+            }
+        }
+
+        // Update scores
+        function updateScores() {
+            player1ScoreDisplay.textContent = player1Score;
+            player2ScoreDisplay.textContent = player2Score;
+            player1StreakDisplay.textContent = player1Streak;
+            player2StreakDisplay.textContent = player2Streak;
+        }
+
+        // Update board
+        function updateBoard() {
+            cells.forEach((cell, index) => {
+                cell.textContent = gameBoardState[index];
+                cell.className = 'cell';
+                if (gameBoardState[index]) {
+                    cell.classList.add(gameBoardState[index].toLowerCase(), 'taken');
+                }
+            });
+        }
+
+        // Character selection
+        document.querySelectorAll('.character-card').forEach(card => {
+            card.addEventListener('click', function() {
+                if (!gameActive) {
+                    if (gameMode === 'pvp') {
+                        // First player selection
+                        player1Character = this.dataset.character;
+                        const remainingCards = Array.from(document.querySelectorAll('.character-card'))
+                            .filter(c => c !== this);
+                        
+                        // Auto-select second character for PvP
+                        setTimeout(() => {
+                            const randomCard = remainingCards[Math.floor(Math.random() * remainingCards.length)];
+                            randomCard.classList.add('selected');
+                            player2Character = randomCard.dataset.character;
+                            startGame();
+                        }, 500);
+                    } else {
+                        // Single player mode
+                        player1Character = this.dataset.character;
+                        startGame();
+                    }
+                    
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        // Game mode selection
+        gameModes.forEach(btn => {
+            btn.addEventListener('click', function() {
+                gameMode = this.dataset.mode;
+                tournamentMode = gameMode === 'tournament';
+                tournamentRound = 1;
+                player1TournamentWins = 0;
+                player2TournamentWins = 0;
+                
+                // Reset UI
+                document.querySelectorAll('.character-card').forEach(c => c.classList.remove('selected'));
+                document.querySelector('.character-card').classList.add('selected');
+                
+                gameMessage.textContent = 'Select Your Character';
+                gameActive = false;
+                
+                updateGameMode();
+            });
+        });
+
+        // Power move buttons
+        blockMove.addEventListener('click', () => usePowerMove('block'));
+        stealMove.addEventListener('click', () => usePowerMove('steal'));
+        doubleMove.addEventListener('click', () => usePowerMove('double'));
+
+        function usePowerMove(type) {
+            if (powerMoveUsed[type] || !gameActive) return;
+            
+            powerMoveUsed[type] = true;
+            const button = document.getElementById(type + 'Move');
+            const cooldown = button.querySelector('.cooldown');
+            
+            if (type === 'block') {
+                // Find an empty cell to block
+                const emptyCells = [];
+                gameBoardState.forEach((cell, index) => {
+                    if (cell === '') emptyCells.push(index);
+                });
+                
+                if (emptyCells.length > 0) {
+                    blockedCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                    cells[blockedCell].classList.add('blocked');
+                    gameMessage.textContent = 'Cell blocked!';
+                    playSound(300, 0.2);
+                    vibrate([50]);
+                    setTimeout(() => {
+                        cells[blockedCell].classList.remove('blocked');
+                        blockedCell = null;
+                    }, 3000);
+                }
+            } else if (type === 'steal') {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                updatePlayerIndicator();
+                gameMessage.textContent = 'Turn stolen!';
+                playSound(400, 0.2);
+                vibrate([100, 50]);
+            } else if (type === 'double') {
+                doubleMoveActive = true;
+                gameMessage.textContent = 'Double move activated!';
+                playSound(500, 0.2);
+                vibrate([100, 100]);
+            }
+            
+            // Show cooldown
+            cooldown.style.display = 'flex';
+            cooldown.textContent = '3';
+            button.disabled = true;
+            
+            let count = 3;
+            const interval = setInterval(() => {
+                count--;
+                cooldown.textContent = count;
+                if (count <= 0) {
+                    clearInterval(interval);
+                    cooldown.style.display = 'none';
+                    button.disabled = false;
+                }
+            }, 1000);
+        }
+
+        // Theme selection
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                document.body.className = settings.highContrast ? 'high-contrast' : '';
+                
+                // Apply theme-specific styles
+                if (theme === 'neon') {
+                    document.documentElement.style.setProperty('--primary', '#FF00FF');
+                    document.documentElement.style.setProperty('--secondary', '#00FFFF');
+                    document.documentElement.style.setProperty('--accent', '#FFFF00');
+                } else if (theme === 'retro') {
+                    document.documentElement.style.setProperty('--primary', '#FFA500');
+                    document.documentElement.style.setProperty('--secondary', '#FF1493');
+                    document.documentElement.style.setProperty('--accent', '#00FF00');
+                } else {
+                    // Reset to comic theme
+                    document.documentElement.style.setProperty('--primary', '#FF3C41');
+                    document.documentElement.style.setProperty('--secondary', '#0099FF');
+                    document.documentElement.style.setProperty('--accent', '#FFD700');
+                }
+            });
+        });
+
+        // Settings panel
+        settingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.add('active');
+        });
+
+        closeSettings.addEventListener('click', () => {
+            settingsPanel.classList.remove('active');
+        });
+
+        // Settings controls
+        soundToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            settings.sound = this.classList.contains('active');
+            soundToggleBtn.innerHTML = settings.sound ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+        });
+
+        vibrationToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            settings.vibration = this.classList.contains('active');
+        });
+
+        animationSpeed.addEventListener('input', function() {
+            settings.animationSpeed = parseFloat(this.value);
+            speedValue.textContent = settings.animationSpeed + 'x';
+            document.documentElement.style.setProperty('--animation-speed', settings.animationSpeed + 's');
+        });
+
+        aiDifficulty.addEventListener('change', function() {
+            settings.aiDifficulty = this.value;
+        });
+
+        highContrastToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            settings.highContrast = this.classList.contains('active');
+            document.body.classList.toggle('high-contrast');
+        });
+
+        // Tutorial
+        tutorialBtn.addEventListener('click', () => {
+            tutorialOverlay.classList.add('active');
+            currentTutorialStep = 0;
+            showTutorialStep(0);
+        });
+
+        let currentTutorialStep = 0;
+        const totalTutorialSteps = tutorialSteps.length;
+
+        function showTutorialStep(step) {
+            tutorialSteps.forEach(s => s.classList.remove('active'));
+            tutorialSteps[step].classList.add('active');
+            tutorialProgress.textContent = `${step + 1} / ${totalTutorialSteps}`;
+            
+            prevTutorial.disabled = step === 0;
+            nextTutorial.disabled = step === totalTutorialSteps - 1;
+        }
+
+        prevTutorial.addEventListener('click', () => {
+            if (currentTutorialStep > 0) {
+                currentTutorialStep--;
+                showTutorialStep(currentTutorialStep);
+            }
+        });
+
+        nextTutorial.addEventListener('click', () => {
+            if (currentTutorialStep < totalTutorialSteps - 1) {
+                currentTutorialStep++;
+                showTutorialStep(currentTutorialStep);
+            } else {
+                tutorialOverlay.classList.remove('active');
+            }
+        });
+
+        // Fullscreen
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        });
+
+        // Share functionality
+        shareBtn.addEventListener('click', async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Comic Tic Tac Toe',
+                        text: 'Check out this awesome comic-style Tic Tac Toe game!',
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    console.log('Error sharing:', err);
+                }
+            } else {
+                // Fallback - copy to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    gameMessage.textContent = 'Link copied to clipboard!';
+                    setTimeout(() => {
+                        if (gameActive) {
+                            gameMessage.textContent = `${currentPlayer === 'X' ? player1NameDisplay.textContent : player2NameDisplay.textContent}'s Turn`;
+                        }
+                    }, 2000);
+                });
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (!gameActive) return;
+            
+            // Number keys 1-9 for cells
+            if (e.key >= '1' && e.key <= '9') {
+                const index = parseInt(e.key) - 1;
+                cells[index].click();
+            }
+            
+            // Power moves
+            if (e.key.toLowerCase() === 'q') usePowerMove('block');
+            if (e.key.toLowerCase() === 'w') usePowerMove('steal');
+            if (e.key.toLowerCase() === 'e') usePowerMove('double');
+            
+            // Settings
+            if (e.key.toLowerCase() === 's') settingsBtn.click();
+            
+            // Fullscreen
+            if (e.key.toLowerCase() === 'f') fullscreenBtn.click();
+            
+            // Help
+            if (e.key.toLowerCase() === 'h') tutorialBtn.click();
+        });
+
+        // Touch/Swipe gestures for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        gameBoard.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+
+        gameBoard.addEventListener('touchend', (e) => {
+            if (!gameActive) return;
+            
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // Determine which cell was tapped
+            const boardRect = gameBoard.getBoundingClientRect();
+            const cellSize = boardRect.width / 3;
+            
+            const relativeX = touchEndX - boardRect.left;
+            const relativeY = touchEndY - boardRect.top;
+            
+            const col = Math.floor(relativeX / cellSize);
+            const row = Math.floor(relativeY / cellSize);
+            
+            if (col >= 0 && col < 3 && row >= 0 && row < 3) {
+                const index = row * 3 + col;
+                cells[index].click();
+            }
+            
+            // Swipe gestures for power moves
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    // Swipe right - Steal turn
+                    usePowerMove('steal');
+                } else {
+                    // Swipe left - Block
+                    usePowerMove('block');
+                }
+            } else if (Math.abs(deltaY) > 50) {
+                if (deltaY < 0) {
+                    // Swipe up - Double move
+                    usePowerMove('double');
+                }
+            }
+        });
+
+        function startGame() {
+            characterSelection.style.display = 'none';
+            powerMoves.style.display = 'flex';
+            gameInfo.style.display = 'flex';
+            gameBoard.style.display = 'grid';
+            gameControls.style.display = 'flex';
+            
+            gameActive = true;
+            gameMessage.textContent = `${player1NameDisplay.textContent}'s Turn`;
+            
+            updateCharacters();
+            updateScores();
+            
+            player1Info.classList.add('active');
+            player2Info.classList.remove('active');
+            
+            // Reset power moves
+            powerMoveUsed = { block: false, steal: false, double: false };
+            document.querySelectorAll('.power-move').forEach(btn => {
+                btn.disabled = false;
+                btn.querySelector('.cooldown').style.display = 'none';
+            });
+            
+            // Show tutorial on first play
+            if (!localStorage.getItem('tutorialShown')) {
+                setTimeout(() => {
+                    tutorialBtn.click();
+                    localStorage.setItem('tutorialShown', 'true');
+                }, 1000);
+            }
+        }
+
+        // Cell Click
+        cells.forEach(cell => {
+            cell.addEventListener('click', handleCellClick);
+        });
+
+        function handleCellClick(event) {
+            const clickedCell = event.target;
+            const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
+
+            if (gameBoardState[clickedCellIndex] !== '' || !gameActive || clickedCellIndex === blockedCell) {
+                return;
+            }
+
+            // Update cell
+            gameBoardState[clickedCellIndex] = currentPlayer;
+            clickedCell.textContent = currentPlayer;
+            clickedCell.classList.add(currentPlayer.toLowerCase(), 'taken');
+            
+            // Add effects
+            const rect = clickedCell.getBoundingClientRect();
+            addSoundEffect(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 10);
+            playSound(currentPlayer === 'X' ? 440 : 660, 0.1);
+            vibrate(50);
+            
+            // Check for win or draw
+            checkResult();
+            
+            // Handle double move
+            if (doubleMoveActive && gameActive) {
+                doubleMoveActive = false;
+                gameMessage.textContent = `${currentPlayer === 'X' ? player1NameDisplay.textContent : player2NameDisplay.textContent}'s Turn (Extra Move)`;
+                return;
+            }
+            
+            // AI move
+            if (gameMode === 'pvc' && gameActive && currentPlayer === 'O') {
+                setTimeout(makeAIMove, 500);
+            }
+        }
+
+        function makeAIMove() {
+            const availableCells = [];
+            gameBoardState.forEach((cell, index) => {
+                if (cell === '' && index !== blockedCell) {
+                    availableCells.push(index);
+                }
+            });
+            
+            if (availableCells.length > 0) {
+                let moveIndex;
+                
+                switch (settings.aiDifficulty) {
+                    case 'easy':
+                        // Random move
+                        moveIndex = availableCells[Math.floor(Math.random() * availableCells.length)];
+                        break;
+                    case 'medium':
+                        // Try to win, block, or random
+                        moveIndex = findBestMove('O');
+                        if (moveIndex === -1) {
+                            moveIndex = findBestMove('X');
+                        }
+                        if (moveIndex === -1) {
+                            moveIndex = availableCells[Math.floor(Math.random() * availableCells.length)];
+                        }
+                        break;
+                    case 'hard':
+                        // Minimax algorithm
+                        moveIndex = minimax(gameBoardState, 'O').index;
+                        break;
+                    case 'impossible':
+                        // Perfect play
+                        moveIndex = getPerfectMove();
+                        break;
+                }
+                
+                const cell = cells[moveIndex];
+                cell.click();
+            }
+        }
+
+        function findBestMove(player) {
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                const values = [gameBoardState[a], gameBoardState[b], gameBoardState[c]];
+                
+                if (values.filter(v => v === player).length === 2 && values.includes('')) {
+                    return condition[values.indexOf('')];
+                }
+            }
+            return -1;
+        }
+
+        function minimax(board, player, depth = 0) {
+            const winner = checkWinner(board);
+            
+            if (winner === 'X') return { score: -10 + depth };
+            if (winner === 'O') return { score: 10 - depth };
+            if (!board.includes('')) return { score: 0 };
+            
+            const moves = [];
+            
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = player;
+                    const result = minimax(board, player === 'X' ? 'O' : 'X', depth + 1);
+                    board[i] = '';
+                    moves.push({ ...result, index: i });
+                }
+            }
+            
+            let bestMove;
+            if (player === 'O') {
+                let bestScore = -Infinity;
+                for (let move of moves) {
+                    if (move.score > bestScore) {
+                        bestScore = move.score;
+                        bestMove = move;
+                    }
+                }
+            } else {
+                let bestScore = Infinity;
+                for (let move of moves) {
+                    if (move.score < bestScore) {
+                        bestScore = move.score;
+                        bestMove = move;
+                    }
+                }
+            }
+            
+            return bestMove;
+        }
+
+        function checkWinner(board) {
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    return board[a];
+                }
+            }
+            return null;
+        }
+
+        function getPerfectMove() {
+            // Center is best first move
+            if (gameBoardState[4] === '') return 4;
+            
+            // Check for winning moves
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                const values = [gameBoardState[a], gameBoardState[b], gameBoardState[c]];
+                
+                if (values.filter(v => v === 'O').length === 2 && values.includes('')) {
+                    return condition[values.indexOf('')];
+                }
+            }
+            
+            // Block opponent's winning moves
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                const values = [gameBoardState[a], gameBoardState[b], gameBoardState[c]];
+                
+                if (values.filter(v => v === 'X').length === 2 && values.includes('')) {
+                    return condition[values.indexOf('')];
+                }
+            }
+            
+            // Corners
+            const corners = [0, 2, 6, 8];
+            const availableCorners = corners.filter(i => gameBoardState[i] === '');
+            if (availableCorners.length > 0) {
+                return availableCorners[Math.floor(Math.random() * availableCorners.length)];
+            }
+            
+            // Any available cell
+            const availableCells = gameBoardState.map((cell, index) => cell === '' ? index : null).filter(i => i !== null);
+            return availableCells[Math.floor(Math.random() * availableCells.length)];
+        }
+
+        function checkResult() {
+            let roundWon = false;
+            
+            for (let i = 0; i < winningConditions.length; i++) {
+                const winCondition = winningConditions[i];
+                const a = gameBoardState[winCondition[0]];
+                const b = gameBoardState[winCondition[1]];
+                const c = gameBoardState[winCondition[2]];
+                
+                if (a === '' || b === '' || c === '') {
+                    continue;
+                }
+                
+                if (a === b && b === c) {
+                    roundWon = true;
+                    break;
+                }
+            }
+            
+            if (roundWon) {
+                const winner = currentPlayer === 'X' ? player1NameDisplay.textContent : player2NameDisplay.textContent;
+                gameMessage.textContent = `${winner} Wins!`;
+                gameActive = false;
+                
+                // Update score and streak
+                if (currentPlayer === 'X') {
+                    player1Score++;
+                    player1Streak++;
+                    player2Streak = 0;
+                    if (tournamentMode) player1TournamentWins++;
+                } else {
+                    player2Score++;
+                    player2Streak++;
+                    player1Streak = 0;
+                    if (tournamentMode) player2TournamentWins++;
+                }
+                
+                updateScores();
+                
+                // Highlight winning cells
+                highlightWinningCells();
+                
+                // Celebration effects
+                const boardRect = gameBoard.getBoundingClientRect();
+                createParticles(boardRect.left + boardRect.width / 2, boardRect.top + boardRect.height / 2, 50);
+                addSoundEffect(boardRect.left + boardRect.width / 2, boardRect.top + boardRect.height / 2, 'VICTORY!');
+                playSound(880, 0.5);
+                vibrate([200, 100, 200]);
+                
+                // Check achievements
+                checkAchievements();
+                
+                // Update leaderboard
+                updateLeaderboard();
+                
+                // Tournament mode handling
+                if (tournamentMode) {
+                    if (player1TournamentWins >= tournamentTarget || player2TournamentWins >= tournamentTarget) {
+                        // Tournament over
+                        const champion = player1TournamentWins >= tournamentTarget ? player1NameDisplay.textContent : player2NameDisplay.textContent;
+                        gameMessage.textContent = `${champion} Wins the Tournament!`;
+                        showAchievement('Tournament Champion!', '🏆');
+                        setTimeout(() => {
+                            newGame();
+                        }, 3000);
+                    } else {
+                        // Next round
+                        tournamentRound++;
+                        setTimeout(() => {
+                            resetGame();
+                            tournamentText.textContent = `Tournament: Round ${tournamentRound} - Best of ${tournamentTarget}`;
+                        }, 2000);
+                    }
+                }
+                
+                return;
+            }
+            
+            // Check for draw
+            if (!gameBoardState.includes('')) {
+                gameMessage.textContent = 'Game Ended in a Draw!';
+                gameActive = false;
+                player1Streak = 0;
+                player2Streak = 0;
+                updateScores();
+                playSound(220, 0.3);
+                
+                if (tournamentMode) {
+                    setTimeout(() => {
+                        resetGame();
+                    }, 2000);
+                }
+                
+                return;
+            }
+            
+            // Switch player
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            gameMessage.textContent = `${currentPlayer === 'X' ? player1NameDisplay.textContent : player2NameDisplay.textContent}'s Turn`;
+            
+            updatePlayerIndicator();
+        }
+
+        function updatePlayerIndicator() {
+            if (currentPlayer === 'X') {
+                player1Info.classList.add('active');
+                player2Info.classList.remove('active');
+            } else {
+                player1Info.classList.remove('active');
+                player2Info.classList.add('active');
+            }
+        }
+
+        function highlightWinningCells() {
+            for (let i = 0; i < winningConditions.length; i++) {
+                const winCondition = winningConditions[i];
+                const a = gameBoardState[winCondition[0]];
+                const b = gameBoardState[winCondition[1]];
+                const c = gameBoardState[winCondition[2]];
+                
+                if (a === '' || b === '' || c === '') {
+                    continue;
+                }
+                
+                if (a === b && b === c) {
+                    cells[winCondition[0]].classList.add('winner');
+                    cells[winCondition[1]].classList.add('winner');
+                    cells[winCondition[2]].classList.add('winner');
+                    break;
+                }
+            }
+        }
+
+        function updateLeaderboard() {
+            const scores = [
+                { name: player1NameDisplay.textContent, score: player1Score },
+                { name: player2NameDisplay.textContent, score: player2Score }
+            ];
+            
+            // Get saved leaderboard data
+            const savedLeaderboard = JSON.parse(localStorage.getItem('ticTacToeLeaderboard') || '[]');
+            
+            // Add current scores
+            scores.forEach(score => {
+                const existing = savedLeaderboard.find(s => s.name === score.name);
+                if (existing) {
+                    existing.score = Math.max(existing.score, score.score);
+                } else {
+                    savedLeaderboard.push({ name: score.name, score: score.score });
+                }
+            });
+            
+            // Sort by score
+            savedLeaderboard.sort((a, b) => b.score - a.score);
+            
+            // Keep only top 10
+            const topScores = savedLeaderboard.slice(0, 10);
+            
+            // Save back to localStorage
+            localStorage.setItem('ticTacToeLeaderboard', JSON.stringify(topScores));
+            
+            // Update display
+            leaderboardList.innerHTML = '';
+            topScores.forEach((score, index) => {
+                const item = document.createElement('li');
+                item.className = 'leaderboard-item';
+                item.innerHTML = `
+                    <span><span class="leaderboard-rank">#${index + 1}</span> ${score.name}</span>
+                    <span>${score.score} Wins</span>
+                `;
+                leaderboardList.appendChild(item);
+            });
+        }
+
+        // Game controls
+        resetButton.addEventListener('click', resetGame);
+        newGameButton.addEventListener('click', newGame);
+        saveButton.addEventListener('click', saveGame);
+        loadButton.addEventListener('click', loadGame);
+        leaderboardButton.addEventListener('click', () => {
+            leaderboard.classList.toggle('active');
+        });
+
+        function resetGame() {
+            gameBoardState = ['', '', '', '', '', '', '', '', ''];
+            gameActive = true;
+            currentPlayer = 'X';
+            gameMessage.textContent = `${player1NameDisplay.textContent}'s Turn`;
+            
+            // Clear cells
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.classList.remove('x', 'o', 'taken', 'winner', 'blocked');
+            });
+            
+            // Reset power moves
+            powerMoveUsed = { block: false, steal: false, double: false };
+            doubleMoveActive = false;
+            blockedCell = null;
+            document.querySelectorAll('.power-move').forEach(btn => {
+                btn.disabled = false;
+                btn.querySelector('.cooldown').style.display = 'none';
+            });
+            
+            updatePlayerIndicator();
+        }
+
+        function newGame() {
+            player1Score = 0;
+            player2Score = 0;
+            player1Streak = 0;
+            player2Streak = 0;
+            player1TournamentWins = 0;
+            player2TournamentWins = 0;
+            tournamentRound = 1;
+            
+            // Reset UI
+            characterSelection.style.display = 'flex';
+            powerMoves.style.display = 'none';
+            gameInfo.style.display = 'none';
+            gameBoard.style.display = 'none';
+            gameControls.style.display = 'none';
+            leaderboard.style.display = 'none';
+            
+            // Reset character selection
+            document.querySelectorAll('.character-card').forEach(c => c.classList.remove('selected'));
+            document.querySelector('.character-card').classList.add('selected');
+            
+            gameMessage.textContent = 'Select Your Character';
+            gameActive = false;
+        }
+
+        // Show/hide keyboard shortcuts hint
+        let shortcutsTimeout;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Shift') {
+                clearTimeout(shortcutsTimeout);
+                shortcutsHint.classList.add('active');
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'Shift') {
+                shortcutsTimeout = setTimeout(() => {
+                    shortcutsHint.classList.remove('active');
+                }, 2000);
+            }
+        });
+
+        // Initialize
+        createFloatingSymbols();
+        updateLeaderboard();
+        
+        // Load settings
+        const savedSettings = localStorage.getItem('ticTacToeSettings');
+        if (savedSettings) {
+            settings = { ...settings, ...JSON.parse(savedSettings) };
+            
+            // Apply settings
+            soundToggle.classList.toggle('active', settings.sound);
+            vibrationToggle.classList.toggle('active', settings.vibration);
+            animationSpeed.value = settings.animationSpeed;
+            speedValue.textContent = settings.animationSpeed + 'x';
+            aiDifficulty.value = settings.aiDifficulty;
+            highContrastToggle.classList.toggle('active', settings.highContrast);
+            
+            if (settings.highContrast) {
+                document.body.classList.add('high-contrast');
+            }
+            
+            soundToggleBtn.innerHTML = settings.sound ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+        }
+
+        // Save settings on change
+        [soundToggle, vibrationToggle, animationSpeed, aiDifficulty, highContrastToggle].forEach(control => {
+            control.addEventListener('change', () => {
+                localStorage.setItem('ticTacToeSettings', JSON.stringify(settings));
+            });
+        });
+
+        // Handle window resize for responsive design
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Recalculate cell sizes if needed
+                const boardRect = gameBoard.getBoundingClientRect();
+                const cellSize = Math.min(boardRect.width / 3, boardRect.height / 3);
+                document.documentElement.style.setProperty('--cell-size', cellSize + 'px');
+            }, 250);
+        });
+
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>

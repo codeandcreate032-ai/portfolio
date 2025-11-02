@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Web Apps | TECH HERO</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Comic Book Color Scheme */
+            --primary: #FF3C41;
+            --secondary: #0099FF;
+            --accent: #FFD700;
+            --background: #FFF;
+            --text: #000;
+            --text-light: #FFF;
+            --panel-bg: #F8F8F8;
+            --border-color: #000;
+            --shadow-color: rgba(0,0,0,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(circle, #000 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        /* Comic Book Halftone Pattern */
+        .halftone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 4px 4px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        .loader-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .loader-bang {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: var(--text-light);
+            text-shadow: 3px 3px 0 var(--secondary), 6px 6px 0 var(--accent);
+            animation: bounce 0.5s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary);
+            border-bottom: 4px solid var(--border-color);
+            z-index: 1000;
+            box-shadow: 0 4px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 700;
+            color: var(--text-light);
+            text-shadow: 2px 2px 0 var(--border-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            position: relative;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            padding: 5px 10px;
+            border: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+            border: 2px solid var(--border-color);
+            background-color: var(--text-light);
+        }
+
+        .theme-toggle {
+            background: var(--secondary);
+            border: 3px solid var(--border-color);
+            color: var(--text-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            box-shadow: 0 3px 0 var(--shadow-color);
+            order: 2;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        .theme-toggle:active {
+            transform: translateY(0);
+            box-shadow: 0 0 0 var(--shadow-color);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            order: 1;
+        }
+
+        /* Apps Section */
+        .apps-section {
+            padding: 100px 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 var(--border-color);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 5px;
+            background: repeating-linear-gradient(90deg, var(--border-color), var(--border-color) 10px, var(--accent) 10px, var(--accent) 20px);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .app-card {
+            background: var(--panel-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+            position: relative;
+            transform: rotate(-1deg);
+        }
+
+        .app-card:nth-child(even) {
+            transform: rotate(1deg);
+        }
+
+        .app-card:hover {
+            transform: rotate(0) scale(1.03);
+            box-shadow: 12px 12px 0 var(--shadow-color);
+        }
+
+        .app-header {
+            background: var(--primary);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--border-color);
+        }
+
+        .app-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-icon {
+            font-size: 1.8rem;
+        }
+
+        .app-number {
+            background: var(--accent);
+            color: var(--text);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            border: 2px solid var(--border-color);
+        }
+
+        .app-content {
+            padding: 25px;
+        }
+
+        .app-description {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .app-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .app-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .app-features li i {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .view-app-btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--secondary);
+            border: 3px solid var(--border-color);
+            color: var(--text-light);
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 var(--shadow-color);
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .view-app-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 0 var(--shadow-color);
+        }
+
+        .view-app-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 0 0 var(--shadow-color);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            border: 5px solid var(--border-color);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 0 5px var(--accent), 10px 10px 0 var(--shadow-color);
+        }
+
+        .modal-header {
+            background: var(--primary);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            padding: 5px;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        /* Clock App Styles */
+        .clock-display {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-align: center;
+            margin: 30px 0;
+            color: var(--primary);
+            text-shadow: 2px 2px 0 var(--border-color);
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .timer-input {
+            width: 80px;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: inset 0 2px 0 var(--shadow-color);
+        }
+
+        .timer-display {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin: 20px 0;
+            color: var(--secondary);
+            text-shadow: 2px 2px 0 var(--border-color);
+        }
+
+        .timer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .timer-btn {
+            padding: 10px 20px;
+            background: var(--accent);
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text);
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            text-transform: uppercase;
+        }
+
+        .timer-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        /* Calculator App Styles */
+        .calc-display {
+            background: var(--background);
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            min-height: 60px;
+            box-shadow: inset 0 3px 0 var(--shadow-color);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .calc-btn {
+            padding: 20px;
+            background: var(--secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 0 var(--shadow-color);
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        .calc-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 0 0 var(--shadow-color);
+        }
+
+        .calc-btn.equals {
+            grid-column: span 2;
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        .calc-btn.clear {
+            background: var(--primary);
+        }
+
+        /* To-Do List App Styles */
+        .todo-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .todo-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: inset 0 2px 0 var(--shadow-color);
+        }
+
+        .add-todo-btn {
+            padding: 12px 20px;
+            background: var(--secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            text-transform: uppercase;
+        }
+
+        .add-todo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        .todo-list {
+            list-style: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--background);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .todo-item:hover {
+            transform: translateX(5px);
+        }
+
+        .todo-item.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .todo-text {
+            flex: 1;
+            font-weight: 700;
+        }
+
+        .todo-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .todo-btn {
+            padding: 8px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .todo-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .todo-btn.complete {
+            color: var(--secondary);
+        }
+
+        .todo-btn.delete {
+            color: var(--primary);
+        }
+
+        /* Color Picker App Styles */
+        .color-picker-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .color-input {
+            width: 100%;
+            height: 80px;
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .color-input:hover {
+            transform: scale(1.02);
+        }
+
+        .color-preview {
+            width: 100%;
+            height: 120px;
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .color-values {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .color-value {
+            padding: 10px 20px;
+            background: var(--background);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-value:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        /* Quote Generator App Styles */
+        .quote-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .quote-display {
+            background: var(--background);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            font-family: 'Bangers', cursive;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            position: relative;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quote-display::before {
+            content: '"';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .quote-display::after {
+            content: '"';
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .quote-text {
+            margin: 20px 0;
+            line-height: 1.4;
+        }
+
+        .quote-author {
+            font-style: italic;
+            margin-top: 15px;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .generate-quote-btn {
+            padding: 15px 30px;
+            background: var(--accent);
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Bangers', cursive;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 0 var(--shadow-color);
+            text-transform: uppercase;
+        }
+
+        .generate-quote-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 var(--shadow-color);
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 0 var(--shadow-color);
+            transition: all 0.3s ease;
+            z-index: 999;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 5px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                border-top: 4px solid var(--border-color);
+                box-shadow: 0 4px 0 var(--shadow-color);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .theme-toggle {
+                order: 1;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 10px;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .theme-toggle {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .back-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .calc-buttons {
+                gap: 5px;
+            }
+            
+            .calc-btn {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Dark Theme */
+        body.dark-theme {
+            background-color: #222;
+            color: #eee;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        body.dark-theme .navbar {
+            background: #111;
+        }
+
+        body.dark-theme .app-card,
+        body.dark-theme .modal-content,
+        body.dark-theme .todo-item,
+        body.dark-theme .color-value,
+        body.dark-theme .quote-display {
+            background: #333;
+            color: #eee;
+        }
+
+        body.dark-theme .calc-display,
+        body.dark-theme .todo-input,
+        body.dark-theme .color-preview {
+            background: #444;
+            color: #eee;
+        }
+
+        body.dark-theme .clock-display,
+        body.dark-theme .timer-display {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Halftone Overlay -->
+    <div class="halftone"></div>
+
+    <!-- Loading Animation -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-bang">KAPOW!</div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">TECH HERO</div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#about">Origin</a>
+            <a href="index.html#filmography">Movies</a>
+            <a href="index.html#projects">Missions</a>
+            <a href="index.html#ott">OTT</a>
+            <a href="index.html#timeline">Journey</a>
+            <a href="index.html#achievements">Powers</a>
+            <a href="index.html#contact">Signal</a>
+        </div>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <!-- Apps Section -->
+    <section class="apps-section">
+        <h2 class="section-title" data-aos="fade-up">Mini Web Apps</h2>
+        <div class="apps-grid">
+            <!-- Clock & Timer App Card -->
+            <div class="app-card" data-aos="fade-up">
+                <div class="app-header">
+                    <div class="app-title">
+                        <i class="fas fa-clock app-icon"></i>
+                        Digital Clock & Timer
+                    </div>
+                    <div class="app-number">1</div>
+                </div>
+                <div class="app-content">
+                    <p class="app-description">A dynamic clock display with customizable timer functionality. Perfect for tracking time and setting reminders!</p>
+                    <ul class="app-features">
+                        <li><i class="fas fa-check"></i> Live digital clock display</li>
+                        <li><i class="fas fa-check"></i> Customizable timer with minutes & seconds</li>
+                        <li><i class="fas fa-check"></i> Comic book styled interface</li>
+                    </ul>
+                    <button class="view-app-btn" onclick="openModal('clock')">
+                        <i class="fas fa-eye"></i> View App
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calculator App Card -->
+            <div class="app-card" data-aos="fade-up">
+                <div class="app-header">
+                    <div class="app-title">
+                        <i class="fas fa-calculator app-icon"></i>
+                        Calculator
+                    </div>
+                    <div class="app-number">2</div>
+                </div>
+                <div class="app-content">
+                    <p class="app-description">A fully functional calculator with basic arithmetic operations. Clean design with comic book aesthetics!</p>
+                    <ul class="app-features">
+                        <li><i class="fas fa-check"></i> Basic arithmetic operations</li>
+                        <li><i class="fas fa-check"></i> Clear and delete functions</li>
+                        <li><i class="fas fa-check"></i> Responsive button layout</li>
+                    </ul>
+                    <button class="view-app-btn" onclick="openModal('calculator')">
+                        <i class="fas fa-eye"></i> View App
+                    </button>
+                </div>
+            </div>
+
+            <!-- To-Do List App Card -->
+            <div class="app-card" data-aos="fade-up">
+                <div class="app-header">
+                    <div class="app-title">
+                        <i class="fas fa-list-check app-icon"></i>
+                        To-Do List
+                    </div>
+                    <div class="app-number">3</div>
+                </div>
+                <div class="app-content">
+                    <p class="app-description">Organize your tasks with this interactive to-do list. Add, complete, and delete tasks with ease!</p>
+                    <ul class="app-features">
+                        <li><i class="fas fa-check"></i> Add new tasks instantly</li>
+                        <li><i class="fas fa-check"></i> Mark tasks as complete</li>
+                        <li><i class="fas fa-check"></i> Delete unwanted tasks</li>
+                    </ul>
+                    <button class="view-app-btn" onclick="openModal('todo')">
+                        <i class="fas fa-eye"></i> View App
+                    </button>
+                </div>
+            </div>
+
+            <!-- Color Picker App Card -->
+            <div class="app-card" data-aos="fade-up">
+                <div class="app-header">
+                    <div class="app-title">
+                        <i class="fas fa-palette app-icon"></i>
+                        Color Picker
+                    </div>
+                    <div class="app-number">4</div>
+                </div>
+                <div class="app-content">
+                    <p class="app-description">Explore colors with this interactive color picker. Get HEX and RGB values instantly!</p>
+                    <ul class="app-features">
+                        <li><i class="fas fa-check"></i> Visual color selection</li>
+                        <li><i class="fas fa-check"></i> HEX and RGB value display</li>
+                        <li><i class="fas fa-check"></i> Live color preview</li>
+                    </ul>
+                    <button class="view-app-btn" onclick="openModal('color')">
+                        <i class="fas fa-eye"></i> View App
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quote Generator App Card -->
+            <div class="app-card" data-aos="fade-up">
+                <div class="app-header">
+                    <div class="app-title">
+                        <i class="fas fa-quote-left app-icon"></i>
+                        Quote Generator
+                    </div>
+                    <div class="app-number">5</div>
+                </div>
+                <div class="app-content">
+                    <p class="app-description">Get inspired with random motivational quotes. Perfect for daily motivation and creative thinking!</p>
+                    <ul class="app-features">
+                        <li><i class="fas fa-check"></i> Random quote generation</li>
+                        <li><i class="fas fa-check"></i> Hero and tech-themed quotes</li>
+                        <li><i class="fas fa-check"></i> Beautiful comic-style display</li>
+                    </ul>
+                    <button class="view-app-btn" onclick="openModal('quote')">
+                        <i class="fas fa-eye"></i> View App
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Container -->
+    <div class="modal" id="appModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">
+                    <i class="fas fa-cube"></i>
+                    <span>App Title</span>
+                </div>
+                <button class="close-modal" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- App content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="index.html#projects" class="back-btn" title="Back to Projects">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Loading Animation
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                document.getElementById('loader').style.visibility = 'hidden';
+            }, 1500);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Modal Functions
+        function openModal(appType) {
+            const modal = document.getElementById('appModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            // Clear previous content
+            modalBody.innerHTML = '';
+            
+            // Load app content based on type
+            switch(appType) {
+                case 'clock':
+                    loadClockApp();
+                    modalTitle.innerHTML = '<i class="fas fa-clock"></i> <span>Digital Clock & Timer</span>';
+                    break;
+                case 'calculator':
+                    loadCalculatorApp();
+                    modalTitle.innerHTML = '<i class="fas fa-calculator"></i> <span>Calculator</span>';
+                    break;
+                case 'todo':
+                    loadTodoApp();
+                    modalTitle.innerHTML = '<i class="fas fa-list-check"></i> <span>To-Do List</span>';
+                    break;
+                case 'color':
+                    loadColorPickerApp();
+                    modalTitle.innerHTML = '<i class="fas fa-palette"></i> <span>Color Picker</span>';
+                    break;
+                case 'quote':
+                    loadQuoteGeneratorApp();
+                    modalTitle.innerHTML = '<i class="fas fa-quote-left"></i> <span>Quote Generator</span>';
+                    break;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('appModal');
+            modal.classList.remove('active');
+            
+            // Clear intervals when closing
+            if (window.clockInterval) {
+                clearInterval(window.clockInterval);
+            }
+            if (window.timerInterval) {
+                clearInterval(window.timerInterval);
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('appModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+
+        // Clock & Timer App
+        function loadClockApp() {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="clock-display" id="clock-display">00:00:00</div>
+                <div class="timer-controls">
+                    <input type="number" class="timer-input" id="timer-minutes" placeholder="Min" min="0" max="59">
+                    <input type="number" class="timer-input" id="timer-seconds" placeholder="Sec" min="0" max="59">
+                </div>
+                <div class="timer-display" id="timer-display">00:00</div>
+                <div class="timer-buttons">
+                    <button class="timer-btn" id="start-timer">Start</button>
+                    <button class="timer-btn" id="reset-timer">Reset</button>
+                </div>
+            `;
+            
+            // Start clock
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('clock-display').textContent = `${hours}:${minutes}:${seconds}`;
+            }
+            
+            window.clockInterval = setInterval(updateClock, 1000);
+            updateClock();
+            
+            // Timer functionality
+            let timerSeconds = 0;
+            
+            document.getElementById('start-timer').addEventListener('click', () => {
+                if (window.timerInterval) {
+                    clearInterval(window.timerInterval);
+                    window.timerInterval = null;
+                    document.getElementById('start-timer').textContent = 'Start';
+                } else {
+                    const minutes = parseInt(document.getElementById('timer-minutes').value) || 0;
+                    const seconds = parseInt(document.getElementById('timer-seconds').value) || 0;
+                    timerSeconds = minutes * 60 + seconds;
+                    
+                    if (timerSeconds > 0) {
+                        document.getElementById('start-timer').textContent = 'Pause';
+                        window.timerInterval = setInterval(() => {
+                            if (timerSeconds <= 0) {
+                                clearInterval(window.timerInterval);
+                                window.timerInterval = null;
+                                document.getElementById('start-timer').textContent = 'Start';
+                                alert('Time\'s up! ⏰');
+                            } else {
+                                timerSeconds--;
+                                const mins = Math.floor(timerSeconds / 60);
+                                const secs = timerSeconds % 60;
+                                document.getElementById('timer-display').textContent = 
+                                    `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                            }
+                        }, 1000);
+                    }
+                }
+            });
+            
+            document.getElementById('reset-timer').addEventListener('click', () => {
+                clearInterval(window.timerInterval);
+                window.timerInterval = null;
+                timerSeconds = 0;
+                document.getElementById('timer-display').textContent = '00:00';
+                document.getElementById('start-timer').textContent = 'Start';
+            });
+        }
+
+        // Calculator App
+        function loadCalculatorApp() {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="calc-display" id="calc-display">0</div>
+                <div class="calc-buttons">
+                    <button class="calc-btn clear" data-action="clear">C</button>
+                    <button class="calc-btn" data-action="delete">DEL</button>
+                    <button class="calc-btn" data-action="operator" data-value="/">/</button>
+                    <button class="calc-btn" data-action="operator" data-value="*">×</button>
+                    
+                    <button class="calc-btn" data-action="number" data-value="7">7</button>
+                    <button class="calc-btn" data-action="number" data-value="8">8</button>
+                    <button class="calc-btn" data-action="number" data-value="9">9</button>
+                    <button class="calc-btn" data-action="operator" data-value="-">-</button>
+                    
+                    <button class="calc-btn" data-action="number" data-value="4">4</button>
+                    <button class="calc-btn" data-action="number" data-value="5">5</button>
+                    <button class="calc-btn" data-action="number" data-value="6">6</button>
+                    <button class="calc-btn" data-action="operator" data-value="+">+</button>
+                    
+                    <button class="calc-btn" data-action="number" data-value="1">1</button>
+                    <button class="calc-btn" data-action="number" data-value="2">2</button>
+                    <button class="calc-btn" data-action="number" data-value="3">3</button>
+                    <button class="calc-btn" data-action="number" data-value=".">.</button>
+                    
+                    <button class="calc-btn" data-action="number" data-value="0">0</button>
+                    <button class="calc-btn equals" data-action="equals">=</button>
+                </div>
+            `;
+            
+            // Calculator functionality
+            let calcDisplay = '0';
+            let calcPreviousValue = '';
+            let calcOperation = '';
+            let shouldResetDisplay = false;
+            
+            const updateCalcDisplay = () => {
+                document.getElementById('calc-display').textContent = calcDisplay;
+            };
+            
+            document.querySelectorAll('.calc-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const action = button.getAttribute('data-action');
+                    const value = button.getAttribute('data-value');
+                    
+                    if (action === 'number') {
+                        if (shouldResetDisplay || calcDisplay === '0') {
+                            calcDisplay = value;
+                            shouldResetDisplay = false;
+                        } else {
+                            calcDisplay += value;
+                        }
+                    } else if (action === 'operator') {
+                        calcPreviousValue = calcDisplay;
+                        calcOperation = value;
+                        shouldResetDisplay = true;
+                    } else if (action === 'equals') {
+                        if (calcOperation && calcPreviousValue) {
+                            const prev = parseFloat(calcPreviousValue);
+                            const current = parseFloat(calcDisplay);
+                            let result;
+                            
+                            switch (calcOperation) {
+                                case '+': result = prev + current; break;
+                                case '-': result = prev - current; break;
+                                case '*': result = prev * current; break;
+                                case '/': result = current !== 0 ? prev / current : 'Error'; break;
+                            }
+                            
+                            calcDisplay = String(result);
+                            calcOperation = '';
+                            calcPreviousValue = '';
+                            shouldResetDisplay = true;
+                        }
+                    } else if (action === 'clear') {
+                        calcDisplay = '0';
+                        calcOperation = '';
+                        calcPreviousValue = '';
+                        shouldResetDisplay = false;
+                    } else if (action === 'delete') {
+                        if (calcDisplay.length > 1) {
+                            calcDisplay = calcDisplay.slice(0, -1);
+                        } else {
+                            calcDisplay = '0';
+                        }
+                    }
+                    
+                    updateCalcDisplay();
+                });
+            });
+        }
+
+        // To-Do List App
+        function loadTodoApp() {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="todo-input-container">
+                    <input type="text" class="todo-input" id="todo-input" placeholder="Add a new task...">
+                    <button class="add-todo-btn" id="add-todo">Add</button>
+                </div>
+                <ul class="todo-list" id="todo-list"></ul>
+            `;
+            
+            let todos = [
+                { text: 'Build amazing web apps', completed: false },
+                { text: 'Create inspiring films', completed: false },
+                { text: 'Master AI and cybersecurity', completed: false }
+            ];
+            
+            function renderTodos() {
+                const todoList = document.getElementById('todo-list');
+                todoList.innerHTML = '';
+                
+                todos.forEach((todo, index) => {
+                    const li = document.createElement('li');
+                    li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                    
+                    li.innerHTML = `
+                        <span class="todo-text">${todo.text}</span>
+                        <div class="todo-actions">
+                            <button class="todo-btn complete" data-index="${index}">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="todo-btn delete" data-index="${index}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    todoList.appendChild(li);
+                });
+                
+                // Add event listeners to the new buttons
+                document.querySelectorAll('.todo-btn.complete').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const index = parseInt(button.getAttribute('data-index'));
+                        todos[index].completed = !todos[index].completed;
+                        renderTodos();
+                    });
+                });
+                
+                document.querySelectorAll('.todo-btn.delete').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const index = parseInt(button.getAttribute('data-index'));
+                        todos.splice(index, 1);
+                        renderTodos();
+                    });
+                });
+            }
+            
+            document.getElementById('add-todo').addEventListener('click', () => {
+                const input = document.getElementById('todo-input');
+                const text = input.value.trim();
+                
+                if (text) {
+                    todos.push({ text, completed: false });
+                    input.value = '';
+                    renderTodos();
+                }
+            });
+            
+            document.getElementById('todo-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('add-todo').click();
+                }
+            });
+            
+            renderTodos();
+        }
+
+        // Color Picker App
+        function loadColorPickerApp() {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="color-picker-container">
+                    <input type="color" class="color-input" id="color-input" value="#FF3C41">
+                    <div class="color-preview" id="color-preview"></div>
+                    <div class="color-values">
+                        <div class="color-value" id="hex-value">#FF3C41</div>
+                        <div class="color-value" id="rgb-value">RGB(255, 60, 65)</div>
+                    </div>
+                </div>
+            `;
+            
+            const colorInput = document.getElementById('color-input');
+            const colorPreview = document.getElementById('color-preview');
+            const hexValue = document.getElementById('hex-value');
+            const rgbValue = document.getElementById('rgb-value');
+            
+            function updateColorValues() {
+                const color = colorInput.value;
+                colorPreview.style.backgroundColor = color;
+                hexValue.textContent = color.toUpperCase();
+                
+                // Convert hex to RGB
+                const r = parseInt(color.substr(1, 2), 16);
+                const g = parseInt(color.substr(3, 2), 16);
+                const b = parseInt(color.substr(5, 2), 16);
+                rgbValue.textContent = `RGB(${r}, ${g}, ${b})`;
+            }
+            
+            colorInput.addEventListener('input', updateColorValues);
+            
+            // Copy to clipboard functionality
+            hexValue.addEventListener('click', () => {
+                navigator.clipboard.writeText(hexValue.textContent);
+                const originalText = hexValue.textContent;
+                hexValue.textContent = 'Copied!';
+                setTimeout(() => {
+                    hexValue.textContent = originalText;
+                }, 1000);
+            });
+            
+            rgbValue.addEventListener('click', () => {
+                navigator.clipboard.writeText(rgbValue.textContent);
+                const originalText = rgbValue.textContent;
+                rgbValue.textContent = 'Copied!';
+                setTimeout(() => {
+                    rgbValue.textContent = originalText;
+                }, 1000);
+            });
+            
+            updateColorValues();
+        }
+
+        // Quote Generator App
+        function loadQuoteGeneratorApp() {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="quote-container">
+                    <div class="quote-display" id="quote-display">
+                        <div class="quote-text" id="quote-text">Loading quote...</div>
+                        <div class="quote-author" id="quote-author"></div>
+                    </div>
+                    <button class="generate-quote-btn" id="generate-quote">Generate New Quote</button>
+                </div>
+            `;
+            
+            const quotes = [
+                { text: "With great power comes great responsibility.", author: "Spider-Man" },
+                { text: "Why do we fall? So we can learn to pick ourselves back up.", author: "Batman" },
+                { text: "It's not who I am underneath, but what I do that defines me.", author: "Batman" },
+                { text: "I can do this all day.", author: "Captain America" },
+                { text: "Intelligence is a privilege, and it needs to be used for the greater good.", author: "Doctor Octopus" },
+                { text: "The ability to speak does not make you intelligent.", author: "Qui-Gon Jinn" },
+                { text: "Do or do not. There is no try.", author: "Yoda" },
+                { text: "The greatest teacher, failure is.", author: "Yoda" },
+                { text: "In a dark place we find ourselves, and a little more knowledge lights our way.", author: "Yoda" },
+                { text: "Your focus determines your reality.", author: "Qui-Gon Jinn" },
+                { text: "The Force will be with you, always.", author: "Obi-Wan Kenobi" },
+                { text: "Never tell me the odds!", author: "Han Solo" },
+                { text: "I find your lack of faith disturbing.", author: "Darth Vader" },
+                { text: "The fear of loss is a path to the Dark Side.", author: "Yoda" },
+                { text: "To be heroic is to be courageous enough to die for something; to be inspirational is to be crazy enough to live a little.", author: "Criss Jami" },
+                { text: "A hero is an ordinary individual who finds the strength to persevere and endure in spite of overwhelming obstacles.", author: "Christopher Reeve" },
+                { text: "Heroes are made by the paths they choose, not the powers they are graced with.", author: "Brodi Ashton" },
+                { text: "Not all heroes wear capes, some wear code.", author: "Tech Hero" },
+                { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
+                { text: "First, solve the problem. Then, write the code.", author: "John Johnson" }
+            ];
+            
+            function generateQuote() {
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                const quote = quotes[randomIndex];
+                
+                document.getElementById('quote-text').textContent = quote.text;
+                document.getElementById('quote-author').textContent = `— ${quote.author}`;
+            }
+            
+            document.getElementById('generate-quote').addEventListener('click', generateQuote);
+            
+            // Generate initial quote
+            generateQuote();
+        }
+    </script>
+</body>
+</html>

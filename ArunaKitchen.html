@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aruna's Kitchen - Authentic Indian Spices & Sweets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Preloader Styles - Redesigned to match website theme */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fb923c 0%, #ef4444 50%, #ec4899 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: all 0.8s ease-out;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+        
+        .preloader-content {
+            text-align: center;
+            position: relative;
+            width: 450px;
+            height: 450px;
+        }
+        
+        /* Spice Bowl Animation */
+        .spice-bowl {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .spice-bowl::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #fb923c, #ef4444, #ec4899);
+            border-radius: 50%;
+            z-index: -1;
+            animation: rotate 10s linear infinite;
+        }
+        
+        .spice-bowl i {
+            font-size: 80px;
+            color: #ef4444;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Floating Spices */
+        .spice {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .spice i {
+            font-size: 24px;
+            color: #ef4444;
+        }
+        
+        .spice:nth-child(1) { 
+            top: 10%; 
+            left: 20%; 
+            animation-delay: 0s;
+        }
+        .spice:nth-child(2) { 
+            top: 20%; 
+            right: 15%; 
+            animation-delay: 0.5s;
+        }
+        .spice:nth-child(3) { 
+            bottom: 20%; 
+            right: 20%; 
+            animation-delay: 1s;
+        }
+        .spice:nth-child(4) { 
+            bottom: 10%; 
+            left: 15%; 
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            50% { 
+                transform: translateY(-15px) rotate(5deg); 
+            }
+        }
+        
+        /* Brand Name */
+        .brand-name {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+        }
+        
+        .brand-name h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            margin-bottom: 15px;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            letter-spacing: 3px;
+        }
+        
+        .brand-name .tagline {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        @keyframes titleGlow {
+            from { 
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 20px rgba(239, 68, 68, 0.5);
+            }
+            to { 
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 30px rgba(239, 68, 68, 0.8);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translate(-50%, -40%); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translate(-50%, -50%); 
+            }
+        }
+        
+        /* Loading Dots */
+        .loading-dots {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+        
+        .dot {
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            animation: bounce 1.4s ease-in-out infinite both;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+        
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        .dot:nth-child(3) { animation-delay: 0; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { 
+                transform: scale(0); 
+                opacity: 0.7;
+            }
+            40% { 
+                transform: scale(1.3); 
+                opacity: 1;
+            }
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fff, #fef3c7);
+            border-radius: 3px;
+            animation: progressFill 3s ease-in-out infinite;
+        }
+        
+        @keyframes progressFill {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .preloader-content {
+                width: 350px;
+                height: 350px;
+            }
+            
+            .brand-name h1 {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+            
+            .brand-name .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .spice {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .spice i {
+                font-size: 20px;
+            }
+            
+            .spice-bowl {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .spice-bowl i {
+                font-size: 60px;
+            }
+            
+            .progress-bar {
+                width: 200px;
+            }
+        }
+        
+        /* Product Cards */
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .product-card:hover::before {
+            left: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .quick-view-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(239, 68, 68, 0.95);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .product-card:hover .quick-view-btn {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 5;
+            opacity: 0;
+        }
+        
+        .product-card:hover .wishlist-btn {
+            opacity: 1;
+        }
+        
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+            background: #ef4444;
+            color: white;
+        }
+        
+        .wishlist-btn.active {
+            background: #ef4444;
+            color: white;
+            opacity: 1;
+        }
+        
+        /* Search Suggestions */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 50;
+            display: none;
+        }
+        
+        .search-suggestions.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .suggestion-item:hover {
+            background: #f8f8f8;
+        }
+        
+        /* Comparison Bar */
+        .comparison-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 90;
+        }
+        
+        .comparison-bar.active {
+            transform: translateY(0);
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+        
+        .toast.success .toast-icon {
+            background: #10b981;
+            color: white;
+        }
+        
+        .toast.error .toast-icon {
+            background: #ef4444;
+            color: white;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #fb923c 0%, #ef4444 50%, #ec4899 100%);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+        
+        .newsletter-content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ef4444;
+        }
+        
+        /* Checkout Steps - FIXED */
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+            z-index: 1;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: -1;
+        }
+        
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #718096;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step.active .step-circle {
+            background: #ef4444;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+        }
+        
+        .step.completed .step-circle {
+            background: #10b981;
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        .step-label {
+            font-size: 16px;
+            color: #718096;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .step.active .step-label {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .step-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+            
+            .step-label {
+                font-size: 14px;
+            }
+            
+            .checkout-steps {
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .fade-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Preloader - Redesigned to match website theme -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <!-- Floating Spices -->
+            <div class="spice">
+                <i class="fas fa-mortar-pestle"></i>
+            </div>
+            <div class="spice">
+                <i class="fas fa-pepper-hot"></i>
+            </div>
+            <div class="spice">
+                <i class="fas fa-bowl-food"></i>
+            </div>
+            <div class="spice">
+                <i class="fas fa-cookie-bite"></i>
+            </div>
+            
+            <!-- Central Spice Bowl -->
+            <div class="spice-bowl">
+                <i class="fas fa-utensils"></i>
+            </div>
+            
+            <!-- Brand Name -->
+            <div class="brand-name">
+                <h1>Aruna's Kitchen</h1>
+                <p class="tagline">"Where Every Spice Tells a Story"</p>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            
+            <!-- Loading Dots -->
+            <div class="loading-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-utensils text-3xl text-orange-500"></i>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Aruna's Kitchen</h1>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-md w-full">
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search for spices, sweets, pickles..."
+                            class="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-full focus:outline-none focus:border-orange-500 transition-all"
+                        >
+                        <i class="fas fa-search absolute right-4 top-3.5 text-gray-400"></i>
+                        <div id="searchSuggestions" class="search-suggestions"></div>
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <div class="flex items-center space-x-4">
+                    <button class="relative p-2 text-gray-600 hover:text-orange-500 transition-colors">
+                        <i class="fas fa-heart text-2xl"></i>
+                        <span id="wishlistCount" class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button id="cartBtn" class="relative p-2 text-gray-600 hover:text-orange-500 transition-colors">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-12">
+            <div class="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-2xl p-8 md:p-12 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-10 rounded-full -ml-24 -mb-24"></div>
+                <div class="relative z-10 text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome to Aruna's Kitchen</h2>
+                    <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Experience the authentic taste of India with our handcrafted spices, sweets, and pickles - made with love and tradition.</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <div class="bg-white/20 backdrop-blur rounded-full px-4 py-2 md:px-6 md:py-3 flex items-center">
+                            <i class="fas fa-leaf mr-2"></i> 100% Natural
+                        </div>
+                        <div class="bg-white/20 backdrop-blur rounded-full px-4 py-2 md:px-6 md:py-3 flex items-center">
+                            <i class="fas fa-medal mr-2"></i> Premium Quality
+                        </div>
+                        <div class="bg-white/20 backdrop-blur rounded-full px-4 py-2 md:px-6 md:py-3 flex items-center">
+                            <i class="fas fa-truck mr-2"></i> Free Shipping
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Filters -->
+        <section class="mb-8">
+            <div class="flex flex-wrap gap-2 md:gap-3 justify-center">
+                <button class="category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-orange-500 text-white font-semibold shadow-lg transform hover:scale-105 transition-all" data-category="all">
+                    <i class="fas fa-th mr-2"></i>All Products
+                </button>
+                <button class="category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-white text-gray-700 hover:bg-gray-100 font-semibold shadow-md transform hover:scale-105 transition-all" data-category="garam-masala">
+                    <i class="fas fa-mortar-pestle mr-2"></i>Garam Masala
+                </button>
+                <button class="category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-white text-gray-700 hover:bg-gray-100 font-semibold shadow-md transform hover:scale-105 transition-all" data-category="food-masala">
+                    <i class="fas fa-pepper-hot mr-2"></i>Food Masala
+                </button>
+                <button class="category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-white text-gray-700 hover:bg-gray-100 font-semibold shadow-md transform hover:scale-105 transition-all" data-category="chat-masala">
+                    <i class="fas fa-lemon mr-2"></i>Chat Masala
+                </button>
+                <button class="category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-white text-gray-700 hover:bg-gray-100 font-semibold shadow-md transform hover:scale-105 transition-all" data-category="sweets">
+                    <i class="fas fa-cookie-bite mr-2"></i>Sweets
+                </button>
+                <button class="category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-white text-gray-700 hover:bg-gray-100 font-semibold shadow-md transform hover:scale-105 transition-all" data-category="pickles">
+                    <i class="fas fa-wine-bottle mr-2"></i>Pickles
+                </button>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+            <!-- Products will be dynamically inserted -->
+        </section>
+
+        <!-- Recently Viewed -->
+        <section class="recently-viewed mt-16">
+            <h2 class="text-3xl font-bold mb-8">Recently Viewed</h2>
+            <div id="recentlyViewedGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Recently viewed products will be inserted here -->
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter mt-16">
+            <div class="newsletter-content text-center text-white">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Stay Connected with Aruna's Kitchen</h2>
+                <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Subscribe to our newsletter and get exclusive offers, recipes, and updates on new products!</p>
+                <form id="newsletterForm" class="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email address"
+                        class="flex-1 px-6 py-3 rounded-full text-gray-800 focus:outline-none"
+                        required
+                    >
+                    <button type="submit" class="bg-white text-orange-500 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Aruna's Kitchen</h3>
+                    <p class="text-gray-400 mb-4">Bringing authentic Indian flavors to your kitchen since 1985.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Quality Promise</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Recipes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                    <ul class="space-y-2 footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>123 Spice Street, Mumbai, India</li>
+                        <li><i class="fas fa-phone mr-2"></i>+91 98765 43210</li>
+                        <li><i class="fas fa-envelope mr-2"></i>info@arunaskitchen.com</li>
+                        <li><i class="fas fa-clock mr-2"></i>Mon-Sat: 9AM-6PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Aruna's Kitchen. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onclick="closeProductModal()"></div>
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-4xl w-full p-6 md:p-8 relative slide-in max-h-[90vh] overflow-y-auto">
+                <button onclick="closeProductModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+                <div id="modalContent">
+                    <!-- Modal content will be dynamically inserted -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onclick="closeCartModal()"></div>
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-6 relative slide-in max-h-[90vh] overflow-y-auto">
+                <button onclick="closeCartModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+                <h2 class="text-2xl font-bold mb-6">Your Cart</h2>
+                <div id="cartContent">
+                    <!-- Cart content will be dynamically inserted -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-3xl w-full p-6 md:p-8 relative slide-in max-h-[90vh] overflow-y-auto">
+                <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+                <h2 class="text-2xl font-bold mb-2">Checkout</h2>
+                
+                <!-- Checkout Steps -->
+                <div class="checkout-steps mb-8">
+                    <div class="step active" id="step1Nav">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Shipping Info</div>
+                    </div>
+                    <div class="step" id="step2Nav">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Review Order</div>
+                    </div>
+                    <div class="step" id="step3Nav">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Payment</div>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Shipping Information -->
+                <div id="step1" class="checkout-step">
+                    <h3 class="text-xl font-semibold mb-4">Shipping Information</h3>
+                    <form id="shippingForm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Full Name</label>
+                                <input type="text" id="fullName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">State</label>
+                                <input type="text" id="state" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">District</label>
+                                <input type="text" id="district" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Pin Code</label>
+                                <input type="text" id="pinCode" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Street Name</label>
+                            <input type="text" id="streetName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Address</label>
+                            <textarea id="address" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Landmark</label>
+                            <input type="text" id="landmark" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500">
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="isQatar" class="mr-2">
+                                <span>Is this address in Qatar?</span>
+                            </label>
+                        </div>
+                        <div id="qatarFields" class="hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Sector Number</label>
+                                    <input type="text" id="sectorNumber" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Quarter Number</label>
+                                    <input type="text" id="quarterNumber" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Nearest Landmark</label>
+                                    <input type="text" id="nearestLandmark" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="goToStep(2)" class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors">Continue to Review</button>
+                    </form>
+                </div>
+                
+                <!-- Step 2: Order Review -->
+                <div id="step2" class="checkout-step hidden">
+                    <h3 class="text-xl font-semibold mb-4">Order Review</h3>
+                    <div id="orderReview" class="mb-6">
+                        <!-- Order items and details will be inserted here -->
+                    </div>
+                    <div class="mb-6">
+                        <h4 class="font-semibold mb-2">Shipping Address</h4>
+                        <div id="shippingAddress" class="bg-gray-50 p-4 rounded-lg">
+                            <!-- Shipping address will be inserted here -->
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button type="button" onclick="goToStep(1)" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300 transition-colors">Back</button>
+                        <button type="button" onclick="goToStep(3)" class="flex-1 bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors">Continue to Payment</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Payment -->
+                <div id="step3" class="checkout-step hidden">
+                    <h3 class="text-xl font-semibold mb-4">Payment</h3>
+                    <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                        <h4 class="font-semibold mb-2">Pay Using UPI</h4>
+                        <div class="flex flex-col md:flex-row items-center gap-6 mb-4">
+                            <div>
+                                <div class="flex items-center mb-2">
+                                    <span class="text-lg font-bold">UPI ID:</span>
+                                    <span class="ml-2 text-lg">7386895149@fam</span>
+                                </div>
+                                <p class="text-red-500 font-semibold">Note: No cash on delivery available. Please pay using the above UPI ID.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border">
+                                <img src="https://picsum.photos/seed/qrcode/200/200" alt="QR Code" class="w-32 h-32 mx-auto">
+                                <p class="text-center mt-2 text-sm">Scan to Pay</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <h4 class="font-semibold mb-2">Order Total</h4>
+                        <div class="text-2xl font-bold text-orange-500" id="orderTotal">₹0</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <button onclick="placeOrder()" class="bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors">
+                            <i class="fas fa-credit-card mr-2"></i>Pay via UPI
+                        </button>
+                        <button onclick="orderViaWhatsApp()" class="bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fab fa-whatsapp mr-2"></i>Order via WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Bar -->
+    <div id="comparisonBar" class="comparison-bar">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <span class="font-semibold">Compare Products:</span>
+                    <div id="compareItems" class="flex flex-wrap gap-2">
+                        <!-- Compare items will be inserted here -->
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="clearComparison()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Clear</button>
+                    <button onclick="showComparison()" class="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Compare Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div>
+            <div class="font-semibold" id="toastTitle">Success!</div>
+            <div class="text-sm text-gray-600" id="toastMessage">Item added to cart</div>
+        </div>
+    </div>
+
+    <script>
+        // Product Data
+        const products = [
+            { id: 1, name: "Premium Garam Masala", category: "garam-masala", price: 299, image: "https://picsum.photos/seed/garam1/300/300", description: "Aromatic blend of premium spices perfect for curries and gravies", weight: "100g", rating: 4.8, reviews: 234 },
+            { id: 2, name: "Traditional Garam Masala", category: "garam-masala", price: 199, image: "https://picsum.photos/seed/garam2/300/300", description: "Authentic traditional recipe passed down through generations", weight: "50g", rating: 4.6, reviews: 189 },
+            { id: 3, name: "Chicken Masala Powder", category: "food-masala", price: 249, image: "https://picsum.photos/seed/chicken/300/300", description: "Perfect blend for delicious chicken curries and biryanis", weight: "100g", rating: 4.7, reviews: 312 },
+            { id: 4, name: "Paneer Masala Mix", category: "food-masala", price: 229, image: "https://picsum.photos/seed/paneer/300/300", description: "Special mix for creamy and flavorful paneer dishes", weight: "75g", rating: 4.5, reviews: 156 },
+            { id: 5, name: "Chat Masala Magic", category: "chat-masala", price: 179, image: "https://picsum.photos/seed/chat1/300/300", description: "Tangy and spicy blend perfect for all chaat items", weight: "50g", rating: 4.9, reviews: 421 },
+            { id: 6, name: "Fruit Chat Masala", category: "chat-masala", price: 159, image: "https://picsum.photos/seed/chat2/300/300", description: "Sweet and tangy spice mix for fruits and salads", weight: "40g", rating: 4.4, reviews: 98 },
+            { id: 7, name: "Motichoor Ladoo", category: "sweets", price: 599, image: "https://picsum.photos/seed/ladoo/300/300", description: "Traditional Indian sweet made from gram flour and sugar syrup", weight: "500g", rating: 4.8, reviews: 567 },
+            { id: 8, name: "Kaju Katli", category: "sweets", price: 799, image: "https://picsum.photos/seed/katli/300/300", description: "Delicious cashew nut sweet, perfect for celebrations", weight: "250g", rating: 4.9, reviews: 789 },
+            { id: 9, name: "Mango Pickle", category: "pickles", price: 349, image: "https://picsum.photos/seed/mango/300/300", description: "Tangy and spicy raw mango pickle with authentic spices", weight: "1kg", rating: 4.7, reviews: 445 },
+            { id: 10, name: "Lemon Pickle", category: "pickles", price: 299, image: "https://picsum.photos/seed/lemon/300/300", description: "Fresh and tangy lemon pickle with traditional spices", weight: "500g", rating: 4.6, reviews: 334 },
+            { id: 11, name: "Mixed Vegetable Pickle", category: "pickles", price: 399, image: "https://picsum.photos/seed/mixed/300/300", description: "Assorted vegetables in aromatic spice mix", weight: "750g", rating: 4.5, reviews: 223 },
+            { id: 12, name: "Special Biryani Masala", category: "food-masala", price: 349, image: "https://picsum.photos/seed/biryani/300/300", description: "Aromatic blend for perfect biryani every time", weight: "100g", rating: 4.8, reviews: 678 }
+        ];
+
+        // State Management
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+        let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+        let currentCategory = 'all';
+        let currentCheckoutStep = 1;
+        let shippingInfo = {};
+        const DELIVERY_FEE = 70; // Fixed delivery fee
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 3000);
+
+            renderProducts();
+            renderRecentlyViewed();
+
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            document.getElementById('cartBtn').addEventListener('click', openCartModal);
+            document.getElementById('newsletterForm').addEventListener('submit', handleNewsletter);
+            
+            // Qatar checkbox handler
+            document.getElementById('isQatar').addEventListener('change', function() {
+                const qatarFields = document.getElementById('qatarFields');
+                if (this.checked) {
+                    qatarFields.classList.remove('hidden');
+                } else {
+                    qatarFields.classList.add('hidden');
+                }
+            });
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    currentCategory = e.target.dataset.category;
+                    updateCategoryButtons();
+                    renderProducts();
+                });
+            });
+
+            updateCartCount();
+            updateWishlistCount();
+            updateCompareBar();
+        });
+
+        // Render Products
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            let filteredProducts = products;
+
+            if (currentCategory !== 'all') {
+                filteredProducts = products.filter(p => p.category === currentCategory);
+            }
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filteredProducts = filteredProducts.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.category.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            filteredProducts.forEach((product, index) => {
+                const card = createProductCard(product);
+                card.style.animationDelay = `${index * 0.1}s`;
+                grid.appendChild(card);
+            });
+
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-500"><i class="fas fa-search text-4xl mb-4"></i><p>No products found</p></div>';
+            }
+        }
+
+        // Create Product Card
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card bg-white rounded-xl shadow-lg overflow-hidden fade-in';
+            
+            const isInWishlist = wishlist.some(item => item.id === product.id);
+            
+            card.innerHTML = `
+                <div class="relative">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <span class="absolute top-2 left-2 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        ${product.weight}
+                    </span>
+                    <button onclick="toggleWishlist(${product.id})" class="wishlist-btn ${isInWishlist ? 'active' : ''}">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <button onclick="quickView(${product.id})" class="quick-view-btn">
+                        <i class="fas fa-eye mr-2"></i>Quick View
+                    </button>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-2">${product.name}</h3>
+                    <p class="text-gray-600 text-sm mb-3">${product.description}</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-orange-500">₹${product.price}</span>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 text-sm ml-1">${product.rating} (${product.reviews})</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <button onclick="addToCart(${product.id})" class="flex-1 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">
+                            <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                        </button>
+                        <button onclick="buyNow(${product.id})" class="flex-1 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                            <i class="fas fa-bolt mr-2"></i>Buy Now
+                        </button>
+                        <button onclick="addToCompare(${product.id})" class="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-balance-scale"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        // Quick View
+        function quickView(productId) {
+            const product = products.find(p => p.id === productId);
+            addToRecentlyViewed(product);
+            showProductModal(product);
+        }
+
+        // Toggle Wishlist
+        function toggleWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            const index = wishlist.findIndex(item => item.id === productId);
+            
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast('Removed from wishlist', 'success');
+            } else {
+                wishlist.push(product);
+                showToast('Added to wishlist', 'success');
+            }
+            
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            updateWishlistCount();
+            renderProducts();
+        }
+
+        // Add to Compare
+        function addToCompare(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (compareList.length >= 3) {
+                showToast('You can compare maximum 3 products', 'error');
+                return;
+            }
+            
+            if (!compareList.some(item => item.id === productId)) {
+                compareList.push(product);
+                localStorage.setItem('compareList', JSON.stringify(compareList));
+                updateCompareBar();
+                showToast('Added to comparison', 'success');
+            } else {
+                showToast('Product already in comparison list', 'error');
+            }
+        }
+
+        // Update Compare Bar
+        function updateCompareBar() {
+            const bar = document.getElementById('comparisonBar');
+            const items = document.getElementById('compareItems');
+            
+            if (compareList.length > 0) {
+                bar.classList.add('active');
+                items.innerHTML = compareList.map(item => `
+                    <div class="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                        <img src="${item.image}" alt="${item.name}" class="w-6 h-6 rounded-full object-cover">
+                        ${item.name.substring(0, 10)}...
+                    </div>
+                `).join('');
+            } else {
+                bar.classList.remove('active');
+            }
+        }
+
+        // Clear Comparison
+        function clearComparison() {
+            compareList = [];
+            localStorage.setItem('compareList', JSON.stringify(compareList));
+            updateCompareBar();
+            showToast('Comparison list cleared', 'success');
+        }
+
+        // Show Comparison
+        function showComparison() {
+            if (compareList.length < 2) {
+                showToast('Add at least 2 products to compare', 'error');
+                return;
+            }
+            showToast('Comparison feature coming soon!', 'success');
+        }
+
+        // Add to Recently Viewed
+        function addToRecentlyViewed(product) {
+            recentlyViewed = recentlyViewed.filter(item => item.id !== product.id);
+            recentlyViewed.unshift(product);
+            
+            if (recentlyViewed.length > 6) {
+                recentlyViewed.pop();
+            }
+            
+            localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+            renderRecentlyViewed();
+        }
+
+        // Render Recently Viewed
+        function renderRecentlyViewed() {
+            const grid = document.getElementById('recentlyViewedGrid');
+            grid.innerHTML = '';
+            
+            if (recentlyViewed.length === 0) {
+                grid.innerHTML = '<p class="col-span-full text-center text-gray-500">No recently viewed products</p>';
+                return;
+            }
+            
+            recentlyViewed.forEach(product => {
+                const item = document.createElement('div');
+                item.className = 'bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow';
+                item.onclick = () => showProductModal(product);
+                item.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-24 object-cover">
+                    <div class="p-2">
+                        <h4 class="text-sm font-semibold truncate">${product.name}</h4>
+                        <p class="text-orange-500 font-bold">₹${product.price}</p>
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        // Search Handler
+        function handleSearch(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const suggestions = document.getElementById('searchSuggestions');
+            
+            if (searchTerm.length > 0) {
+                const matches = products.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.category.toLowerCase().includes(searchTerm)
+                );
+                
+                if (matches.length > 0) {
+                    suggestions.innerHTML = matches.slice(0, 5).map(product => `
+                        <div class="suggestion-item" onclick="selectSuggestion('${product.name}')">
+                            <div class="flex items-center gap-3">
+                                <img src="${product.image}" alt="${product.name}" class="w-10 h-10 rounded object-cover">
+                                <div>
+                                    <div class="font-semibold">${product.name}</div>
+                                    <div class="text-sm text-gray-600">${product.category} • ₹${product.price}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    suggestions.classList.add('active');
+                } else {
+                    suggestions.innerHTML = '<div class="suggestion-item">No products found</div>';
+                    suggestions.classList.add('active');
+                }
+            } else {
+                suggestions.classList.remove('active');
+            }
+            
+            renderProducts();
+        }
+
+        // Select Search Suggestion
+        function selectSuggestion(productName) {
+            document.getElementById('searchInput').value = productName;
+            document.getElementById('searchSuggestions').classList.remove('active');
+            renderProducts();
+        }
+
+        // Newsletter Handler
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            showToast('Successfully subscribed to newsletter!', 'success');
+            e.target.reset();
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const title = document.getElementById('toastTitle');
+            const msg = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            title.textContent = type === 'success' ? 'Success!' : 'Oops!';
+            msg.textContent = message;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showToast('Added to cart!');
+        }
+
+        // Buy Now
+        function buyNow(productId) {
+            const product = products.find(p => p.id === productId);
+            addToRecentlyViewed(product);
+            showProductModal(product);
+        }
+
+        // Show Product Modal
+        function showProductModal(product) {
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                    <div>
+                        <img src="${product.image}" alt="${product.name}" class="w-full rounded-lg shadow-lg">
+                        <div class="grid grid-cols-4 gap-2 mt-4">
+                            ${[1,2,3,4].map(i => `<img src="https://picsum.photos/seed/${product.name}${i}/100/100" class="rounded cursor-pointer hover:opacity-80" onclick="changeMainImage(this)"></img>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4">${product.name}</h2>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="flex items-center text-yellow-400">
+                                ${Array(5).fill().map((_, i) => 
+                                    `<i class="fas fa-star${i < Math.floor(product.rating) ? '' : (i === Math.floor(product.rating) && product.rating % 1 !== 0 ? '-half-alt' : '-o')}"></i>`
+                                ).join('')}
+                                <span class="text-gray-600 ml-2">${product.rating} (${product.reviews} reviews)</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6">${product.description}</p>
+                        <div class="mb-6">
+                            <span class="text-3xl md:text-4xl font-bold text-orange-500">₹${product.price}</span>
+                            <span class="text-gray-500 ml-2">/ ${product.weight}</span>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium mb-2">Quantity</label>
+                            <div class="flex items-center">
+                                <button onclick="decreaseQuantity()" class="bg-gray-200 px-4 py-2 rounded-l-lg hover:bg-gray-300">-</button>
+                                <input type="number" id="quantity" value="1" min="1" class="w-16 text-center border-t border-b border-gray-200 text-lg">
+                                <button onclick="increaseQuantity()" class="bg-gray-200 px-4 py-2 rounded-r-lg hover:bg-gray-300">+</button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                            <button onclick="addToCartFromModal(${product.id})" class="flex-1 bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors">
+                                <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                            </button>
+                            <button onclick="startCheckout()" class="flex-1 bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors">
+                                <i class="fas fa-bolt mr-2"></i>Buy Now
+                            </button>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold mb-2">Product Details</h3>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-green-500 mr-2"></i>Pure and Natural Ingredients</li>
+                                <li><i class="fas fa-check text-green-500 mr-2"></i>No Artificial Preservatives</li>
+                                <li><i class="fas fa-check text-green-500 mr-2"></i>Hygienically Packed</li>
+                                <li><i class="fas fa-check text-green-500 mr-2"></i>Long Shelf Life</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        // Close Product Modal
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        // Add to Cart from Modal
+        function addToCartFromModal(productId) {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...product, quantity });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showToast('Added to cart!');
+            closeProductModal();
+        }
+
+        // Open Cart Modal
+        function openCartModal() {
+            const modal = document.getElementById('cartModal');
+            const content = document.getElementById('cartContent');
+            
+            if (cart.length === 0) {
+                content.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500 text-lg">Your cart is empty</p>
+                        <button onclick="closeCartModal()" class="mt-4 px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+                            Continue Shopping
+                        </button>
+                    </div>
+                `;
+            } else {
+                let subtotal = 0;
+                content.innerHTML = `
+                    <div class="space-y-4">
+                        ${cart.map(item => {
+                            subtotal += item.price * item.quantity;
+                            return `
+                                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                                    <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold">${item.name}</h3>
+                                        <p class="text-gray-600">₹${item.price} × ${item.quantity}</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})" class="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">-</button>
+                                        <span class="px-3 py-1 bg-white border">${item.quantity}</span>
+                                        <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})" class="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">+</button>
+                                        <button onclick="removeFromCart(${item.id})" class="text-red-500 ml-4 hover:text-red-700">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                        <div class="border-t pt-4">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium mb-2">Discount Code</label>
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <input type="text" id="discountCode" placeholder="Enter code" class="flex-1 px-4 py-2 border rounded-lg">
+                                    <button onclick="applyDiscount()" class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">Apply</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex justify-between">
+                                    <span>Subtotal:</span>
+                                    <span>₹${subtotal}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Delivery Fee:</span>
+                                    <span>₹${DELIVERY_FEE}</span>
+                                </div>
+                                <div class="flex justify-between text-lg font-bold">
+                                    <span>Total:</span>
+                                    <span class="text-orange-500">₹${subtotal + DELIVERY_FEE}</span>
+                                </div>
+                            </div>
+                            <button onclick="startCheckout()" class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold">
+                                <i class="fas fa-credit-card mr-2"></i>Proceed to Checkout
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        // Close Cart Modal
+        function closeCartModal() {
+            document.getElementById('cartModal').classList.add('hidden');
+        }
+
+        // Update Quantity
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                const item = cart.find(item => item.id === productId);
+                if (item) {
+                    item.quantity = newQuantity;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    openCartModal();
+                }
+            }
+        }
+
+        // Remove from Cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            openCartModal();
+        }
+
+        // Update Cart Count
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Update Wishlist Count
+        function updateWishlistCount() {
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        // Update Category Buttons
+        function updateCategoryButtons() {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.dataset.category === currentCategory) {
+                    btn.className = 'category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-orange-500 text-white font-semibold shadow-lg transform hover:scale-105 transition-all';
+                } else {
+                    btn.className = 'category-btn px-6 py-2 md:px-8 md:py-3 rounded-full bg-white text-gray-700 hover:bg-gray-100 font-semibold shadow-md transform hover:scale-105 transition-all';
+                }
+            });
+        }
+
+        // Apply Discount
+        function applyDiscount() {
+            const code = document.getElementById('discountCode').value.toUpperCase();
+            if (code === 'ARUNA10') {
+                showToast('10% discount applied!', 'success');
+            } else {
+                showToast('Invalid discount code', 'error');
+            }
+        }
+
+        // Start Checkout
+        function startCheckout() {
+            closeCartModal();
+            closeProductModal();
+            
+            // Reset checkout form
+            document.getElementById('shippingForm').reset();
+            document.getElementById('qatarFields').classList.add('hidden');
+            
+            // Reset to step 1
+            currentCheckoutStep = 1;
+            updateCheckoutSteps();
+            
+            // Show checkout modal
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        // Go to Checkout Step
+        function goToStep(step) {
+            if (step === 2) {
+                // Validate shipping form
+                const fullName = document.getElementById('fullName').value;
+                const phone = document.getElementById('phone').value;
+                const state = document.getElementById('state').value;
+                const district = document.getElementById('district').value;
+                const streetName = document.getElementById('streetName').value;
+                const address = document.getElementById('address').value;
+                const pinCode = document.getElementById('pinCode').value;
+                
+                if (!fullName || !phone || !state || !district || !streetName || !address || !pinCode) {
+                    showToast('Please fill all required fields', 'error');
+                    return;
+                }
+                
+                // Save shipping info
+                shippingInfo = {
+                    fullName,
+                    phone,
+                    state,
+                    district,
+                    streetName,
+                    address,
+                    pinCode,
+                    landmark: document.getElementById('landmark').value,
+                    isQatar: document.getElementById('isQatar').checked,
+                    sectorNumber: document.getElementById('sectorNumber').value,
+                    quarterNumber: document.getElementById('quarterNumber').value,
+                    nearestLandmark: document.getElementById('nearestLandmark').value
+                };
+                
+                // Populate order review
+                populateOrderReview();
+            } else if (step === 3) {
+                // Calculate total with delivery fee
+                let subtotal = 0;
+                cart.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                });
+                const total = subtotal + DELIVERY_FEE;
+                document.getElementById('orderTotal').textContent = `₹${total}`;
+            }
+            
+            currentCheckoutStep = step;
+            updateCheckoutSteps();
+        }
+
+        // Update Checkout Steps - FIXED
+        function updateCheckoutSteps() {
+            // Hide all steps
+            document.querySelectorAll('.checkout-step').forEach(step => {
+                step.classList.add('hidden');
+            });
+            
+            // Show current step
+            document.getElementById(`step${currentCheckoutStep}`).classList.remove('hidden');
+            
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNum = index + 1;
+                const stepCircle = step.querySelector('.step-circle');
+                
+                // Remove all classes first
+                step.classList.remove('active', 'completed');
+                
+                if (stepNum < currentCheckoutStep) {
+                    step.classList.add('completed');
+                    stepCircle.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (stepNum === currentCheckoutStep) {
+                    step.classList.add('active');
+                    stepCircle.textContent = stepNum;
+                } else {
+                    stepCircle.textContent = stepNum;
+                }
+            });
+        }
+
+        // Populate Order Review
+        function populateOrderReview() {
+            // Populate order items
+            let orderHTML = '<div class="space-y-4 mb-6">';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                orderHTML += `
+                    <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                        <div class="flex-1">
+                            <h4 class="font-semibold">${item.name}</h4>
+                            <p class="text-gray-600">₹${item.price} × ${item.quantity}</p>
+                        </div>
+                        <div class="font-semibold">₹${item.price * item.quantity}</div>
+                    </div>
+                `;
+            });
+            
+            const total = subtotal + DELIVERY_FEE;
+            
+            orderHTML += `
+                <div class="border-t pt-4">
+                    <div class="flex justify-between">
+                        <span>Subtotal:</span>
+                        <span>₹${subtotal}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Delivery Fee:</span>
+                        <span>₹${DELIVERY_FEE}</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold">
+                        <span>Total:</span>
+                        <span class="text-orange-500">₹${total}</span>
+                    </div>
+                </div>
+            </div>`;
+            
+            document.getElementById('orderReview').innerHTML = orderHTML;
+            
+            // Populate shipping address
+            let addressHTML = `
+                <p><strong>${shippingInfo.fullName}</strong></p>
+                <p>${shippingInfo.phone}</p>
+                <p>${shippingInfo.streetName}, ${shippingInfo.address}</p>
+                <p>${shippingInfo.district}, ${shippingInfo.state} - ${shippingInfo.pinCode}</p>
+            `;
+            
+            if (shippingInfo.landmark) {
+                addressHTML += `<p>Landmark: ${shippingInfo.landmark}</p>`;
+            }
+            
+            if (shippingInfo.isQatar) {
+                addressHTML += `
+                    <p>Sector: ${shippingInfo.sectorNumber}</p>
+                    <p>Quarter: ${shippingInfo.quarterNumber}</p>
+                    <p>Nearest Landmark: ${shippingInfo.nearestLandmark}</p>
+                `;
+            }
+            
+            document.getElementById('shippingAddress').innerHTML = addressHTML;
+        }
+
+        // Place Order
+        function placeOrder() {
+            // Show success message
+            showToast('Order placed successfully!', 'success');
+            
+            // Calculate totals
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            const total = subtotal + DELIVERY_FEE;
+            
+            // Clear cart
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            // Close checkout modal
+            closeCheckoutModal();
+            
+            // Show alert with order details
+            let orderDetails = 'Thank you for your order!\n\n';
+            orderDetails += 'Order Details:\n';
+            
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                orderDetails += `${item.name} x ${item.quantity} = ₹${item.price * item.quantity}\n`;
+            });
+            
+            orderDetails += `\nSubtotal: ₹${subtotal}\n`;
+            orderDetails += `Delivery Fee: ₹${DELIVERY_FEE}\n`;
+            orderDetails += `Total: ₹${total}\n\n`;
+            orderDetails += `Shipping Address:\n${shippingInfo.fullName}\n${shippingInfo.phone}\n${shippingInfo.streetName}, ${shippingInfo.address}\n${shippingInfo.district}, ${shippingInfo.state} - ${shippingInfo.pinCode}\n`;
+            orderDetails += `\nPayment Method: UPI\nUPI ID: 7386895149@fam\n\n`;
+            orderDetails += 'Note: No cash on delivery available. Please pay using the above UPI ID.';
+            
+            setTimeout(() => {
+                alert(orderDetails);
+            }, 500);
+        }
+
+        // Order via WhatsApp
+        function orderViaWhatsApp() {
+            // Calculate totals
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            const total = subtotal + DELIVERY_FEE;
+            
+            // Create WhatsApp message
+            let message = 'Hello, I would like to place an order from Aruna\'s Kitchen.\n\n';
+            message += 'Order Details:\n';
+            
+            cart.forEach(item => {
+                message += `${item.name} x ${item.quantity} = ₹${item.price * item.quantity}\n`;
+            });
+            
+            message += `\nSubtotal: ₹${subtotal}\n`;
+            message += `Delivery Fee: ₹${DELIVERY_FEE}\n`;
+            message += `Total: ₹${total}\n\n`;
+            message += `Shipping Address:\n${shippingInfo.fullName}\n${shippingInfo.phone}\n${shippingInfo.streetName}, ${shippingInfo.address}\n${shippingInfo.district}, ${shippingInfo.state} - ${shippingInfo.pinCode}\n`;
+            
+            if (shippingInfo.landmark) {
+                message += `Landmark: ${shippingInfo.landmark}\n`;
+            }
+            
+            if (shippingInfo.isQatar) {
+                message += `Sector: ${shippingInfo.sectorNumber}\n`;
+                message += `Quarter: ${shippingInfo.quarterNumber}\n`;
+                message += `Nearest Landmark: ${shippingInfo.nearestLandmark}\n`;
+            }
+            
+            message += '\nPlease confirm my order and let me know the next steps.';
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Open WhatsApp with pre-filled message
+            const whatsappURL = `https://wa.me/918142860105?text=${encodedMessage}`;
+            window.open(whatsappURL, '_blank');
+            
+            // Show success message
+            showToast('Opening WhatsApp...', 'success');
+        }
+
+        // Close Checkout Modal
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        // Quantity Controls
+        function increaseQuantity() {
+            const input = document.getElementById('quantity');
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decreaseQuantity() {
+            const input = document.getElementById('quantity');
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
+        // Change Main Image
+        function changeMainImage(thumb) {
+            const mainImg = document.querySelector('#modalContent img');
+            mainImg.src = thumb.src.replace('/100/100', '/300/300');
+        }
+    </script>
+</body>
+</html>
