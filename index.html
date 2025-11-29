@@ -77,49 +77,29 @@
             text-decoration: none !important;
         }
         
-        /* WhatsApp button style */
-        .whatsapp-button {
-            background: #25D366;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            margin-top: 15px;
-        }
-        
-        .whatsapp-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            background: #128C7E;
-        }
-        
-        /* Resume button style */
-        .resume-button {
+        /* Resume button style matching the theme */
+        .btn-resume {
             background: linear-gradient(135deg, #ff2a6d, #05d9e8);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 12px 25px;
             border-radius: 50px;
             cursor: pointer;
-            font-weight: 500;
-            display: flex;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
         }
         
-        .resume-button:hover {
+        .btn-resume:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #05d9e8, #ff2a6d);
         }
         
         /* Updated hero-buttons container */
@@ -130,11 +110,252 @@
             margin-top: 30px;
         }
         
-        /* Contact form buttons container */
-        .form-buttons {
+        /* Resume Section - New */
+        .resume-section {
+            padding: 4rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resume-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 42, 109, 0.05) 0%, rgba(5, 217, 232, 0.05) 100%);
+            z-index: -1;
+        }
+        
+        .resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .resume-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .resume-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .resume-button-container {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn-resume-main {
+            background: var(--gradient-1);
+            color: var(--bg-primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 10px 30px rgba(255, 42, 109, 0.4);
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Exo 2', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-resume-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn-resume-main:hover::before {
+            left: 100%;
+        }
+        
+        .btn-resume-main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 42, 109, 0.6);
+        }
+        
+        /* Projects Tab Navigation - Tablet Style */
+        .projects-tab-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 0.5rem;
+            max-width: 600px; /* Reduced width for 3 tabs */
+            margin: 0 auto 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 10px;
+            font-family: 'Exo 2', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: var(--transition);
+        }
+        
+        .project-tab:hover::before {
+            left: 100%;
+        }
+        
+        .project-tab:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .project-tab.active {
+            background: var(--gradient-1);
+            color: var(--bg-primary);
+            box-shadow: 0 5px 15px rgba(255, 42, 109, 0.3);
+        }
+        
+        .project-tab i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Project Tab Content */
+        .project-tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .project-tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Project Card with Three Buttons - Improved Layout */
+        .project-footer {
+            padding: 0 2rem 2rem;
+            display: flex;
+            gap: 0.6rem; /* Reduced gap for better spacing */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+        
+        .btn-demo, .btn-documentation, .btn-source {
+            flex: 1; /* Each button takes equal space */
+            min-width: 100px; /* Ensure buttons don't get too small */
+            padding: 0.8rem 0.9rem; /* Slightly smaller padding for a tighter look */
+            justify-content: center;
+            text-align: center;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.8rem; /* Slightly smaller font size */
+            transition: var(--transition);
+            text-decoration: none;
+            font-family: 'Exo 2', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem; /* Reduced gap for better alignment */
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        
+        .btn-demo {
+            background: var(--gradient-1);
+            color: var(--bg-primary);
+            box-shadow: 0 4px 12px rgba(255, 42, 109, 0.3);
+        }
+        
+        .btn-documentation {
+            background: var(--gradient-2);
+            color: var(--bg-primary);
+            box-shadow: 0 4px 12px rgba(5, 217, 232, 0.3);
+        }
+        
+        .btn-source {
+            background: linear-gradient(135deg, #6e5494, #24292e);
+            color: white;
+            box-shadow: 0 4px 12px rgba(110, 84, 148, 0.3);
+        }
+        
+        .btn-demo:hover, .btn-documentation:hover, .btn-source:hover {
+            transform: translateY(-3px);
+        }
+        
+        .btn-demo:hover {
+            box-shadow: 0 6px 18px rgba(255, 42, 109, 0.4);
+        }
+        
+        .btn-documentation:hover {
+            box-shadow: 0 6px 18px rgba(5, 217, 232, 0.4);
+        }
+        
+        .btn-source:hover {
+            box-shadow: 0 6px 18px rgba(110, 84, 148, 0.4);
+        }
+        
+        .btn-demo::before, .btn-documentation::before, .btn-source::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn-demo:hover::before, .btn-documentation:hover::before, .btn-source:hover::before {
+            left: 100%;
         }
     </style>
 </head>
@@ -210,7 +431,6 @@
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary"><i class="fas fa-briefcase"></i> View My Work</a>
                 <a href="#shop" class="btn btn-secondary"><i class="fas fa-shopping-bag"></i> Visit Shop</a>
-                <a href="#" class="resume-button" onclick="showResumeNotification(); return false;"><i class="fas fa-file-pdf"></i> View Resume</a>
             </div>
         </div>
     </section>
@@ -252,7 +472,28 @@
                         <div class="stat-number">5</div>
                         <div class="stat-label">Web Projects</div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section - New -->
+    <section class="resume-section" id="resume">
+        <div class="resume-container fade-in">
+            <h2 class="resume-title">Professional Resume</h2>
+            <p class="resume-description">
+                Download my resume to learn more about my education, skills, and professional experience. 
+                I'm always open to new opportunities and collaborations in the tech industry.
+            </p>
+            <div class="resume-button-container">
+                <a href="https://docs.google.com/document/d/1oqKeW6Kyo--aox4c7iyVDuZpq7mQmuy_Yf5bzteUwCo/edit?usp=drive_link" 
+                   target="_blank" class="btn-resume-main">
+                    <i class="fas fa-file-pdf"></i> Download Resume
+                </a>
             </div>
         </div>
     </section>
@@ -388,119 +629,242 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Projects Section - Updated with Tab Navigation -->
     <section class="section projects-section" id="projects">
         <div class="bg-effect">
             <div class="grid-lines"></div>
         </div>
         <h2 class="section-title fade-in">Featured Projects</h2>
+        
+        <!-- Project Tab Navigation - Tablet Style -->
+        <div class="projects-tab-nav fade-in">
+            <button class="project-tab active" data-tab="aiml">
+                <i class="fas fa-brain"></i> AIML
+            </button>
+            <button class="project-tab" data-tab="web">
+                <i class="fas fa-globe"></i> Web Projects
+            </button>
+            <button class="project-tab" data-tab="python">
+                <i class="fas fa-code"></i> Python
+            </button>
+        </div>
+        
         <div class="projects-container">
-            <div class="projects-grid">
-                <div class="project-card fade-in" data-id="1">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-laptop-code"></i></div>
-                        <h3 class="project-title">CodeandCreate Portfolio</h3>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-desc">Professional website with Firebase hosting, GitHub integration, responsive design, and admin panel for content management.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">HTML/CSS</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">GitHub</span>
+            <!-- AIML Projects Tab Content -->
+            <div class="project-tab-content active" id="aiml">
+                <div class="projects-grid">
+                    <div class="project-card fade-in" data-id="1">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-smile"></i></div>
+                            <h3 class="project-title">Face Emotion Recognition</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">Built a computer vision model to detect and classify human emotions from facial expressions using OpenCV and deep learning.</p>
+                            <p class="project-desc">Use case: real-time emotion analysis for smart classrooms, user-experience analytics, or entertainment apps.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">OpenCV</span>
+                                <span class="tech-tag">Deep Learning</span>
+                                <span class="tech-tag">Computer Vision</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="#" class="btn-demo" onclick="showDemoNotification('Face Emotion Recognition')">
+                                <i class="fas fa-play"></i> Demo
+                            </a>
+                            <a href="#" class="btn-documentation" onclick="showDocumentationNotification('Face Emotion Recognition')">
+                                <i class="fas fa-file-alt"></i> Docs
+                            </a>
+                            <a href="https://github.com/Mohithbatchala2007/face_emotion" target="_blank" class="btn-source">
+                                <i class="fab fa-github"></i> Code
+                            </a>
                         </div>
                     </div>
-                    <div class="project-footer">
-                        <a href="project.html?id=1" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    <div class="project-card fade-in" data-id="2">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-heartbeat"></i></div>
+                            <h3 class="project-title">AI Heart</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">AI-powered tool that analyzes health-related inputs (like medical parameters or lifestyle data) to predict heart-risk patterns or give basic insights.</p>
+                            <p class="project-desc">Focus on applying ML to healthcare data with clear, visual feedback for users.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Machine Learning</span>
+                                <span class="tech-tag">Healthcare</span>
+                                <span class="tech-tag">Data Analysis</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="#" class="btn-demo" onclick="showDemoNotification('AI Heart')">
+                                <i class="fas fa-play"></i> Demo
+                            </a>
+                            <a href="#" class="btn-documentation" onclick="showDocumentationNotification('AI Heart')">
+                                <i class="fas fa-file-alt"></i> Docs
+                            </a>
+                            <a href="https://github.com/Mohithbatchala2007/ai_health_chat_bot" target="_blank" class="btn-source">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-card fade-in" data-id="3">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-file-user"></i></div>
+                            <h3 class="project-title">AI Resume Scanner Pro</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">Flask web app that scans resume text and predicts best-fit job category using TF-IDF + Logistic Regression trained on 962 labeled resumes.</p>
+                            <p class="project-desc">Includes a polished Tailwind CSS frontend with real-time prediction and a detailed explanation panel.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">Machine Learning</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="#" class="btn-demo" onclick="showDemoNotification('AI Resume Scanner Pro')">
+                                <i class="fas fa-play"></i> Demo
+                            </a>
+                            <a href="#" class="btn-documentation" onclick="showDocumentationNotification('AI Resume Scanner Pro')">
+                                <i class="fas fa-file-alt"></i> Docs
+                            </a>
+                            <a href="https://github.com/Mohithbatchala2007/ai_resume" target="_blank" class="btn-source">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card fade-in" data-id="2">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-robot"></i></div>
-                        <h3 class="project-title">Arduino Pet Robot</h3>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-desc">Voice-recognition enabled robot with autonomous navigation and human-following capabilities using Arduino and various sensors.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Arduino</span>
-                            <span class="tech-tag">C/C++</span>
-                            <span class="tech-tag">Sensors</span>
-                            <span class="tech-tag">Robotics</span>
+            </div>
+            
+            <!-- Web Projects Tab Content -->
+            <div class="project-tab-content" id="web">
+                <div class="projects-grid">
+                    <div class="project-card fade-in" data-id="4">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-laptop-code"></i></div>
+                            <h3 class="project-title">CodeandCreate Portfolio</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">Professional website with Firebase hosting, GitHub integration, responsive design, and admin panel for content management.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">GitHub</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="project.html?id=4" class="btn btn-primary btn-project">
+                                <i class="fas fa-eye"></i> View Project
+                            </a>
                         </div>
                     </div>
-                    <div class="project-footer">
-                        <a href="project.html?id=2" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                    <div class="project-card fade-in" data-id="5">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
+                            <h3 class="project-title">Food Business E-commerce</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">Online store with product catalog, shopping cart, and payment integration for a local food business.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">E-commerce</span>
+                                <span class="tech-tag">Web Design</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="project.html?id=5" class="btn btn-primary btn-project">
+                                <i class="fas fa-eye"></i> View Project
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-card fade-in" data-id="6">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-school"></i></div>
+                            <h3 class="project-title">KV School Webpage Design</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">Custom design for Kendriya Vidyalaya with school branding, responsive layout, and intuitive navigation.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Web Design</span>
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">Responsive</span>
+                                <span class="tech-tag">UI/UX</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="project.html?id=6" class="btn btn-primary btn-project">
+                                <i class="fas fa-eye"></i> View Project
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card fade-in" data-id="3">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-brain"></i></div>
-                        <h3 class="project-title">AIML Presentation Project</h3>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-desc">Educational content on ML types, AI agents, decision trees, and random forests for learning and teaching purposes.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">AI/ML</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Research</span>
-                            <span class="tech-tag">Education</span>
+            </div>
+            
+            <!-- Python Projects Tab Content -->
+            <div class="project-tab-content" id="python">
+                <div class="projects-grid">
+                    <div class="project-card fade-in" data-id="7">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-chart-line"></i></div>
+                            <h3 class="project-title">Data Analysis Dashboard</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">Interactive dashboard for visualizing and analyzing complex datasets using Python libraries like Pandas, Matplotlib, and Plotly.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Pandas</span>
+                                <span class="tech-tag">Matplotlib</span>
+                                <span class="tech-tag">Plotly</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="project.html?id=7" class="btn btn-primary btn-project">
+                                <i class="fas fa-eye"></i> View Project
+                            </a>
                         </div>
                     </div>
-                    <div class="project-footer">
-                        <a href="project.html?id=3" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
-                    </div>
-                </div>
-                <div class="project-card fade-in" data-id="4">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-pen-fancy"></i></div>
-                        <h3 class="project-title">Creative Writing Projects</h3>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-desc">Anime/movie scripts with original characters, exploring themes of friendship and mythology using creative writing techniques.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Storytelling</span>
-                            <span class="tech-tag">AI Tools</span>
-                            <span class="tech-tag">Creative Writing</span>
+                    <div class="project-card fade-in" data-id="8">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-robot"></i></div>
+                            <h3 class="project-title">Automation Scripts</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-desc">Collection of Python automation scripts for file management, web scraping, and task scheduling to improve productivity.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Automation</span>
+                                <span class="tech-tag">Web Scraping</span>
+                                <span class="tech-tag">Scheduling</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="project.html?id=8" class="btn btn-primary btn-project">
+                                <i class="fas fa-eye"></i> View Project
+                            </a>
                         </div>
                     </div>
-                    <div class="project-footer">
-                        <a href="project.html?id=4" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
-                    </div>
-                </div>
-                <div class="project-card fade-in" data-id="5">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
-                        <h3 class="project-title">Food Business E-commerce</h3>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-desc">Online store with product catalog, shopping cart, and payment integration for a local food business.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">HTML/CSS</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">E-commerce</span>
-                            <span class="tech-tag">Web Design</span>
+                    <div class="project-card fade-in" data-id="9">
+                        <div class="project-header">
+                            <div class="project-icon"><i class="fas fa-database"></i></div>
+                            <h3 class="project-title">Database Management System</h3>
                         </div>
-                    </div>
-                    <div class="project-footer">
-                        <a href="project.html?id=5" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
-                    </div>
-                </div>
-                <div class="project-card fade-in" data-id="6">
-                    <div class="project-header">
-                        <div class="project-icon"><i class="fas fa-school"></i></div>
-                        <h3 class="project-title">KV School Webpage Design</h3>
-                    </div>
-                    <div class="project-body">
-                        <p class="project-desc">Custom design for Kendriya Vidyalaya with school branding, responsive layout, and intuitive navigation.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Web Design</span>
-                            <span class="tech-tag">HTML/CSS</span>
-                            <span class="tech-tag">Responsive</span>
-                            <span class="tech-tag">UI/UX</span>
+                        <div class="project-body">
+                            <p class="project-desc">Python-based database management system with CRUD operations, data validation, and reporting features.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">SQLite</span>
+                                <span class="tech-tag">Database</span>
+                                <span class="tech-tag">CRUD</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-footer">
-                        <a href="project.html?id=6" class="btn btn-primary btn-project"><i class="fas fa-eye"></i> View Project</a>
+                        <div class="project-footer">
+                            <a href="project.html?id=9" class="btn btn-primary btn-project">
+                                <i class="fas fa-eye"></i> View Project
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -728,7 +1092,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-quote">"Mohith's CodeandCreate channel is a valuable resource for students interested in technology. His tutorials are clear, engaging, and demonstrate a deep understanding of the subject matter."</p>
+                    <p class="testimonial-quote">"Mohith's CodeandCreate channel is a valuable resource for students interested in technology. His tutorials are clear, engaging, and demonstrate a deep understanding of subject matter."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">
                             <img src="https://via.placeholder.com/100" alt="Ankit Patel">
@@ -759,25 +1123,20 @@
         </div>
         <h2 class="section-title fade-in">Get In Touch</h2>
         <div class="contact-container">
-            <form class="contact-form fade-in" id="contact-form" action="https://forms.gle/xifweuoNZPHsSaZB7" method="get" target="_blank">
+            <form class="contact-form fade-in" id="contact-form">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="entry.1234567890" required>
+                    <input type="text" class="form-control" id="name" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="entry.0987654321" required>
+                    <input type="email" class="form-control" id="email" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea class="form-control" id="message" name="entry.1122334455" required></textarea>
+                    <textarea class="form-control" id="message" required></textarea>
                 </div>
-                <div class="form-buttons">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
-                    <button type="button" class="whatsapp-button" onclick="openWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> Contact on WhatsApp
-                    </button>
-                </div>
+                <button type="button" class="btn btn-primary" onclick="sendWhatsAppMessage()"><i class="fas fa-paper-plane"></i> Send Message</button>
             </form>
             <div class="social-links fade-in">
                 <a href="https://github.com/mohithbatchala" class="social-link github" target="_blank">
@@ -866,7 +1225,7 @@
         });
 
         // Add hover effect to links and buttons
-        const hoverElements = document.querySelectorAll('a, button, .btn, .skill-card, .achievement-card, .project-card, .certificate-card, .testimonial-card, .timeline-content, .stat-card, .hero-tag, .social-link, .shop-feature, .footer-social-link');
+        const hoverElements = document.querySelectorAll('a, button, .btn, .skill-card, .achievement-card, .project-card, .certificate-card, .testimonial-card, .timeline-content, .stat-card, .hero-tag, .social-link, .shop-feature, .footer-social-link, .project-tab');
         
         hoverElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
@@ -1102,102 +1461,102 @@
             }
         });
 
-        // Form submission
-        const contactForm = document.getElementById('contact-form');
-        contactForm.addEventListener('submit', function(e) {
-            // Get form values
+        // Project Tab Navigation
+        const projectTabs = document.querySelectorAll('.project-tab');
+        const projectTabContents = document.querySelectorAll('.project-tab-content');
+        
+        projectTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                projectTabs.forEach(t => t.classList.remove('active'));
+                projectTabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Reinitialize fade-in animation for newly visible content
+                const newFadeElements = document.querySelectorAll(`#${tabId} .fade-in`);
+                newFadeElements.forEach(element => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }, 100);
+                });
+            });
+        });
+
+        // WhatsApp function
+        function sendWhatsAppMessage() {
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
             
-            // Show a brief notification before redirecting
+            if (!name || !email || !message) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            const phoneNumber = '7386895149';
+            const whatsappMessage = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            window.open(url, '_blank');
+            
+            // Show success notification
+            showNotification('Opening WhatsApp to send your message...', 'success');
+            
+            // Reset form
+            document.getElementById('contact-form').reset();
+        }
+
+        // Notification function
+        function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = 'notification';
+            
+            if (type === 'error') {
+                notification.style.background = 'linear-gradient(135deg, #ff5e3a, #ff2a6d)';
+            } else if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, #25D366, #128C7E)';
+            }
+            
             notification.innerHTML = `
-                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i>
-                Redirecting to contact form...
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}" style="margin-right: 10px;"></i>
+                ${message}
             `;
             
             document.body.appendChild(notification);
             
-            // Remove notification after 2 seconds
+            // Remove notification after 5 seconds
             setTimeout(() => {
                 notification.classList.add('fade-out');
                 setTimeout(() => {
                     document.body.removeChild(notification);
                 }, 300);
-            }, 2000);
-            
-            // The form will automatically redirect to the Google Form
-            // No need to prevent default behavior
-        });
-
-        // WhatsApp function
-        function openWhatsApp() {
-            const phoneNumber = '7386895149';
-            const message = 'Hi Mohith, I visited your portfolio and would like to connect with you.';
-            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
+            }, 5000);
         }
 
         // Certificate notification function
         function showCertificateNotification() {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `
-                <i class="fas fa-envelope" style="margin-right: 10px;"></i>
-                I'll send you my certificates via email if you're interested. Sorry for the inconvenience due to privacy concerns.
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remove notification after 5 seconds
-            setTimeout(() => {
-                notification.classList.add('fade-out');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 5000);
-        }
-
-        // Resume notification function
-        function showResumeNotification() {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `
-                <i class="fas fa-file-pdf" style="margin-right: 10px;"></i>
-                I'll send you my resume via email. Please contact me at mohithbatchala21@gmail.com
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remove notification after 5 seconds
-            setTimeout(() => {
-                notification.classList.add('fade-out');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 5000);
+            showNotification('I\'ll send you my certificates via email if you\'re interested. Sorry for the inconvenience due to privacy concerns.');
         }
 
         // Shop notification function
         function showShopNotification() {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `
-                <i class="fas fa-shopping-cart" style="margin-right: 10px;"></i>
-                The shop is currently in progress. Please wait a few days.
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remove notification after 5 seconds
-            setTimeout(() => {
-                notification.classList.add('fade-out');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 5000);
+            showNotification('The shop is currently in progress. Please wait a few days.');
+        }
+
+        // Demo notification function
+        function showDemoNotification(projectName) {
+            showNotification(`Live demo for ${projectName} is currently being prepared. It will be available soon!`, 'info');
+        }
+
+        // Documentation notification function
+        function showDocumentationNotification(projectName) {
+            showNotification(`Documentation for ${projectName} is being finalized. It will be available soon!`, 'info');
         }
 
         // Fade-in animation on scroll
