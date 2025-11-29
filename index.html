@@ -76,6 +76,66 @@
         .social-link, .footer-social-link {
             text-decoration: none !important;
         }
+        
+        /* WhatsApp button style */
+        .whatsapp-button {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .whatsapp-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            background: #128C7E;
+        }
+        
+        /* Resume button style */
+        .resume-button {
+            background: linear-gradient(135deg, #ff2a6d, #05d9e8);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .resume-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Updated hero-buttons container */
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        /* Contact form buttons container */
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -150,6 +210,7 @@
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary"><i class="fas fa-briefcase"></i> View My Work</a>
                 <a href="#shop" class="btn btn-secondary"><i class="fas fa-shopping-bag"></i> Visit Shop</a>
+                <a href="#" class="resume-button" onclick="showResumeNotification(); return false;"><i class="fas fa-file-pdf"></i> View Resume</a>
             </div>
         </div>
     </section>
@@ -180,16 +241,16 @@
                 </p>
                 <div class="about-stats">
                     <div class="stat-card">
-                        <div class="stat-number">2+</div>
-                        <div class="stat-label">National Championships</div>
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">AIML Projects</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">Certifications</div>
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Python Projects</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label">Tech Projects</div>
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Web Projects</div>
                     </div>
                 </div>
             </div>
@@ -711,7 +772,12 @@
                     <label for="message">Message</label>
                     <textarea class="form-control" id="message" name="entry.1122334455" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    <button type="button" class="whatsapp-button" onclick="openWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                    </button>
+                </div>
             </form>
             <div class="social-links fade-in">
                 <a href="https://github.com/mohithbatchala" class="social-link github" target="_blank">
@@ -1066,6 +1132,14 @@
             // No need to prevent default behavior
         });
 
+        // WhatsApp function
+        function openWhatsApp() {
+            const phoneNumber = '7386895149';
+            const message = 'Hi Mohith, I visited your portfolio and would like to connect with you.';
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
         // Certificate notification function
         function showCertificateNotification() {
             const notification = document.createElement('div');
@@ -1073,6 +1147,26 @@
             notification.innerHTML = `
                 <i class="fas fa-envelope" style="margin-right: 10px;"></i>
                 I'll send you my certificates via email if you're interested. Sorry for the inconvenience due to privacy concerns.
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 5000);
+        }
+
+        // Resume notification function
+        function showResumeNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <i class="fas fa-file-pdf" style="margin-right: 10px;"></i>
+                I'll send you my resume via email. Please contact me at mohithbatchala21@gmail.com
             `;
             
             document.body.appendChild(notification);
